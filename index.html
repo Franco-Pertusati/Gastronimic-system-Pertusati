@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./buttons.css" />
+  <link rel="stylesheet" href="./windows.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <header>
+    <div class="title">
+      <h1>El despa</h1>
+    </div>
+    <nav>
+      <div></div>
+      <button class="squareButton" id="cajaCtrlBtn">
+        <ion-icon name="cash-outline"></ion-icon>
+      </button>
+      <button class="squareButton navBtnDoble" id="newPaymentBtn">
+        <ion-icon name="arrow-down-outline"></ion-icon>
+      </button>
+      <button class="squareButton navBtnDoble" id="newPaymentBtn2">
+        <ion-icon name="arrow-up-outline"></ion-icon>
+      </button>
+      <button class="squareButton">
+        <ion-icon name="bar-chart-outline"></ion-icon>
+      </button>
+      <button class="squareButton" id="cartaWinSwitch">
+        <ion-icon name="archive-outline"></ion-icon>
+      </button>
+      <button class="squareButton">
+        <ion-icon name="cog-outline"></ion-icon>
+      </button>
+      <button class="squareButton">
+        <ion-icon name="exit-outline"></ion-icon>
+      </button>
+    </nav>
+  </header>
+
+  <section>
+    <div class="background">
+      <div class="salon"></div>
+    </div>
+    <div class="" id="salonPanel">
+      <div class="salonPanelPag1 background" id="panelSalonPag">
+        <div class="squareButton selectedTable simpleButton"></div>
+        <div class="" id="tableContent"></div>
+        <div class="squareButton simpleButton" id="tableTotal">$0</div>
+        <div>
+          <button id="openTableInventoryMenu">
+            <ion-icon name="add-outline"></ion-icon>
+          </button>
+          <button id="openCloseSwap">
+            <ion-icon name="swap-horizontal-outline"></ion-icon>
+          </button>
+          <button><ion-icon name="create-outline"></ion-icon></button>
+          <button id="close1">
+            <ion-icon name="receipt-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+
+      <div id="panelSalonPag" class="background panelSalonPag2 hide">
+        <button class="listElement" id="createTable">Crear mesa</button>
+        <button class="listElement">Crear mesa redonda</button>
+        <button class="listElement">Crear texto</button>
+        <button class="listElement">Eliminar elemento</button>
+      </div>
+
+      <div class="twoCellgrid">
+        <button class="squareButton" id="panelSalonbtn">Config mesa</button>
+        <button class="squareButton" id="panelSalonbtn">Config salon</button>
+      </div>
+    </div>
+  </section>
+
+<div class="winContainer hide" id="cartaWin">
+  <div class="win">
+    <div class="winBackground" id="groupConteiner"></div>
+    <div class="winBackground">
+      <p>Crear Grupo</p>
+      <div class="spacer"></div>
+      <input id="aNameInput" type="text" placeholder="Nombre del grupo" />
+      <button class="listElement" id="createGroupArray">Crear grupo</button>
+      <div class="spacer"></div>
+      <p>Crear Producto</p>
+      <div class="spacer"></div>
+      <input id="aNameInput2" type="text" placeholder="Nombre del proucto" />
+      <input id="aPriceInput" type="text" placeholder="Precio" />
+      <select id="GroupSelect" name=""></select>
+      <button id="createProductArray" class="listElement">
+        Crear producto
+      </button>
+      <button class="listElement squareButton" id="cartaWinSwitch">
+        Salir
+      </button>
+    </div>
+  </div>
+</div>
+
+  <div class="winContainer hide" id="tableInventory">
+    <div class="win">
+      <div class="winBackground">
+        <div class="groupsTabs"></div>
+        <div class="productButtons"></div>
+      </div>
+      <div class="winBackground preOrdersMenu">
+        <div class="listElement selectedTable">Mesa:</div>
+        <div class="preOrdersList" id="preOrdersList"></div>
+        <div class="listElement" id="subTotal">total:</div>
+        <div class="twoCellgrid">
+          <button class=" cancelarComanda" id="openTableInventoryMenu">
+            Cancelar
+          </button>
+          <button class=" comandar" id="openTableInventoryMenu">
+            Comandar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="winContainer hide" id="askCloseTable">
+    <div class="win2">
+      <div class="win2Cont">
+        </label>
+        <p>Imprimir ticket</p>
+        <label class="switch">
+          <input type="checkbox" />
+          <span class="slider"></span>
+        </label>
+        <p>Metodo de pago</p>
+        <select name="" id=""></select>
+        <input id="notesInput" type="text" placeholder="Anotaciones" />
+      </div>
+      <div class="twoCellgrid">
+        <button class="squareButton" id="close1">Cancelar</button>
+        <button class="squareButton" id="close1">Cerrar mesa</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="winContainer swapTables hide" id="swapTablesWin">
+    <div class="win3">
+      <div class="swap1">
+        <p>Mover mesa:</p>
+        <select name="" id="tablesSlct"></select>
+        <p>a</p>
+        <select name="" id="tablesSlct"></select>
+      </div>
+      <div class="twoCellgrid">
+        <button id="openCloseSwap">Cancelar</button>
+        <button id="dolSwap">Aceptar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="winContainer cajaCtrl hide">
+    <div class="win3">
+      <p class="listElement" id="title2">Control de caja</p>
+      <div class="listElement" id="totalMoney">Dinero en caja: $0</div>
+      <button class="listElement" id="newPaymentBtn"><ion-icon name="arrow-down-outline"></ion-icon>Nueva entrada</button>
+      <button class="listElement" id="newPaymentBtn2"><ion-icon name="arrow-up-outline"></ion-icon>Nueva salida</button>
+      <button class="listElement" id="paymentsHistoryBtn"><ion-icon name="time-outline"></ion-icon>Historial de
+        pagos</button>
+      <button class="listElement"><ion-icon name="time-outline"></ion-icon>Historial de mesas</button>
+      <button class="listElement"><ion-icon name="close-outline"></ion-icon>Cerrar todas las mesas</button>
+      <button class="listElement"><ion-icon name="close-outline"></ion-icon>Cerrar turno</button>
+      <button class="listElement" id="cajaCtrlBtn"><ion-icon name="arrow-undo-outline"></ion-icon>Volver</button>
+    </div>
+  </div>
+
+  <div class="winContainer paymentsHistory hide">
+    <div class="win3">
+      <div class="paymentsHistoryList"></div>
+      <div class="twoCellgrid">
+        <button id="paymentsHistoryBtn">Cerrar</button>
+        <button>Imprimir</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="winContainer hide" id="newPayment">
+    <div class="win3 newPayment">
+      <p id="title2">Entrada</p>
+      <div class="cnt1551">
+        <p>Motivo:</p>
+        <input type="text" id="incomeReason">
+      </div>
+      <div class="cnt1551">
+        <p>Metodo de pago:</p>
+        <select name="" id=""></select>
+      </div>
+      <div class="cnt1551">
+        <p>Monto:</p>
+        <input type="text" name="" id="incomeAmount">
+      </div>
+      <div class="twoCellgrid">
+        <button id="newPaymentBtn">Volver</button>
+        <button id="createIncome">Aceptar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="winContainer hide" id="newPayment2">
+    <div class="win3 newPayment2">
+      <p id="title2">Salida</p>
+      <div class="cnt1551">
+        <p>Motivo:</p>
+        <input type="text" name="" id="expenseReason">
+      </div>
+      <div class="cnt1551">
+        <p>Metodo de pago:</p>
+        <select name="" id=""></select>
+      </div>
+      <div class="cnt1551">
+        <p>Monto:</p>
+        <input type="text" name="" id="expenseAmount">
+      </div>
+      <div class="twoCellgrid">
+        <button id="newPaymentBtn2">Volver</button>
+        <button id="createExpense">Aceptar</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script src="dataMagnament.js"></script>
+</body>
+
+</html>
