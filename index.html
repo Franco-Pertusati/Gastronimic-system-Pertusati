@@ -8,51 +8,58 @@
   <link rel="stylesheet" href="./styles.css" />
   <link rel="stylesheet" href="./buttons.css" />
   <link rel="stylesheet" href="./windows.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet" />
 </head>
 
 <body>
   <header>
     <div class="title">
-      <h1>El despa</h1>
+      <h1 class="barName"></h1>
     </div>
     <nav>
       <div></div>
-      <button class="squareButton" id="cajaCtrlBtn">
-        <ion-icon name="cash-outline"></ion-icon>
+      <button class=" tooltip" id="cashierSell">
+        <div class="icon"><ion-icon name="basket-outline"></ion-icon></div>
+        <div class="tooltiptext">Vender desde la caja</div>
       </button>
-      <button class="squareButton navBtnDoble" id="newPaymentBtn">
-        <ion-icon name="arrow-down-outline"></ion-icon>
+      <button class=" tooltip" id="cajaCtrlBtn">
+        <div class="icon"><ion-icon name="cash-outline"></ion-icon></div>
+        <div class="tooltiptext">Opciones de caja</div>
       </button>
-      <button class="squareButton navBtnDoble" id="newPaymentBtn2">
-        <ion-icon name="arrow-up-outline"></ion-icon>
+      <button class=" tooltip navBtnDoble" id="newPaymentBtn">
+        <div class="icon"><ion-icon name="arrow-down-outline"></ion-icon></div>
+        <div class="tooltiptext">Nueva entrada</div>
       </button>
-      <button class="squareButton">
-        <ion-icon name="bar-chart-outline"></ion-icon>
+      <button class=" tooltip navBtnDoble" id="newPaymentBtn2">
+        <div class="icon"><ion-icon name="arrow-up-outline"></ion-icon></div>
+        <div class="tooltiptext">Nueva salida</div>
       </button>
-      <button class="squareButton" id="cartaWinSwitch">
-        <ion-icon name="archive-outline"></ion-icon>
+      <button class=" tooltip" id="statsWin">-
+        <div class="icon"><ion-icon name="stats-chart-outline"></ion-icon></div>
+        <div class="tooltiptext">Stock</div>
       </button>
-      <button class="squareButton">
-        <ion-icon name="cog-outline"></ion-icon>
+      <button class=" tooltip" id="cartaWinSwitch">
+        <div class="icon"><ion-icon name="restaurant-outline"></ion-icon></div>
+        <div class="tooltiptext">Carta</div>
       </button>
-      <button class="squareButton">
-        <ion-icon name="exit-outline"></ion-icon>
+      <button class=" tooltip" id="configBtn">
+        <div class="icon"><ion-icon name="cog-outline"></ion-icon></div>
+        <div class="tooltiptext">Configuraciones</div>
+      </button>
+      <button class="" id="toggleThemeBtn">
+        <div class="icon"><ion-icon name="invert-mode-outline"></ion-icon></div>
       </button>
     </nav>
   </header>
 
   <section>
-    <div class="background">
+    <div class="background" id="salonConteiner">
       <div class="salon"></div>
     </div>
     <div class="" id="salonPanel">
-      <div class="salonPanelPag1 background" id="panelSalonPag">
-        <div class="squareButton selectedTable simpleButton"></div>
-        <div class="" id="tableContent"></div>
-        <div class="squareButton simpleButton" id="tableTotal">$0</div>
+      <div class="salonPanelPag1 " id="panelSalonPag">
+        <div class="listElement selectedTable"></div>
+        <div class="" id="itemsList"></div>
+        <div class="listElement simpleButton" id="tableTotal">$0</div>
         <div>
           <button id="openTableInventoryMenu">
             <ion-icon name="add-outline"></ion-icon>
@@ -60,7 +67,6 @@
           <button id="openCloseSwap">
             <ion-icon name="swap-horizontal-outline"></ion-icon>
           </button>
-          <button><ion-icon name="create-outline"></ion-icon></button>
           <button id="close1">
             <ion-icon name="receipt-outline"></ion-icon>
           </button>
@@ -68,58 +74,78 @@
       </div>
 
       <div id="panelSalonPag" class="background panelSalonPag2 hide">
-        <button class="listElement" id="createTable">Crear mesa</button>
-        <button class="listElement">Crear mesa redonda</button>
-        <button class="listElement">Crear texto</button>
-        <button class="listElement">Eliminar elemento</button>
+        <div class="tool tableTool">
+          <p>Crear mesa</p>
+        </div>
+        <div class="tool tableTool2">
+          <p>Borrar mesa</p>
+          <div class="slot">
+            <ion-icon name="trash-outline"></ion-icon>
+          </div>
+        </div>
       </div>
-
       <div class="twoCellgrid">
-        <button class="squareButton" id="panelSalonbtn">Config mesa</button>
-        <button class="squareButton" id="panelSalonbtn">Config salon</button>
+        <button class="" id="panelSalonbtn">Config mesa</button>
+        <button class="" id="panelSalonbtn">Config salon</button>
       </div>
     </div>
   </section>
 
-<div class="winContainer hide" id="cartaWin">
-  <div class="win">
-    <div class="winBackground" id="groupConteiner"></div>
-    <div class="winBackground">
-      <p>Crear Grupo</p>
-      <div class="spacer"></div>
-      <input id="aNameInput" type="text" placeholder="Nombre del grupo" />
-      <button class="listElement" id="createGroupArray">Crear grupo</button>
-      <div class="spacer"></div>
-      <p>Crear Producto</p>
-      <div class="spacer"></div>
-      <input id="aNameInput2" type="text" placeholder="Nombre del proucto" />
-      <input id="aPriceInput" type="text" placeholder="Precio" />
-      <select id="GroupSelect" name=""></select>
-      <button id="createProductArray" class="listElement">
-        Crear producto
-      </button>
-      <button class="listElement squareButton" id="cartaWinSwitch">
-        Salir
-      </button>
+  <div class="rt231">
+    <button id="gitBtn">
+      <ion-icon name="logo-github"></ion-icon>
+    </button>
+    <div>
+      <p>Sistema gastronomico por Franco Pertusati</p>
     </div>
   </div>
-</div>
 
-  <div class="winContainer hide" id="tableInventory">
+  <div class="winContainer win3" id="cartaWin">
     <div class="win">
+      <div class="cartaWinNav winBackground">
+        <button class="contentBtn">Grupos</button>
+        <button class="contentBtn">Productos</button>
+        <button class="contentBtn">Ingredientes</button>
+        <button class="contentBtn">Combos</button>
+        <button class="contentBtn">Descuentos</button>
+      </div>
+      <div class="cartaWinMain">
+        <div class="cartaWinList"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="winBackground hide">
+    <p>Crear ingrediente</p>
+    <input type="text" placeholder="Nombre" id="ingredientName">
+    <div class="twoCellgrid2">
+      <input type="text" placeholder="Peso / Volumen" id="ingredientCant">
+      <select id="ingredientMet" name="">
+        <option value="Gr">Gr</option>
+        <option value="L">L</option>
+        <option value="Unit">Unit</option>
+      </select>
+    </div>
+    <button class="createBtn listElement" id="createIngredient">Crear</button>
+    <p>Ingredientes</p>
+    <div class="huecoIngredientes IngredientesTotales" id="allIngrdients"></div>
+  </div>
+
+  <div class="winContainer win3 hide" id="tableInventory">
+    <div class="tableInventory">
       <div class="winBackground">
         <div class="groupsTabs"></div>
         <div class="productButtons"></div>
       </div>
       <div class="winBackground preOrdersMenu">
         <div class="listElement selectedTable">Mesa:</div>
-        <div class="preOrdersList" id="preOrdersList"></div>
+        <div class="preOrdersList" id="preOrderItemsList"></div>
         <div class="listElement" id="subTotal">total:</div>
         <div class="twoCellgrid">
-          <button class=" cancelarComanda" id="openTableInventoryMenu">
+          <button class="squareButton cancelarComanda" id="openTableInventoryMenu">
             Cancelar
           </button>
-          <button class=" comandar" id="openTableInventoryMenu">
+          <button class="squareButton comandar" id="openTableInventoryMenu">
             Comandar
           </button>
         </div>
@@ -128,67 +154,66 @@
   </div>
 
   <div class="winContainer hide" id="askCloseTable">
-    <div class="win2">
+    <div class="win2 win3 winBackground">
       <div class="win2Cont">
-        </label>
-        <p>Imprimir ticket</p>
-        <label class="switch">
-          <input type="checkbox" />
-          <span class="slider"></span>
-        </label>
         <p>Metodo de pago</p>
-        <select name="" id=""></select>
-        <input id="notesInput" type="text" placeholder="Anotaciones" />
+        <select class="PM1" name="" id="paymentsMethodsSlct"></select>
       </div>
       <div class="twoCellgrid">
         <button class="squareButton" id="close1">Cancelar</button>
-        <button class="squareButton" id="close1">Cerrar mesa</button>
+        <button class="squareButton" id="closeTable">Cerrar mesa</button>
       </div>
     </div>
   </div>
 
   <div class="winContainer swapTables hide" id="swapTablesWin">
-    <div class="win3">
+    <div class="win3 winBackground">
       <div class="swap1">
         <p>Mover mesa:</p>
-        <select name="" id="tablesSlct"></select>
+        <select name="" id="tablesSlct" class="table1"></select>
         <p>a</p>
-        <select name="" id="tablesSlct"></select>
+        <select name="" id="tablesSlct" class="table2"></select>
       </div>
       <div class="twoCellgrid">
-        <button id="openCloseSwap">Cancelar</button>
-        <button id="dolSwap">Aceptar</button>
+        <button id="openCloseSwap">Volver</button>
+        <button id="doSwap">Aceptar</button>
       </div>
     </div>
   </div>
 
   <div class="winContainer cajaCtrl hide">
-    <div class="win3">
+    <div class="winBackground opcionesDecaja">
       <p class="listElement" id="title2">Control de caja</p>
-      <div class="listElement" id="totalMoney">Dinero en caja: $0</div>
-      <button class="listElement" id="newPaymentBtn"><ion-icon name="arrow-down-outline"></ion-icon>Nueva entrada</button>
-      <button class="listElement" id="newPaymentBtn2"><ion-icon name="arrow-up-outline"></ion-icon>Nueva salida</button>
-      <button class="listElement" id="paymentsHistoryBtn"><ion-icon name="time-outline"></ion-icon>Historial de
+      <div class="listElement" id="totalMoney">$0</div>
+      <button class="squareButton listElement" id="newPaymentBtn"><ion-icon name="arrow-down-outline"></ion-icon>Nueva
+        entrada</button>
+      <button class="squareButton listElement" id="newPaymentBtn2"><ion-icon name="arrow-up-outline"></ion-icon>Nueva
+        salida</button>
+      <button class="squareButton listElement" id="paymentsHistoryBtn"><ion-icon
+          name="time-outline"></ion-icon>Historial de
         pagos</button>
-      <button class="listElement"><ion-icon name="time-outline"></ion-icon>Historial de mesas</button>
-      <button class="listElement"><ion-icon name="close-outline"></ion-icon>Cerrar todas las mesas</button>
-      <button class="listElement"><ion-icon name="close-outline"></ion-icon>Cerrar turno</button>
-      <button class="listElement" id="cajaCtrlBtn"><ion-icon name="arrow-undo-outline"></ion-icon>Volver</button>
+      <button class="squareButton listElement"><ion-icon name="time-outline"></ion-icon>Historial de gastos</button>
+      <button class="squareButton listElement" id="closeAllTables"><ion-icon name="close-outline"></ion-icon>Cerrar
+        todas las
+        mesas</button>
+      <button class="squareButton listElement" id="cajaCtrlBtn"><ion-icon
+          name="arrow-undo-outline"></ion-icon>Volver</button>
     </div>
   </div>
 
   <div class="winContainer paymentsHistory hide">
-    <div class="win3">
-      <div class="paymentsHistoryList"></div>
-      <div class="twoCellgrid">
-        <button id="paymentsHistoryBtn">Cerrar</button>
-        <button>Imprimir</button>
+    <div class="win3 winBackground">
+      <div class="paymentsHistoryList softBorder"></div>
+      <div class="paymentsHistoryResult listElement">Balance: $0 - - Fecha: 0/0/2000</div>
+      <div class="ytr2">
+        <button class="squareButton" id="paymentsHistoryBtn">Volver</button>
+        <button class="squareButton">Imprimir</button>
       </div>
     </div>
   </div>
 
   <div class="winContainer hide" id="newPayment">
-    <div class="win3 newPayment">
+    <div class="win3 newPayment winBackground">
       <p id="title2">Entrada</p>
       <div class="cnt1551">
         <p>Motivo:</p>
@@ -196,39 +221,208 @@
       </div>
       <div class="cnt1551">
         <p>Metodo de pago:</p>
-        <select name="" id=""></select>
+        <select class="PM2" name="" id="paymentsMethodsSlct"></select>
       </div>
       <div class="cnt1551">
         <p>Monto:</p>
-        <input type="text" name="" id="incomeAmount">
+        <input class="input" pattern="\d+" type="text" name="" id="incomeAmount">
       </div>
       <div class="twoCellgrid">
-        <button id="newPaymentBtn">Volver</button>
-        <button id="createIncome">Aceptar</button>
+        <button class="squareButton" id="newPaymentBtn">Volver</button>
+        <button class="squareButton" id="createIncome">Aceptar</button>
       </div>
     </div>
   </div>
 
   <div class="winContainer hide" id="newPayment2">
-    <div class="win3 newPayment2">
+    <div class="win3 winBackground newPayment2">
       <p id="title2">Salida</p>
       <div class="cnt1551">
         <p>Motivo:</p>
-        <input type="text" name="" id="expenseReason">
+        <input type="text" class="" name="" id="expenseReason">
       </div>
       <div class="cnt1551">
         <p>Metodo de pago:</p>
-        <select name="" id=""></select>
+        <select class="PM3" id="paymentsMethodsSlct"></select>
       </div>
       <div class="cnt1551">
         <p>Monto:</p>
-        <input type="text" name="" id="expenseAmount">
+        <input class="input" pattern="\d+" type="text" name="" id="expenseAmount">
       </div>
       <div class="twoCellgrid">
-        <button id="newPaymentBtn2">Volver</button>
-        <button id="createExpense">Aceptar</button>
+        <button class="squareButton" id="newPaymentBtn2">Volver</button>
+        <button class="squareButton" id="createExpense">Aceptar</button>
       </div>
     </div>
+  </div>
+
+  </div>
+
+  <div class="winContainer hide" id="mostradorWin">
+    <div class="tableInventory">
+      <div class="winBackground">
+        <div class="groupsTabs" id="mostradorWin-gt"></div>
+        <div class="productButtons" id="mostradorWin-pb"></div>
+      </div>
+      <div class="preOrdersMenu2 winBackground">
+        <div class="listElement">Venta por mostrador</div>
+        <div class="preOrdersList" id="mostradorWinpreOrder"></div>
+        <div class="listElement" id="mostradorWintotal"></div>
+        <select class="PM4" name="" id="paymentsMethodsSlct"></select>
+        <div class="twoCellgrid">
+          <button class="cancelarComanda squareButton" id="cashierSell">
+            Cancelar
+          </button>
+          <button class="comandar squareButton" id="confirmSell">
+            Vender
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="winContainer hide" id="editProductSlct">
+    <div class="editProductSlct">
+      <div class="winBackground winBackground2" id="allIngrdientsList2">
+        <div class="huecoIngredientes allIngrdientsList2" id="huecoIngredientesProd"></div>
+      </div>
+      <div class="winBackground winBackground2">
+        <p>Editar producto</p>
+        <input type="text" id="prodNameToEdit">
+        <input type="text" id="prodPriceToEdit">
+        <button class="createBtn listElement" id="apllyNewData">Confirmar</button>
+        <p>Ingredientes</p>
+        <div class="huecoIngredientes prodIngredientsList" id="huecoIngredientesProd"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="winContainer hide" id="ConfigsWin">
+    <div class="configWins">
+      <div class="listOptions allCell">
+        <button class="simpleButton" id="configTabsBtn">Tickets</button>
+        <button class="simpleButton" id="configTabsBtn">Nombre del bar</button>
+        <button class="simpleButton" id="configTabsBtn">Metodos de pago</button>
+        <button class="simpleButton" id="configTabsBtn">Temas</button>
+        <button class="simpleButton" id="">Tamaño del salon</button>
+        <button class="simpleButton" id="configTabsBtn">Reestablecer valores</button>
+        <button class="simpleButton" id="configTabsBtn">Cargar ejemplo</button>
+        <button class="simpleButton salir" id="configBtn">Salir</button>
+      </div>
+      <div class="optionDisplay allCell">
+        <div class="" id="configTabs">
+          <p class="listElement">Configuraciones de ticket:</p>
+          <div class="softBorder">
+            <div class="pAtoggle">
+              <p class="title">Mensaje Personalizado 1</p>
+            </div>
+            <div class="">
+              <input id="ct1" placeholder="Introduzca un texto" type="text">
+            </div>
+          </div>
+          <div class="softBorder">
+            <div class="pAtoggle">
+              <p class="title">Mensaje Personalizado 2</p>
+            </div>
+            <div class="">
+              <input id="ct2" placeholder="Introduzca un texto" type="text">
+            </div>
+          </div>
+          <div class="pAtoggle">
+            <p class="title">Mostrar fecha</p>
+            <label class="switch">
+              <input id="dateToggle" type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="pAtoggle">
+            <p class="title">Mostrar hora</p>
+            <label class="switch">
+              <input id="hourToggle" type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="pAtoggle">
+            <p class="title">Grosor de la fuente</p>
+            <select name="" id="fsv">
+              <option value="300">1</option>
+              <option value="500">2</option>
+              <option value="700">3</option>
+              <option value="900">4</option>
+            </select>
+          </div>
+          <div class="pAtoggle">
+            <p class="title">Intensidad de la fuente*</p>
+            <select name="" id="fwv">
+              <option value="0.4">1</option>
+              <option value="0.6">2</option>
+              <option value="0.8">3</option>
+              <option value="1">4</option>
+            </select>
+          </div>
+          <p class="description">*Este valor puede ayudarte a ahorrar tinta a cambio de menos nitidez</p>
+          <div class="ytr2">
+            <button class="listElement" id="applyTicketsConfigs">Aplicar cambios</button>
+            <button class="listElement" id="testTicket">Imprimir prueba</button>
+          </div>
+        </div>
+        <div class="hide" id="configTabs">
+          <p class="listElement">Nombre del bar:</p>
+          <div class="inputAconfirm">
+            <input id="changeBarNameInput" placeholder="Introduzca un nombre" type="text">
+            <button class="squareButton" id="changeBarName">Confirmar</button>
+          </div>
+          <p class="description">Este es el nombre que se mostrara en los tickets y en el encabezado de la aplicacion
+          </p>
+        </div>
+        <div class="hide" id="configTabs">
+          <div class="inputAconfirm"><input type="text" id="paymentMethodName" placeholder="Nuevo metodo de pago">
+            <button class="squareButton" id="addPaymenMethod">Añadir</button>
+          </div>
+          <div class="paymentsMethodsList"></div>
+          <div class="twoCellgrid">
+          </div>
+        </div>
+        <div class="hide themeTabs" id="configTabs">
+          <div class="softBorder themeCard">
+            <p class="">Claro 1</p>
+            <div class="paleta">
+              <div class="colorPrueba" id="c1">a</div>
+              <div class="colorPrueba" id="c2">a</div>
+              <div class="colorPrueba" id="c3">a</div>
+            </div>
+            <button class="listElement" id="theme1">Aplicar</button>
+          </div>
+          <div class="softBorder themeCard">
+            <p class="">Oscuro 1</p>
+            <div class="paleta">
+              <div class="colorPrueba" id="c4">a</div>
+              <div class="colorPrueba" id="c5">a</div>
+              <div class="colorPrueba" id="c6">a</div>
+            </div>
+            <button class="listElement" id="theme2">Aplicar</button>
+          </div>
+        </div>
+        <div class="hide" id="configTabs">Reestablecer valores</div>
+        <div class="hide" id="configTabs">Cargar ejemplo</div>
+      </div>
+    </div>
+  </div>
+  <!-- 
+  <div class="win3 winContainer">
+    <div class="statsConteiner">
+      <div class="winBackground statsDisplay" id="statsDisplayIngredients"></div>
+      <div class="winBackground statsDisplay" id="statsDisplayProducts"></div>
+      <div class="ytr2">
+        <button class="squareButton">Volver</button>
+        <button class="squareButton">Imprimir</button>
+      </div>
+    </div>
+  </div> -->
+
+  <div id="notification" class="noti">
+    <ion-icon name="information-circle-outline"></ion-icon>
+    <p id="notiText"></p>
   </div>
 
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

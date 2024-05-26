@@ -1,70 +1,78 @@
-/* :root {
-  --charcoal: #233d4d;
-  --pumpkin: #fe7f2d;
-  --cancel: #370617;
-  --sunglow: #fcca46;
-  --olivine: #a1c181ff;
-  --zomp: #0ca30f;
-  --celticBlue: #276fbf;
-  --red: #a30c0c;
-  --content: #fff;
-} */
-
-/* :root {
-  --charcoal: #003049;
-  --pumpkin: #d62828;
-  --cancel: #370617;
-  --sunglow: #f77f00;
-  --olivine: #a1c181ff;
-  --zomp: #0ca30f;
-  --celticBlue: #276fbf;
-  --red: #a30c0c;
-  --content: #fff;
-} */
-
-:root {
-  --charcoal: #3a0ca3;
-  --pumpkin: #f72585;
-  --cancel: #c9184a;
-  --sunglow: #4cc9f0;
-  --olivine: #f72585;
-  --zomp: #0ca30f;
-  --celticBlue: #4361ee;
-  --red: #a30c0c;
-  --content: #fff;
-}
-
 p {
   font-size: 3.5rem;
-  color: var(--content);
+}
+
+html body .softBtn {
+  border: solid 4px var(--mainColor2);
+  font-size: 3.5rem;
 }
 
 button {
   border-style: none;
   border-radius: 10px;
-  background-color: var(--pumpkin);
+  transition: all ease .1s;
+  background: var(--mainColor);
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.4);
   color: var(--content);
 }
 
-button:hover {
-  background-color: var(--sunglow);
-  box-shadow: 0px 0px 5px 0px var(--sunglow);
+html button:hover {
+  background-color: var(--mainColor2);
+  box-shadow: 0px 0px 20px -2px var(--mainColor2);
+  color: #e7e7e7;
+  box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.75);
+}
+
+button:active {
+  transform: scale(.95);
+}
+
+.simpleButton {
+  margin-bottom: 10px;
+  width: 100%;
+  height: 50px;
+  font-size: 3.5rem;
+}
+
+.pm {
+  margin: 10px 0;
+  padding-left: 10px;
+  height: 50px;
+  display: grid;
+  grid-template-columns: 1fr 50px;
+  border-radius: 10px;
+  text-align: start;
+  font-size: 4rem;
+  background-color: var(--secondaryColor);
+}
+
+.pm button {
+  width: 100%;
+  height: 50px;
+  background: var(--mainColor);
+}
+
+.pm button ion-icon {
+  font-size: 3rem;
+  margin-top: 8px;
+}
+
+.contentBtn {
+  margin-right: 10px;
+  padding: 10px;
+  font-size: 3.5rem;
 }
 
 ion-icon {
-  margin-top: 12px;
+  margin-top: 10px;
   font-size: 5rem;
+  color: var(--content);
 }
 
 .squareButton {
   width: 100%;
   height: 100%;
   font-size: 3.5rem;
-  background-color: var(--pumpkin);
-}
-
-.cancelButton {
-  background-color: var(--cancel);
 }
 
 .listElement,
@@ -78,21 +86,24 @@ select {
   text-align: center;
 }
 
-input {
-  background-color: var(--charcoal);
-  border-style: none;
-  border-bottom: 4px var(--pumpkin) solid;
-}
-
 select {
-  background-color: var(--pumpkin);
+  margin: 0;
   border-style: none;
   border-radius: 10px;
+  background: var(--mainColor);
+  box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.75);
 }
 
-.tableSelected {
-  border: solid 4px var(--sunglow);
-  box-shadow: 0px 0px 5px 0px var(--sunglow);
+input {
+  border-style: none;
+  border-radius: 10px;
+  background: var(--main-bg-color);
+  text-align: start;
+  box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.75) inset;
+}
+
+html body .tableSelected {
+  border: solid 4px var(--content);
 }
 
 .spacer {
@@ -105,19 +116,173 @@ select {
   grid-template-columns: 1fr 1fr;
 }
 
-.prodItem {
+.twoCellgrid2 {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  grid-template-columns: 1fr 80px;
 }
 
-.simpleButton {
+.prodItem {
+  display: grid;
+  grid-template-columns: 1fr 140px;
+  text-align: start;
+}
+
+.prodItem>* {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+html body .positiveAmount {
+  color: var(--zomp);
+}
+
+html body .negativeAmount {
+  color: red;
+}
+
+html body .ocuped {
+  background: var(--secondaryColor);
+  color: var(--content);
+  box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.75);
+}
+
+.table {
+  font-size: 2rem;
+  background: var(--mainColor);
+  border-style: none;
+  border-radius: 10px;
   display: grid;
   place-items: center;
-  width: 350px;
-  margin: 0;
-  border-radius: 10px;
-  place-self: center;
+  font-size: 4rem;
+  color: var(--content);
+  transition: all 0.1s;
 }
+
+.table:hover {
+  box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.75);
+}
+
+.selectedBtn {
+  background: var(--mainColor2);
+  color: var(--content);
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 10px;
+  position: absolute;
+  z-index: 1;
+  top: 125%;
+  left: 50%;
+  margin-left: -100px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 2rem;
+}
+
+.input:invalid {
+  animation: justshake 0.3s forwards;
+  color: red;
+}
+
+@keyframes justshake {
+  25% {
+    transform: translateX(5px);
+  }
+
+  50% {
+    transform: translateX(-5px);
+  }
+
+  75% {
+    transform: translateX(5px);
+  }
+
+  100% {
+    transform: translateX-(5px);
+  }
+}
+
+.softBtn {
+  border: solid 4px var(--mainColor2);
+  box-shadow: none;
+}
+
+.softBtn:hover {
+  box-shadow: none;
+  border: none;
+}
+
+#panelSalonbtn {
+  background-color: var(--mainColor);
+}
+
+#panelSalonbtn:hover {
+  background-color: var(--mainColor2);
+}
+
+.squareButtonReal {
+  margin-top: 275px;
+  width: 100px;
+}
+
+.squareButtonReal div {
+  margin-top: 10px;
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  background-color: var(--mainColor);
+  display: grid;
+
+}
+
+.squareButtonReal div ion-icon {
+  height: 100px;
+  width: 100px;
+  margin: 0;
+}
+
+.productTableBtn {
+  border: solid 4px var(--mainColor);
+}
+
+.productTableBtn:hover {
+  box-shadow: 3px 3px 1px 1px rgba(0, 0, 0, 0.902);
+}
+
+.productTableBtn:active {
+  border: solid 4px var(--content);
+  transform: scale(1);
+}
+
+/* .createBtn {
+  background: rgb(127, 224, 83);
+  background: linear-gradient(90deg, rgb(127, 224, 83) 0%, rgb(158, 201, 65) 100%);  
+} */
+
+html .ingredients ion-icon {
+  font-size: 3rem;
+}
+
+/* TOGGLE SWITCH */
 
 .switch {
   position: relative;
@@ -158,20 +323,45 @@ select {
   border-radius: 50%;
 }
 
-input:checked + .slider {
-  background-color: var(--pumpkin);
+input:checked+.slider {
+  background-color: var(--mainColor);
 }
 
-input:checked + .slider:before {
+input:focus+.slider {
+  box-shadow: 0 0 1px var(--mainColor);
+}
+
+input:checked+.slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
 
-.positiveAmount {
-  color: var(--zomp);
+.ytr2 {
+  margin-top: 20px;
+  margin-left: calc(50% - 405px);
+  width: 100%;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 400px 400px;
 }
 
-.negativeAmount {
-  color: var(--red);
+.ytr2 button {
+  margin: 0;
+}
+
+.listOptions #configBtn {
+  margin-bottom: 0;
+  margin-top: 210px;
+}
+
+.tableTool2 div {
+  background-color: var(--mainColor);
+  padding: 10px;
+}
+
+.tableTool2 ion-icon {
+  margin: 0;
+  width: 100%;
+  height: 100%;
 }
