@@ -1,41 +1,63 @@
+:root {
+  --zomp: #23a30c;
+  
+  --content: #ebebeb;
+  --main-bg-color: #264653;
+
+  --mainColor: #e76f51;
+  --mainColor2: #f4a261;
+  --mainColor3: #2f5868;
+  --secondaryColor: #2a9d8f;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "poppins", sans-serif;
+  font-family: Arial, sans-serif;
   font-size: 62.5%;
+  color: var(--content);
+  /* transition: all 1s; */
 }
 
 body {
-  padding: 10px;
+  padding-top: 10px;
   width: 100vw;
   height: 100vh;
   display: grid;
-  place-items: center;
-  grid-template-rows: 100px 1fr;
   gap: 10px;
-  background: var(--charcoal);
+  place-items: center;
+  grid-template-rows: 100px 740px 1fr;
+  background: var(--main-bg-color);
 }
 
 header {
-  height: 100%;
-  width: 100%;
+  padding: 0 10px;
+  width: 100vw;
   display: grid;
   place-items: center;
-  grid-template-columns: 1fr 1.6fr;
+  grid-template-columns: 1fr 1110px;
+}
+
+header button {
+  width: 100%;
+  height: 100px;
 }
 
 nav {
-  margin: 5px;
   width: 100%;
   height: 100%;
   display: grid;
   column-gap: 10px;
   place-items: center;
-  grid-template-columns: 1fr repeat(9, 100px);
+  grid-template-columns: 1fr repeat(10, 100px);
 }
 
 nav button {
+  margin: 0;
+}
+
+nav ion-icon {
   margin: 0;
 }
 
@@ -44,34 +66,73 @@ body .navBtnDoble {
 }
 
 .background {
-  padding: 10px;
-  background-color: var(--olivine);
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 section {
+  padding: 0 10px;
   width: 100%;
-  height: 100%;
   display: grid;
-  grid-template-columns: 1fr 540px;
   gap: 10px;
+  grid-template-columns: 1fr 540px;
 }
 
 h1 {
   font-size: 8.2rem;
   line-height: 0;
-  color: var(--content);
+  color: var(--mainColor2);
+  text-shadow: 2px 2px 0px var(--content);
 }
 
 #title2 {
   font-size: 5rem;
   text-align: center;
   font-weight: bold;
-  text-decoration: underline;
+}
+
+.huecoIngredientes {
+  padding: 10px;
+  height: 110px;
+  border-radius: 10px;
+  /* background: var(--main-bg-color);
+  box-shadow: inset 5px 5px 10px var(--shadow-dark),
+    inset -5px -5px 10px var(--shadow-light); */
+  overflow-y: auto;
+  border: solid 4px var(--mainColor2);
+}
+
+.huecoIngredientes .listElement {
+  margin: 0;
+  height: 45px;
+  text-align: start;
+}
+
+.IngredientesTotales {
+  height: 550px;
+}
+
+.slot {
+  padding: 5px;
+}
+
+.description {
+  font-size: 2rem;
+}
+
+.inputAconfirm {
+  height: 50px;
+  display: grid;
+  grid-template-columns: 1fr 210px;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.inputAconfirm input {
+  margin: 0;
+}
+
+.pAtoggle {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  margin-bottom: 10px;
 }
