@@ -10,7 +10,7 @@
   padding: 10px;
   border-radius: 10px;
   background-color: var(--mainColor3);
-  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.5);
 }
 
 .winBackground2 {
@@ -38,6 +38,10 @@
   grid-template-columns: 1fr 120px 53px 53px;
   gap: 10px;
   text-align: start;
+}
+
+.groupElement p {
+  margin-top: 10px;
 }
 
 .groupElement ion-icon {
@@ -393,7 +397,7 @@ html body .hide {
   background-color: var(--mainColor3);
   border-radius: 10px;
   padding: 10px;
-  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.5);
 }
 
 .stockWin {
@@ -504,7 +508,7 @@ html body .hide {
   grid-template-columns: 50px 1fr;
   background-color: var(--secondaryColor);
   border-radius: 10px;
-  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.5);
   transition: top 0.5s ease;
 }
 
@@ -529,4 +533,11 @@ section {
 .statsDisplay {
   width: 500px;
   height: 800px;
+}
+
+.prodAndQuantity {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 50px;
+  text-align: start;
 }

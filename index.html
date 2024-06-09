@@ -33,9 +33,9 @@
         <div class="icon"><ion-icon name="arrow-up-outline"></ion-icon></div>
         <div class="tooltiptext">Nueva salida</div>
       </button>
-      <button class=" tooltip" id="statsWin">-
+      <button class=" tooltip" id="statsBtn">-
         <div class="icon"><ion-icon name="stats-chart-outline"></ion-icon></div>
-        <div class="tooltiptext">Stock</div>
+        <div class="tooltiptext">Estadisticas</div>
       </button>
       <button class=" tooltip" id="cartaWinSwitch">
         <div class="icon"><ion-icon name="restaurant-outline"></ion-icon></div>
@@ -92,7 +92,7 @@
   </section>
 
   <div class="rt231">
-    <a id="gitBtn">
+    <a id="gitBtn" href="https://github.com/Franco-Pertusati/Gastronimic-system-Pertusati" target="_blank">
       <ion-icon name="logo-github"></ion-icon>
     </a>
     <div>
@@ -405,6 +405,17 @@
         </div>
         <div class="hide" id="configTabs">Reestablecer valores</div>
         <div class="hide" id="configTabs">Cargar ejemplo</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="winContainer hide" id="statsWin">
+    <div class="winBackground">
+      <p style="margin-bottom: 10px;">Ventas del dia</p>
+      <div class="softBorder" id="itemsOfTheDay" style=" width: 450px; height: 550px;"></div>
+      <div class="twoCellgrid">
+        <button id="statsBtn">Volver</button>
+        <button id="printTotalItemsOfTheDay">Imprimir</button>
       </div>
     </div>
   </div>

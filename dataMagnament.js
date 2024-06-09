@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var paymentMethods = [];
   var ingredientsList = [];
   var barName = "";
+  var totalItemsSold = [];
 
   //Variables para los tickets/recibos
   customText1 = localStorage.getItem("customText1") || "";
@@ -280,7 +281,6 @@ document.addEventListener("DOMContentLoaded", function () {
           });
           //Funcionalidad del boton de editar producto y añadirle ingredientes (ahora se despliega un ventana para hacerlo)
           btnIco2.addEventListener("click", function () {
-
             const window = document.querySelector("#editProductSlct");
             openCloseWindows(window);
             // Filtra el array groups para excluir el objeto prodToRemove
@@ -499,7 +499,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //Confirmar cierre de mesa
   document.querySelector("#closeTable").addEventListener("click", function () {
-    paymentMethod = document.querySelector(".PM1").value;
+    var paymentMethod = document.querySelector(".PM1").value;
     closeTable(selectedTableJS, paymentMethod);
   });
 
@@ -507,6 +507,8 @@ document.addEventListener("DOMContentLoaded", function () {
     amount = tableToClose.total;
     //Creamos el ticket en una pestaña nueva
     createTicket(tableToClose.items, tableToClose.total, tableToClose.name + 1);
+    //Añadir items a la lista de items totales vendidos
+    addToTotalItemsSold(tableToClose.items);
     tableToClose.items = [];
     tableToClose.total = 0;
     printItemList(
@@ -527,8 +529,48 @@ document.addEventListener("DOMContentLoaded", function () {
     showNotification(`${reason} cerrada correctamente`);
   }
 
+  function addToTotalItemsSold(itemsToAdd) {
+    const list = document.querySelector("#itemsOfTheDay");
+    totalItemsSold = [...totalItemsSold, ...itemsToAdd];
+    const productCounts = {};
+
+    totalItemsSold.forEach((product) => {
+      if (product.name in productCounts) {
+        productCounts[product.name]++;
+      } else {
+        productCounts[product.name] = 1;
+      }
+    });
+
+    list.innerHTML = "";
+    for (const productName in productCounts) {
+      const quantity = productCounts[productName];
+      const container = document.createElement("div");
+      container.classList.add("prodAndQuantity");
+      container.classList.add("listElement");
+      const prodName = document.createElement("p");
+      const prodQuantity = document.createElement("p");
+      prodQuantity.textContent = "x" + quantity;
+      prodName.textContent = productName;
+      list.appendChild(container);
+      container.appendChild(prodName);
+      container.appendChild(prodQuantity);
+    }
+  }
+
   function createTicket(items, total, name) {
-    console.log(ticketDate);
+    // Agrupar los productos por su nombre y calcular la cantidad de cada uno
+    const itemMap = items.reduce((acc, item) => {
+        if (!acc[item.name]) {
+            acc[item.name] = { ...item, quantity: 1 };
+        } else {
+            acc[item.name].quantity += 1;
+        }
+        return acc;
+    }, {});
+
+    const groupedItems = Object.values(itemMap);
+
     // Construir el contenido del ticket
     const ticketContent = `
         <html>
@@ -538,64 +580,130 @@ document.addEventListener("DOMContentLoaded", function () {
         <body>
             <h1>${barName} - Mesa: ${name}</h1>
             <div></div>
-            <ul>
-                ${items
-                  .map((item) => `<li>${item.name}: $${item.price}</li>`)
-                  .join("")}
-            </ul>
-            <div></div>
-            <p class="total">Total: $${total}</p>
+            <div class="cuentaGrid" style="
+                border-top: solid 2px #ccc;
+            ">
+                <div class="articulo"><strong>Artículo</strong></div>
+                <div class="cantidad"><strong>Cantidad</strong></div>
+                <div class="precioUnitario"><strong>Precio Unitario</strong></div>
+            </div>
+            ${groupedItems.map(item => `
+                <div class="cuentaGrid">
+                    <div class="articulo">${item.name}</div>
+                    <div class="cantidad">${item.quantity}</div>
+                    <div class="precioUnitario">$${item.price}</div>
+                </div>
+            `).join('')}
+            <div class="total">Total: $${total}</div>
             <p class="date">Fecha: ${day}/${month}/${year}</p>
             <p>${customText1}</p>
             <p>${customText2}</p>
         </body>
         </html>
         <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 20px;
-    }
-
-    * {
-        font-weight: ${fontSharpnessValue};
-        color: hsla(0, 0%, 0%, ${fontWeightValue});
-    }
-
-    div {
-      border: dashed 1px black
-    }
-    h1, .total {
-        text-align: center;
-        font-size: 32px;
-    }
-
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    li {
-        margin-bottom: 5px;
-        list-style: none;
-    }
-
-    p {
-        margin-top: 20px;
-        text-align: center;
-    }
-
-    .date {
-      display: ${ticketDate}
-    }
-</style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 20px;
+            }
+            .cuentaGrid {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            .articulo, .cantidad, .precioUnitario {
+                padding: 10px;
+                border-left: 1px solid #ccc;
+                border-bottom: 1px solid #ccc;
+                border-right: 1px solid #ccc;
+                text-align: center;
+            }
+            .total {
+                text-align: center;
+                font-size: 20px;
+            }
+            .date {
+                display: ${ticketDate}
+            }
+        </style>
     `;
 
     // Abrir una nueva pestaña con el contenido del ticket
     const ticketWindow = window.open("", "_blank", "width=400,height=600");
     ticketWindow.document.write(ticketContent);
     ticketWindow.document.close();
-  }
+}
+
+function createResumeTicket(items) {
+  // Agrupar los productos por su nombre y calcular la cantidad de cada uno
+  const itemMap = items.reduce((acc, item) => {
+      if (!acc[item.name]) {
+          acc[item.name] = { ...item, quantity: 1 };
+      } else {
+          acc[item.name].quantity += 1;
+      }
+      return acc;
+  }, {});
+
+  const groupedItems = Object.values(itemMap);
+
+  // Construir el contenido del ticket
+  const ticketContent = `
+      <html>
+      <head>
+          <title>Ticket de Mesa: X</title>
+      </head>
+      <body>
+          <h1>Resumen del turno</h1>
+          <div></div>
+          <div class="cuentaGrid">
+              <div class="articulo"><strong>Artículo</strong></div>
+              <div class="cantidad"><strong>Cantidad</strong></div>
+          </div>
+          ${groupedItems.map(item => `
+              <div class="cuentaGrid">
+                  <div class="articulo">${item.name}</div>
+                  <div class="cantidad">${item.quantity}</div>
+              </div>
+          `).join('')}
+          <p class="date">Fecha: ${day}/${month}/${year}</p>
+      </body>
+      </html>
+      <style>
+          body {
+              font-family: Arial, sans-serif;
+              margin: 0;
+              padding: 20px;
+          }
+          .cuentaGrid {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+          }
+          .articulo, .cantidad, .precioUnitario {
+              padding: 10px;
+              border: 1px solid #ccc;
+              text-align: center;
+          }
+          .total {
+              text-align: center;
+              font-size: 20px;
+          }
+          .date {
+              display: ${ticketDate}
+          }
+      </style>
+  `;
+
+  // Abrir una nueva pestaña con el contenido del ticket
+  const ticketWindow = window.open("", "_blank", "width=400,height=600");
+  ticketWindow.document.write(ticketContent);
+  ticketWindow.document.close();
+}
+
+  document
+    .querySelector("#printTotalItemsOfTheDay")
+    .addEventListener("click", function () {
+      createResumeTicket(totalItemsSold);
+    });
 
   const date = new Date();
   const day = date.getDate();
@@ -913,6 +1021,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  //Ventana de estadisticas
+  document.querySelectorAll("#statsBtn").forEach((btn) => {
+    btn.addEventListener("click", function () {
+      const window = document.querySelector("#statsWin");
+      openCloseWindows(window);
+    });
+  });
+
   //Venta desde caja/mostrador
   document.querySelectorAll("#cashierSell").forEach((btn) => {
     btn.addEventListener("click", function () {
@@ -938,6 +1054,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "Venta desde caja",
       document.querySelector(".PM4").value
     );
+    addToTotalItemsSold(preOrder);
     preOrder = [];
     showNotification(`Venta por caja realizada con exito por $${subTotal}`);
   });
