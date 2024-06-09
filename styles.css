@@ -17,7 +17,6 @@
   font-family: Arial, sans-serif;
   font-size: 62.5%;
   color: var(--content);
-  /* transition: all 1s; */
 }
 
 body {
@@ -135,4 +134,18 @@ h1 {
   display: grid;
   grid-template-columns: 1fr auto;
   margin-bottom: 10px;
+}
+
+#gitBtn {
+  padding: 5px;
+  height: 60px;
+  width: 60px;
+  background-color: var(--mainColor);
+  border-radius: 10px;
+  display: grid;
+  cursor: pointer;
+}
+
+#gitBtn ion-icon {
+  margin: 0;
 }

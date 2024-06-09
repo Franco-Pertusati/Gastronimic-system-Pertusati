@@ -3,7 +3,7 @@
   display: grid;
   gap: 10px;
   grid-template-columns:1000px 400px;
-  grid-template-rows: auto 700px;
+  grid-template-rows: 700px;
 }
 
 .winBackground {

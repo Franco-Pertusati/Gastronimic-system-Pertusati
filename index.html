@@ -92,25 +92,32 @@
   </section>
 
   <div class="rt231">
-    <button id="gitBtn">
+    <a id="gitBtn">
       <ion-icon name="logo-github"></ion-icon>
-    </button>
+    </a>
     <div>
-      <p>Sistema gastronomico por Franco Pertusati</p>
+      <p>Ultima actualizacion 9 de junio</p>
     </div>
   </div>
 
-  <div class="winContainer win3" id="cartaWin">
+  <div class="winContainer hide win3" id="cartaWin">
     <div class="win">
-      <div class="cartaWinNav winBackground">
-        <button class="contentBtn">Grupos</button>
-        <button class="contentBtn">Productos</button>
-        <button class="contentBtn">Ingredientes</button>
-        <button class="contentBtn">Combos</button>
-        <button class="contentBtn">Descuentos</button>
-      </div>
-      <div class="cartaWinMain">
-        <div class="cartaWinList"></div>
+      <div class="winBackground" id="groupConteiner"></div>
+      <div class="winBackground">
+        <p>Crear Grupo</p>
+        <div class="spacer"></div>
+        <input id="aNameInput" type="text" placeholder="Nombre del grupo" />
+        <button class="listElement createBtn" id="createGroupArray">Crear grupo</button>
+        <div class="spacer"></div>
+        <p>Crear Producto</p>
+        <div class="spacer"></div>
+        <input id="aNameInput2" type="text" placeholder="Nombre del proucto" />
+        <input class="input" pattern="\d+" id="aPriceInput" type="text" placeholder="Precio" />
+        <select class="listElement" id="GroupSelect" name=""></select>
+        <button id="createProductArray" class="listElement createBtn">Crear producto</button>
+        <button class="listElement squareButton exitBtn1" id="cartaWinSwitch">
+          Salir
+        </button>
       </div>
     </div>
   </div>
@@ -196,7 +203,7 @@
       <button class="squareButton listElement" id="closeAllTables"><ion-icon name="close-outline"></ion-icon>Cerrar
         todas las
         mesas</button>
-      <button class="squareButton listElement" id="cajaCtrlBtn"><ion-icon
+      <button class="squareButton listElement" id="cajaCtrlBtn" style="margin-bottom: 0;"><ion-icon
           name="arrow-undo-outline"></ion-icon>Volver</button>
     </div>
   </div>
@@ -282,19 +289,12 @@
   </div>
 
   <div class="winContainer hide" id="editProductSlct">
-    <div class="editProductSlct">
-      <div class="winBackground winBackground2" id="allIngrdientsList2">
-        <div class="huecoIngredientes allIngrdientsList2" id="huecoIngredientesProd"></div>
-      </div>
       <div class="winBackground winBackground2">
         <p>Editar producto</p>
         <input type="text" id="prodNameToEdit">
         <input type="text" id="prodPriceToEdit">
         <button class="createBtn listElement" id="apllyNewData">Confirmar</button>
-        <p>Ingredientes</p>
-        <div class="huecoIngredientes prodIngredientsList" id="huecoIngredientesProd"></div>
       </div>
-    </div>
   </div>
 
   <div class="winContainer hide" id="ConfigsWin">

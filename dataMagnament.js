@@ -280,11 +280,6 @@ document.addEventListener("DOMContentLoaded", function () {
           });
           //Funcionalidad del boton de editar producto y añadirle ingredientes (ahora se despliega un ventana para hacerlo)
           btnIco2.addEventListener("click", function () {
-            printAllIngredients(
-              document.querySelector(".allIngrdientsList2"),
-              ingredientsList,
-              3
-            );
 
             const window = document.querySelector("#editProductSlct");
             openCloseWindows(window);
@@ -314,7 +309,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 nameInput.value = "";
                 priceInput.value = "";
                 selectedProd = null;
-                document.querySelector("#huecoIngredientesProd").innerHTML = "";
                 saveData("groups", groups);
               });
           });
@@ -853,10 +847,6 @@ document.addEventListener("DOMContentLoaded", function () {
       "#264653",
       "#fff"
     );
-  });
-
-  document.querySelector("#gitBtn").addEventListener("click", function () {
-    showNotification("aojasooahngojsjdsfjhASpoamfpaspfajsgf{p");
   });
 
   function showNotification(message) {

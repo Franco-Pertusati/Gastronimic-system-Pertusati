@@ -99,7 +99,11 @@ input {
   border-radius: 10px;
   background: var(--main-bg-color);
   text-align: start;
+}
+
+input:focus {
   box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.75) inset;
+  outline: 2px var(--mainColor) solid;
 }
 
 html body .tableSelected {
