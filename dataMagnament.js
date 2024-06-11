@@ -561,18 +561,20 @@ document.addEventListener("DOMContentLoaded", function () {
   function createTicket(items, total, name) {
     // Agrupar los productos por su nombre y calcular la cantidad de cada uno
     const itemMap = items.reduce((acc, item) => {
-        if (!acc[item.name]) {
-            acc[item.name] = { ...item, quantity: 1 };
-        } else {
-            acc[item.name].quantity += 1;
-        }
-        return acc;
+      if (!acc[item.name]) {
+        acc[item.name] = { ...item, quantity: 1 };
+      } else {
+        acc[item.name].quantity += 1;
+      }
+      return acc;
     }, {});
 
     const groupedItems = Object.values(itemMap);
 
     // Construir el contenido del ticket
     const ticketContent = `
+<!DOCTYPE html>
+<html lang="en">
         <html>
         <head>
             <title>Ticket de Mesa: X</title>
@@ -587,21 +589,29 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="cantidad"><strong>Cantidad</strong></div>
                 <div class="precioUnitario"><strong>Precio Unitario</strong></div>
             </div>
-            ${groupedItems.map(item => `
+            ${groupedItems
+              .map(
+                (item) => `
                 <div class="cuentaGrid">
                     <div class="articulo">${item.name}</div>
                     <div class="cantidad">${item.quantity}</div>
                     <div class="precioUnitario">$${item.price}</div>
                 </div>
-            `).join('')}
+            `
+              )
+              .join("")}
+            <p style="text-align: center;">--------------------------------------------------------------<p />
             <div class="total">Total: $${total}</div>
+            <p style="text-align: center;">--------------------------------------------------------------<p />
             <p class="date">Fecha: ${day}/${month}/${year}</p>
-            <p>${customText1}</p>
-            <p>${customText2}</p>
+            <p >${customText1}</p>
+            <p >${customText2}</p>
         </body>
         </html>
         <style>
             body {
+                display: grid;
+                place-items: center;
                 font-family: Arial, sans-serif;
                 margin: 0;
                 padding: 20px;
@@ -615,7 +625,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 border-left: 1px solid #ccc;
                 border-bottom: 1px solid #ccc;
                 border-right: 1px solid #ccc;
-                text-align: center;
             }
             .total {
                 text-align: center;
@@ -624,6 +633,9 @@ document.addEventListener("DOMContentLoaded", function () {
             .date {
                 display: ${ticketDate}
             }
+                            .p {
+                            text-aling: center;
+            }
         </style>
     `;
 
@@ -631,23 +643,23 @@ document.addEventListener("DOMContentLoaded", function () {
     const ticketWindow = window.open("", "_blank", "width=400,height=600");
     ticketWindow.document.write(ticketContent);
     ticketWindow.document.close();
-}
+  }
 
-function createResumeTicket(items) {
-  // Agrupar los productos por su nombre y calcular la cantidad de cada uno
-  const itemMap = items.reduce((acc, item) => {
+  function createResumeTicket(items) {
+    // Agrupar los productos por su nombre y calcular la cantidad de cada uno
+    const itemMap = items.reduce((acc, item) => {
       if (!acc[item.name]) {
-          acc[item.name] = { ...item, quantity: 1 };
+        acc[item.name] = { ...item, quantity: 1 };
       } else {
-          acc[item.name].quantity += 1;
+        acc[item.name].quantity += 1;
       }
       return acc;
-  }, {});
+    }, {});
 
-  const groupedItems = Object.values(itemMap);
+    const groupedItems = Object.values(itemMap);
 
-  // Construir el contenido del ticket
-  const ticketContent = `
+    // Construir el contenido del ticket
+    const ticketContent = `
       <html>
       <head>
           <title>Ticket de Mesa: X</title>
@@ -659,12 +671,16 @@ function createResumeTicket(items) {
               <div class="articulo"><strong>Artículo</strong></div>
               <div class="cantidad"><strong>Cantidad</strong></div>
           </div>
-          ${groupedItems.map(item => `
+          ${groupedItems
+            .map(
+              (item) => `
               <div class="cuentaGrid">
                   <div class="articulo">${item.name}</div>
                   <div class="cantidad">${item.quantity}</div>
               </div>
-          `).join('')}
+          `
+            )
+            .join("")}
           <p class="date">Fecha: ${day}/${month}/${year}</p>
       </body>
       </html>
@@ -678,26 +694,14 @@ function createResumeTicket(items) {
               display: grid;
               grid-template-columns: 1fr 1fr;
           }
-          .articulo, .cantidad, .precioUnitario {
-              padding: 10px;
-              border: 1px solid #ccc;
-              text-align: center;
-          }
-          .total {
-              text-align: center;
-              font-size: 20px;
-          }
-          .date {
-              display: ${ticketDate}
-          }
       </style>
   `;
 
-  // Abrir una nueva pestaña con el contenido del ticket
-  const ticketWindow = window.open("", "_blank", "width=400,height=600");
-  ticketWindow.document.write(ticketContent);
-  ticketWindow.document.close();
-}
+    // Abrir una nueva pestaña con el contenido del ticket
+    const ticketWindow = window.open("", "_blank", "width=400,height=600");
+    ticketWindow.document.write(ticketContent);
+    ticketWindow.document.close();
+  }
 
   document
     .querySelector("#printTotalItemsOfTheDay")

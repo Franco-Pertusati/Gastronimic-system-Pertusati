@@ -165,7 +165,6 @@ html body .ocuped {
   place-items: center;
   font-size: 4rem;
   color: var(--content);
-  transition: all 0.1s;
 }
 
 .table:hover {
@@ -268,19 +267,6 @@ html body .ocuped {
   margin: 0;
 }
 
-.productTableBtn {
-  border: solid 4px var(--mainColor);
-}
-
-.productTableBtn:hover {
-  box-shadow: 3px 3px 1px 1px rgba(0, 0, 0, 0.5);
-}
-
-.productTableBtn:active {
-  border: solid 4px var(--content);
-  transform: scale(1);
-}
-
 /* .createBtn {
   background: rgb(127, 224, 83);
   background: linear-gradient(90deg, rgb(127, 224, 83) 0%, rgb(158, 201, 65) 100%);  
@@ -372,4 +358,9 @@ input:checked+.slider:before {
   margin: 0;
   width: 100%;
   height: 100%;
+}
+
+.fitCntBtn {
+  padding: 10px;
+  font-size: 3rem;
 }

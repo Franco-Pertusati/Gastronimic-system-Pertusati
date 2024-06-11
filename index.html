@@ -199,7 +199,6 @@
       <button class="squareButton listElement" id="paymentsHistoryBtn"><ion-icon
           name="time-outline"></ion-icon>Historial de
         pagos</button>
-      <button class="squareButton listElement"><ion-icon name="time-outline"></ion-icon>Historial de gastos</button>
       <button class="squareButton listElement" id="closeAllTables"><ion-icon name="close-outline"></ion-icon>Cerrar
         todas las
         mesas</button>
@@ -289,12 +288,12 @@
   </div>
 
   <div class="winContainer hide" id="editProductSlct">
-      <div class="winBackground winBackground2">
-        <p>Editar producto</p>
-        <input type="text" id="prodNameToEdit">
-        <input type="text" id="prodPriceToEdit">
-        <button class="createBtn listElement" id="apllyNewData">Confirmar</button>
-      </div>
+    <div class="winBackground winBackground2">
+      <p>Editar producto</p>
+      <input type="text" id="prodNameToEdit">
+      <input type="text" id="prodPriceToEdit">
+      <button class="createBtn listElement" id="apllyNewData">Confirmar</button>
+    </div>
   </div>
 
   <div class="winContainer hide" id="ConfigsWin">
@@ -403,7 +402,24 @@
             <button class="listElement" id="theme2">Aplicar</button>
           </div>
         </div>
-        <div class="hide" id="configTabs">Reestablecer valores</div>
+        <div class="hide" id="configTabs">
+          <div class="pAtoggle">
+            <p>Borrar todos los valores</p>
+            <button class="fitCntBtn">Reestablecer</button>
+          </div>
+          <div class="pAtoggle">
+            <p>Borrar posiciones de las mesas</p>
+            <button class="fitCntBtn">Reestablecer</button>
+          </div>
+          <div class="pAtoggle">
+            <p>Borrar datos de los productos</p>
+            <button class="fitCntBtn">Reestablecer</button>
+          </div>
+          <div class="pAtoggle">
+            <p>Borrar datos de los metodos de pago</p>
+            <button class="fitCntBtn">Reestablecer</button>
+          </div>
+        </div>
         <div class="hide" id="configTabs">Cargar ejemplo</div>
       </div>
     </div>
