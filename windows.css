@@ -3,7 +3,7 @@
   display: grid;
   gap: 10px;
   grid-template-columns:1000px 400px;
-  grid-template-rows: 700px;
+  grid-template-rows: 645px;
 }
 
 .winBackground {
@@ -14,7 +14,7 @@
 }
 
 .winBackground2 {
-  background-color: var(--main-bg-color);
+  width: 620px;
 }
 
 .cartaWinNav {
@@ -35,9 +35,14 @@
 
 .groupElement {
   display: grid;
-  grid-template-columns: 1fr 120px 53px 53px;
+  grid-template-columns: 1fr 120px 120px 53px 53px 53px;
   gap: 10px;
   text-align: start;
+  border-radius: 10px;
+}
+
+.groupElement:hover {
+  background-color: var(--main-bg-color);
 }
 
 .groupElement p {
@@ -48,13 +53,12 @@
   padding: 4px;
   margin: 4px 0 0 0;
   font-size: 3.5rem;
-  border: solid var(--mainColor2) 3px;
   border-radius: 10px;
 }
 
 #groupConteiner {
   width: 100%;
-  padding: 30px;
+  padding: 10px;
   overflow-y: auto;
 }
 
@@ -540,4 +544,9 @@ section {
   display: grid;
   grid-template-columns: 1fr 50px;
   text-align: start;
+}
+
+html body #itemsOfTheDay {
+  overflow: auto;
+  height: 550px;
 }

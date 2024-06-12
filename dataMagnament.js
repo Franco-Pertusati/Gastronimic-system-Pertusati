@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
   var barName = "";
   var totalItemsSold = [];
 
+  console.log(groups);
+
   //Variables para los tickets/recibos
   customText1 = localStorage.getItem("customText1") || "";
   customText2 = localStorage.getItem("customText2") || "";
@@ -83,8 +85,14 @@ document.addEventListener("DOMContentLoaded", function () {
     saveData("groups", groups);
   }
 
-  function createProduct(pName, pPrice, pGroup) {
-    const product = { name: pName, price: pPrice, ingredients: [] };
+  function createProduct(pName, pPrice, pcost, pGroup) {
+    const product = {
+      name: pName,
+      price: pPrice,
+      cost: pcost,
+      ingredients: [],
+      available: true,
+    };
     var selectedGroup = groups.find((group) => group.name === pGroup);
     selectedGroup.products.push(product);
     printGroupArrayMenu();
@@ -96,16 +104,18 @@ document.addEventListener("DOMContentLoaded", function () {
     .addEventListener("click", function () {
       const pName = document.querySelector("#aNameInput2").value.trim();
       const pPrice = document.querySelector("#aPriceInput").value.trim();
+      const pCost = document.querySelector("#aPriceCost").value.trim();
       const pGroup = document.querySelector("#GroupSelect").value.trim();
 
       // Expresión regular para verificar si el precio contiene solo números
       const priceRegex = /^\d+$/;
 
       if (pName && pPrice !== "" && priceRegex.test(pPrice)) {
-        createProduct(pName, pPrice, pGroup);
+        createProduct(pName, pPrice, pCost, pGroup);
         // Limpieza de inputs
         document.querySelector("#aNameInput2").value = "";
         document.querySelector("#aPriceInput").value = "";
+        document.querySelector("#aPriceCost").value = "";
         showNotification(`${pName} agregado con exito a ${pGroup}`);
       } else {
         showNotification(
@@ -241,29 +251,44 @@ document.addEventListener("DOMContentLoaded", function () {
             conteiner.removeChild(newGroup);
             // Guardar los cambios en el almacenamiento
             saveData("groups", groups);
+            // Actualizar el select
           }
         });
         //Ahora se procede a agregarle los items a cada grupo
         group.products.forEach((product) => {
           const newProduct = document.createElement("div");
+          if (!product.available) {
+            newProduct.classList.add("unaviliable");
+          }
           newProduct.classList.add("listElement");
           newProduct.classList.add("groupElement");
+          newProduct.id = product.name;
           const p1 = document.createElement("p");
+          const p1_5 = document.createElement("p");
           const p2 = document.createElement("p");
           const groupBtn = document.createElement("div");
           const groupBtn2 = document.createElement("div");
           const btnIco = document.createElement("ion-icon");
           const btnIco2 = document.createElement("ion-icon");
+          const checkBox = document.createElement("ion-icon");
           btnIco.setAttribute("name", "trash-outline");
           btnIco2.setAttribute("name", "create-outline");
+          checkBox.setAttribute("name", "close-circle-outline");
           groupBtn.appendChild(btnIco);
           groupBtn2.appendChild(btnIco2);
           p1.textContent = product.name;
+          if (product.cost > 0) {
+            p1_5.textContent = "$" + product.cost;
+          } else {
+            p1_5.textContent = "";
+          }
           p2.textContent = "$" + product.price;
           newProduct.appendChild(p1);
+          newProduct.appendChild(p1_5);
           newProduct.appendChild(p2);
           newProduct.appendChild(groupBtn);
           newProduct.appendChild(groupBtn2);
+          newProduct.appendChild(checkBox);
           groupContent.appendChild(newProduct);
           //Funcionalidad de el boton de borrar producto
           btnIco.addEventListener("click", function () {
@@ -277,6 +302,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 (product) => product !== prodToRemove
               );
             });
+
             saveData("groups", groups);
           });
           //Funcionalidad del boton de editar producto y añadirle ingredientes (ahora se despliega un ventana para hacerlo)
@@ -292,9 +318,11 @@ document.addEventListener("DOMContentLoaded", function () {
             //Ahora se renderizan los datos en los inputs de edicion
             const nameInput = document.querySelector("#prodNameToEdit");
             const priceInput = document.querySelector("#prodPriceToEdit");
+            const costInput = document.querySelector("#prodCostToEdit");
 
             nameInput.value = selectedProd.name;
             priceInput.value = selectedProd.price;
+            costInput.value = selectedProd.cost;
 
             document
               .querySelector("#apllyNewData")
@@ -305,12 +333,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 selectedProd.name = nameInput.value;
                 selectedProd.price = priceInput.value;
+                selectedProd.cost = costInput.value;
                 printGroupArrayMenu();
                 nameInput.value = "";
                 priceInput.value = "";
                 selectedProd = null;
                 saveData("groups", groups);
               });
+          });
+          checkBox.addEventListener("click", function () {
+            const productsHtml = document.querySelectorAll(".groupElement");
+            const productsArray = Array.from(productsHtml);
+
+            const prodToChange = productsArray.find(
+              (productHtml) => productHtml.id === product.name
+            );
+            prodToChange.classList.toggle("unaviliable");
+            groupTodEdit = product.available = !product.available;
+            saveData("groups", groups);
+            console.log(groups);
           });
         });
       });
@@ -575,68 +616,90 @@ document.addEventListener("DOMContentLoaded", function () {
     const ticketContent = `
 <!DOCTYPE html>
 <html lang="en">
-        <html>
-        <head>
-            <title>Ticket de Mesa: X</title>
-        </head>
-        <body>
-            <h1>${barName} - Mesa: ${name}</h1>
-            <div></div>
-            <div class="cuentaGrid" style="
-                border-top: solid 2px #ccc;
-            ">
-                <div class="articulo"><strong>Artículo</strong></div>
-                <div class="cantidad"><strong>Cantidad</strong></div>
-                <div class="precioUnitario"><strong>Precio Unitario</strong></div>
-            </div>
-            ${groupedItems
-              .map(
-                (item) => `
-                <div class="cuentaGrid">
-                    <div class="articulo">${item.name}</div>
-                    <div class="cantidad">${item.quantity}</div>
-                    <div class="precioUnitario">$${item.price}</div>
-                </div>
-            `
-              )
-              .join("")}
-            <p style="text-align: center;">--------------------------------------------------------------<p />
-            <div class="total">Total: $${total}</div>
-            <p style="text-align: center;">--------------------------------------------------------------<p />
-            <p class="date">Fecha: ${day}/${month}/${year}</p>
-            <p >${customText1}</p>
-            <p >${customText2}</p>
-        </body>
-        </html>
-        <style>
-            body {
-                display: grid;
-                place-items: center;
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 20px;
-            }
-            .cuentaGrid {
-                display: grid;
-                grid-template-columns: 1fr 1fr 1fr;
-            }
-            .articulo, .cantidad, .precioUnitario {
-                padding: 10px;
-                border-left: 1px solid #ccc;
-                border-bottom: 1px solid #ccc;
-                border-right: 1px solid #ccc;
-            }
-            .total {
-                text-align: center;
-                font-size: 20px;
-            }
-            .date {
-                display: ${ticketDate}
-            }
-                            .p {
-                            text-aling: center;
-            }
-        </style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket de Mesa: X</title>
+    <style>
+        * {
+            font-weight: ${fontSharpnessValue};
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            width: 400px;
+            display: grid;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .cuentaGrid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 15px;
+            padding: 5px 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .cuentaGrid div {
+            text-align: left;
+        }
+
+        .cuentaGrid div.strong {
+            font-weight: bold;
+        }
+
+        .total {
+            font-weight: bold;
+            text-align: center;
+            font-size: 124px;
+            padding: 10px;
+            margin: 5px
+        }
+
+        .customText {
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        p {
+            text-align: center;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>${barName} - Mesa: ${name}</h1>
+    <div class="cuentaGrid">
+        <div class="articulo"><strong>Artículo</strong></div>
+        <div class="cantidad"><strong>Cantidad</strong></div>
+        <div class="precioUnitario"><strong>Precio Unitario</strong></div>
+    </div>
+    ${groupedItems
+      .map(
+        (item) => `
+    <div class="cuentaGrid">
+        <div class="articulo">${item.name}</div>
+        <div class="cantidad">${item.quantity}</div>
+        <div class="precioUnitario">$${item.price}</div>
+    </div>
+    `
+      )
+      .join("")}
+    <div class="total" style="font-size: 28px;">Total: $${total}</div>
+    <p class="date" style="display: ${ticketDate}">Fecha: ${day}/${month}/${year}</p>
+    <p class="customText">${customText1}</p>
+    <p class="customText">${customText2}</p>
+</body>
+
+</html>
     `;
 
     // Abrir una nueva pestaña con el contenido del ticket

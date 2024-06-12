@@ -101,9 +101,9 @@
   </div>
 
   <div class="winContainer hide win3" id="cartaWin">
-    <div class="win">
-      <div class="winBackground" id="groupConteiner"></div>
-      <div class="winBackground">
+    <div class="win winBackground">
+      <div class="" id="groupConteiner"></div>
+      <div class="">
         <p>Crear Grupo</p>
         <div class="spacer"></div>
         <input id="aNameInput" type="text" placeholder="Nombre del grupo" />
@@ -113,6 +113,7 @@
         <div class="spacer"></div>
         <input id="aNameInput2" type="text" placeholder="Nombre del proucto" />
         <input class="input" pattern="\d+" id="aPriceInput" type="text" placeholder="Precio" />
+        <input class="input" pattern="\d+" id="aPriceCost" type="text" placeholder="Costo" />
         <select class="listElement" id="GroupSelect" name=""></select>
         <button id="createProductArray" class="listElement createBtn">Crear producto</button>
         <button class="listElement squareButton exitBtn1" id="cartaWinSwitch">
@@ -139,12 +140,12 @@
   </div>
 
   <div class="winContainer win3 hide" id="tableInventory">
-    <div class="tableInventory">
-      <div class="winBackground">
+    <div class="tableInventory winBackground">
+      <div class="">
         <div class="groupsTabs"></div>
         <div class="productButtons"></div>
       </div>
-      <div class="winBackground preOrdersMenu">
+      <div class=" preOrdersMenu">
         <div class="listElement selectedTable">Mesa:</div>
         <div class="preOrdersList" id="preOrderItemsList"></div>
         <div class="listElement" id="subTotal">total:</div>
@@ -264,13 +265,13 @@
 
   </div>
 
-  <div class="winContainer hide" id="mostradorWin">
-    <div class="tableInventory">
-      <div class="winBackground">
+  <div class="winContainer hide " id="mostradorWin">
+    <div class="tableInventory winBackground">
+      <div class="">
         <div class="groupsTabs" id="mostradorWin-gt"></div>
         <div class="productButtons" id="mostradorWin-pb"></div>
       </div>
-      <div class="preOrdersMenu2 winBackground">
+      <div class="preOrdersMenu2 ">
         <div class="listElement">Venta por mostrador</div>
         <div class="preOrdersList" id="mostradorWinpreOrder"></div>
         <div class="listElement" id="mostradorWintotal"></div>
@@ -292,6 +293,7 @@
       <p>Editar producto</p>
       <input type="text" id="prodNameToEdit">
       <input type="text" id="prodPriceToEdit">
+      <input type="text" id="prodCostToEdit">
       <button class="createBtn listElement" id="apllyNewData">Confirmar</button>
     </div>
   </div>

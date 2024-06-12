@@ -1,13 +1,13 @@
 :root {
   --zomp: #23a30c;
   
-  --content: #ebebeb;
-  --main-bg-color: #264653;
+  --content: #3d3d3d;
+  --main-bg-color: #f4f1de;
 
-  --mainColor: #e76f51;
-  --mainColor2: #f4a261;
-  --mainColor3: #2f5868;
-  --secondaryColor: #2a9d8f;
+  --mainColor: #f0886c;
+  --mainColor2: #81b29a;
+  --mainColor3: #fffdee;
+  --secondaryColor: #81b29a;
 }
 
 * {
@@ -153,4 +153,10 @@ h1 {
 
 .mb10 {
   margin-bottom: 10px;
+}
+
+html .unaviliable {
+  text-decoration: line-through;
+  color: red;
+  border-radius: 10px;
 }
