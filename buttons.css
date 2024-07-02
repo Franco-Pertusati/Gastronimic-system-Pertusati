@@ -188,7 +188,7 @@ html body .ocuped {
 
 .table {
   font-size: 2rem;
-  background: #b6b6b6;
+  background: var(--mainColor);
   border-style: none;
   border-radius: 10px;
   display: grid;
