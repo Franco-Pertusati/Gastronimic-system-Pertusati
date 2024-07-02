@@ -46,7 +46,7 @@
 }
 
 .groupElement p {
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 .groupElement ion-icon {
@@ -54,6 +54,16 @@
   margin: 4px 0 0 0;
   font-size: 3.5rem;
   border-radius: 10px;
+  display: none;
+}
+
+.groupElement ion-icon:hover {
+  cursor: pointer;
+  background-color: var(--mainColor3);
+}
+
+.groupElement:hover ion-icon {
+  display: inherit;
 }
 
 #groupConteiner {
@@ -98,10 +108,10 @@
 
 .salon {
   height: 100%;
-  padding: 10px;
+  padding: 5px;
   display: grid;
-  grid-template-columns: repeat(13, 100px);
-  grid-template-rows: repeat(7, 100px);
+  grid-template-columns: repeat(13, 1fr);
+  grid-template-rows: repeat(7, 1fr);
   border-radius: 10px;
   border: solid 4px var(--mainColor2);
 }
@@ -146,14 +156,14 @@ html body .productButtons {
   border: solid 4px var(--mainColor2);
   border-radius: 10px;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: min-content;
+  grid-template-rows: 235px;
   gap: 10px;
   height: 650px;
   overflow-y: auto;
 }
 
 .productButtons button {
-  height: 220px;
+  height: 235px;
   display: grid;
   place-items: center;
   grid-template-rows: 1fr 1fr;

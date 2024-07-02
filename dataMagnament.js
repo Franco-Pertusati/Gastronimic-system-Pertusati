@@ -184,6 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
       //Cuando las mesas se crean mediante la funcion loadTables no se les agrega una data-position
       newTable.setAttribute("data-position", position);
       table.position = position;
+      // createDelBtn(conteiner, tables, newTable, newTable.id, "");
     }
     newTable.addEventListener("dragstart", function (event) {
       event.dataTransfer.setData("text/plain", event.target.id);
@@ -202,7 +203,8 @@ document.addEventListener("DOMContentLoaded", function () {
       //Mostrar la mesa seleccionada en el menu de mesa
       const selectedTableDisplay = document.querySelectorAll(".selectedTable");
       selectedTableDisplay.forEach((a) => {
-        a.textContent = "Mesa seleccionada: " + selectedTable.textContent;
+        let selectedTableId = parseInt(selectedTable.id, 10);
+        a.textContent = "Mesa seleccionada: " + (selectedTableId + 1);
         // Se actualiza el muestreo del inventario de la mesa
       });
       printItemList(itemsList1, total1);
@@ -380,26 +382,28 @@ document.addEventListener("DOMContentLoaded", function () {
           (group) => group.name === groupSelected
         );
         groupToPrint.products.forEach((product) => {
-          const newProduct = document.createElement("button");
-          const p1 = document.createElement("p");
-          const p2 = document.createElement("p");
-          p1.textContent = product.name;
-          p2.textContent = "$" + product.price;
-          newProduct.classList.add("productTableBtn");
-          newProduct.appendChild(p1);
-          newProduct.appendChild(p2);
-          newProduct.setAttribute("data-name", product.name);
-          productsConteiner.appendChild(newProduct);
-          newProduct.addEventListener("click", function () {
-            //Se añanden a una lista los objetos que queremos cargar a la mesa
-            const allProducts = groups.flatMap((group) => group.products);
-            const productToAdd = allProducts.find(
-              (a) => a.name === product.name
-            );
-            preOrder.push(productToAdd);
-            printPreorder(preOrder1, subTotal1);
-            printPreorder(preOrder2, subTotal2);
-          });
+          if (product.available) {
+            const newProduct = document.createElement("button");
+            const p1 = document.createElement("p");
+            const p2 = document.createElement("p");
+            p1.textContent = product.name;
+            p2.textContent = "$" + product.price;
+            newProduct.classList.add("productTableBtn");
+            newProduct.appendChild(p1);
+            newProduct.appendChild(p2);
+            newProduct.setAttribute("data-name", product.name);
+            productsConteiner.appendChild(newProduct);
+            newProduct.addEventListener("click", function () {
+              //Se añanden a una lista los objetos que queremos cargar a la mesa
+              const allProducts = groups.flatMap((group) => group.products);
+              const productToAdd = allProducts.find(
+                (a) => a.name === product.name
+              );
+              preOrder.push(productToAdd);
+              printPreorder(preOrder1, subTotal1);
+              printPreorder(preOrder2, subTotal2);
+            });
+          }
         });
       });
     });
@@ -427,7 +431,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const p1 = document.createElement("p");
       const p2 = document.createElement("p");
       newProduct.classList.add("listElement");
-      newProduct.classList.add("prodItem");
+      newProduct.classList.add("prodItem2");
       newProduct.appendChild(p1);
       newProduct.appendChild(p2);
       p1.textContent = "x" + quantity + " " + productName;
@@ -463,16 +467,34 @@ document.addEventListener("DOMContentLoaded", function () {
       const newProduct = document.createElement("div");
       const p1 = document.createElement("p");
       const p2 = document.createElement("p");
+      const deleteButton = document.createElement("button"); // Crear el botón de borrar
+      const tCan = document.createElement("ion-icon");
+      tCan.setAttribute("name", "trash-outline");
+
       newProduct.classList.add("listElement");
       newProduct.classList.add("prodItem");
+
+      deleteButton.addEventListener("click", () => {
+        preOrder = preOrder.filter((product) => product.name !== productName);
+        printPreorder(preOrderItemsList, total);
+      });
+
       newProduct.appendChild(p1);
       newProduct.appendChild(p2);
+      newProduct.appendChild(deleteButton);
+      deleteButton.appendChild(tCan);
+
       p1.textContent = "x" + quantity + " " + productName;
       p2.textContent =
-        "$" + preOrder.find((p) => p.name === productName).price * quantity;
+        "$" +
+        (preOrder.find((p) => p.name === productName).price * quantity).toFixed(
+          2
+        );
+
       preOrderItemsList.appendChild(newProduct);
     }
-    total.textContent = "$" + subTotal.toFixed(2); // redondea el total a 2 decimales
+
+    total.textContent = "$" + subTotal.toFixed(2); // Redondea el total a 2 decimales
   }
 
   //Funcionalidad de boton de comandar y cancelar comanda

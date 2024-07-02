@@ -88,7 +88,7 @@ select {
   margin: 0;
   border-style: none;
   border-radius: 10px;
-  background: var(--mainColor);
+  background: var(--main-bg-color);
 }
 
 select:focus {
@@ -131,7 +131,7 @@ html body .tableSelected {
 
 .prodItem {
   display: grid;
-  grid-template-columns: 1fr 140px;
+  grid-template-columns: 1fr 170px 50px;
   text-align: start;
 }
 
@@ -139,6 +139,37 @@ html body .tableSelected {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.prodItem p {
+  margin-top: 5px;
+}
+
+.prodItem button {
+  height: 50px;
+  width: 50px;
+  
+}
+
+.prodItem button ion-icon {
+  transform: scale(0.8);
+  margin: 0;
+}
+
+.prodItem2 {
+  display: grid;
+  grid-template-columns: 1fr 140px;
+  text-align: start;
+}
+
+.prodItem2>* {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.prodItem2 p {
+  margin-top: 5px;
 }
 
 html body .positiveAmount {
@@ -157,7 +188,7 @@ html body .ocuped {
 
 .table {
   font-size: 2rem;
-  background: var(--mainColor);
+  background: #b6b6b6;
   border-style: none;
   border-radius: 10px;
   display: grid;
@@ -168,6 +199,16 @@ html body .ocuped {
 
 .table:hover {
   box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.5);
+}
+
+.tableDelBtn {
+  display: none;
+  position: absolute;
+  margin-bottom: 120px;
+}
+
+.table:hover .tableDelBtn {
+  display: inherit;
 }
 
 .selectedBtn {
@@ -351,15 +392,17 @@ input:checked+.slider:before {
 .tableTool2 div {
   background-color: var(--mainColor);
   padding: 10px;
+  display: grid;
+  place-items: center;
 }
 
 .tableTool2 ion-icon {
   margin: 0;
-  width: 100%;
-  height: 100%;
 }
 
 .fitCntBtn {
+  width: fit-content;
+  height: fit-content;
   padding: 10px;
   font-size: 3rem;
 }

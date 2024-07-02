@@ -160,3 +160,7 @@ html .unaviliable {
   color: red;
   border-radius: 10px;
 }
+
+#subTotal {
+  margin-top: 8px;
+}
