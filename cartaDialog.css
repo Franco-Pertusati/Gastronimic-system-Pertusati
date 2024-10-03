@@ -1,0 +1,191 @@
+#cartaDialog {
+    width: fit-content;
+    height: 610px;
+    background-color: transparent;
+}
+
+#groupWindow {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: var(--seasalt);
+    overflow: hidden;
+    border-right: none;
+    border-radius: 22px 0 0 22px;
+}
+
+#itemInfo {
+    width: 340px;
+    background-color: var(--seasalt);
+    border-radius: 0 22px 22px 0;
+}
+
+
+.groupsList {
+    height: 100%;
+    width: 536px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 18px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.newGroup {
+    position: relative;
+    border-radius: 22px;
+    background-color: var(--seasalt);
+    border: solid 1px var(--platinum);
+    box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.1);
+}
+
+.newGroup h2 {
+    width: 100%;
+}
+
+.renameGroup {
+    display: flex;
+    gap: 8px;
+    position: absolute;
+}
+
+.renameGroup input {
+    width: 350px;
+}
+
+.groupItemList {
+    display: flex;
+    flex-direction: column;
+    border-bottom: solid 1px var(--french-gray);
+}
+
+.prodInProdList {
+    height: 45px;
+    padding: 0px 8px;
+    border-top: solid 1px var(--french-gray);
+    display: grid;
+    grid-template-columns: 250px 1fr auto;
+    gap: 18px;
+    align-items: center;
+}
+
+.prodInProdList:hover {
+    outline: solid 1px var(--outer-space);
+    border-radius: 4px;
+    box-shadow: 0 4px 4px #0000006b;
+    z-index: 20;
+}
+
+.prodOptions2 {
+    display: none;
+}
+
+.prodInProdList:hover .prodOptions2 {
+    display: flex;
+}
+
+/* CALENDARIO */
+
+/* From Uiverse.io by hayyangovinda */
+.days-btn-container {
+    margin: 14px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.day-btn {
+    display: none;
+    /* Hide the original checkbox */
+}
+
+.day-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--mainColor);
+    cursor: pointer;
+    border: 2px solid var(--mainColor);
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+}
+
+/* Apply styles for the selected state */
+.day-btn:checked+.day-label {
+    background-color: var(--mainColor);
+    border: none;
+    color: var(--seasalt);
+}
+
+.itemmod {
+    height: 100%;
+}
+
+.spanToggle {
+    display: flex;
+}
+
+.spanToggle .switch-parent {
+    margin-left: auto;
+}
+
+/* The switch - the box around the slider */
+.switch-parent {
+    width: 51px;
+    height: 31px;
+    position: relative;
+}
+
+/* Hide default HTML checkbox */
+.checkbox {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.switch {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-color: #e9e9eb;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+}
+
+/* The slider */
+.slider {
+    width: 27px;
+    height: 27px;
+    position: absolute;
+    left: calc(50% - 27px / 2 - 10px);
+    top: calc(50% - 27px / 2);
+    border-radius: 20px;
+    background: #ffffff;
+    transition: all 0.2s ease-out;
+    cursor: pointer;
+}
+
+.switch-parent:active .slider {
+    width: 37px;
+    border-radius: 20px;
+}
+
+.checkbox:checked+.switch:active .slider {
+    width: 37px;
+    left: calc(30% - 27px / 2 + 10px);
+}
+
+.checkbox:checked+.switch {
+    background-color: var(--mainColor);
+}
+
+.checkbox:checked+.switch .slider {
+    left: calc(50% - 27px / 2 + 10px);
+    top: calc(50% - 27px / 2);
+}

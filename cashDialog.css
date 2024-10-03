@@ -1,0 +1,22 @@
+#cashOptions h2 {
+    margin-bottom: 18px;
+}
+
+/* CAJAS DIALOG */
+#cajas {
+    width: 264px;
+}
+
+.cajasList {
+    height: 100%;
+}
+
+.caja {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+}
+
+.bolder {
+    font-weight: 800;
+}

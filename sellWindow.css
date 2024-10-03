@@ -1,0 +1,84 @@
+.sellWindow {
+    display: flex;
+    height: 640px;
+    overflow: hidden;
+    gap: 8px;
+}
+
+#sellWindow {
+    padding: 20px;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+#sellWindow .win {
+    border: solid 1px var(--platinum);
+    padding: 0;
+}
+
+#sellWindowPestaña {
+    width: 200px;
+    padding-top: 16px;
+    overflow-y: auto;
+}
+
+#sellWindowPestaña button {
+    width: 100%;
+    background-color: var(--seasalt);
+}
+
+#sellWindowPestaña button:hover {
+    background-color: var(--hover);
+}
+
+.SellWindowlistContainer {
+    overflow-y: auto;
+}
+
+#sellWindowProductList {
+    width: 432px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.squareProdBtn {
+    width: 120px;
+    height: 120px;
+    color: var(--seasalt);
+    background-color: var(--mainColor);
+    border-radius: 22px;
+    display: flex;
+    justify-content: center;
+    transition: all ease .2s;
+}
+
+.squareProdBtn:hover {
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.5);
+}
+
+.addedItems {
+    width: 400px;
+}
+
+#addedItems {
+    height: 100%;
+    overflow-y: auto;
+}
+
+#sellWindowsbotonera {
+    padding: 8px;
+    display: flex;
+    gap: 8px;
+}
+
+.prodInPordList2 {
+    display: grid;
+    grid-template-columns: 1fr 42px 96px 42px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    align-items: center;
+    padding: 0 10px;
+}

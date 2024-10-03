@@ -1,0 +1,62 @@
+.movContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* border: solid 1px var(--french-gray-2); */
+    overflow: hidden;
+}
+
+.movContainer button {
+    transition: all ease .2s;
+}
+
+.movContainer:hover {
+    box-shadow: 0 0cap 4px #0000006b;
+}
+
+#cashHistoryList {
+    height: 100%;
+    overflow-y: auto;
+}
+
+#historyDialog {
+    height: 460px;
+}
+
+#historyDialog h2 {
+    margin: 18px;
+}
+
+.movContainer .movInfo {
+    padding: 4px 8px;
+    display: grid;
+    grid-template-columns: 160px 130px 130px 65px 95px 32px;
+    gap: 12px;
+    align-items: center;
+}
+
+.movContainer button {
+    padding: 6px;
+}
+
+.movListItem {
+    padding: 0 24%;
+    width: 100%;
+    background-color: var(--antiflash-white);
+}
+
+.movListItem .prodInPordList2 {
+    grid-template-columns: 1fr 42px 112px;
+}
+
+.movListItem .prodInPordList2 button {
+    display: none;
+}
+
+.m18 {
+    margin: 18px;
+}
+
+.rotate90 {
+    transform: rotate(-90deg);
+}

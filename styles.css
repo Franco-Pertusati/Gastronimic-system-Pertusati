@@ -1,166 +1,220 @@
 :root {
-  --zomp: #23a30c;
-  
-  --content: #3d3d3d;
-  --main-bg-color: #f4f1de;
-
-  --mainColor: #f0886c;
-  --mainColor2: #81b29a;
-  --mainColor3: #fffdee;
-  --secondaryColor: #81b29a;
+    --seasalt: #f8f9faff;
+    --antiflash-white: #e9ecefff;
+    --platinum: #dee2e6ff;
+    --french-gray: #ced4daff;
+    --french-gray-2: #adb5bdff;
+    --slate-gray: #6c757dff;
+    --outer-space: #495057ff;
+    --onyx: #343a40ff;
+    --eerie-black: #212529ff;
+    --mainColor: #f16845;
+    --hover: #ffeee9;
+    --red: #eb252c;
+    --green: #8bc927;
+    --blue: #379BD8;
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-  font-size: 62.5%;
-  color: var(--content);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "poppins", sans-serif;
+    font-size: 62.5%;
+    color: var(--eerie-black);
 }
 
-body {
-  padding-top: 10px;
-  width: 100vw;
-  height: 100vh;
-  display: grid;
-  gap: 10px;
-  place-items: center;
-  grid-template-rows: 100px 740px 1fr;
-  background: var(--main-bg-color);
+button {
+    width: fit-content;
+    border-style: none;
+    cursor: pointer;
+    font-size: 2rem;
+    align-items: center;
 }
 
-header {
-  padding: 0 10px;
-  width: 100vw;
-  display: grid;
-  place-items: center;
-  grid-template-columns: 1fr 1110px;
-}
-
-header button {
-  width: 100%;
-  height: 100px;
-}
-
-nav {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  column-gap: 10px;
-  place-items: center;
-  grid-template-columns: 1fr repeat(10, 100px);
-}
-
-nav button {
-  margin: 0;
-}
-
-nav ion-icon {
-  margin: 0;
-}
-
-body .navBtnDoble {
-  grid-column: span 2;
-}
-
-.background {
-  border-radius: 10px;
-}
-
-section {
-  padding: 0 10px;
-  width: 100%;
-  display: grid;
-  gap: 10px;
-  grid-template-columns: 1fr 540px;
+span {
+    font-size: 2rem;
 }
 
 h1 {
-  font-size: 8.2rem;
-  line-height: 0;
-  color: var(--mainColor2);
-  text-shadow: 2px 2px 0px var(--content);
+    font-size: 5.5rem;
+    color: var(--mainColor);
+    position: absolute;
+    left: 20px;
+    top: 34px;
+    line-height: 0;
+    font-weight: bolder;
 }
 
-#title2 {
-  font-size: 5rem;
-  text-align: center;
-  font-weight: bold;
+h2 {
+    font-size: 2.5rem;
 }
 
-.huecoIngredientes {
-  padding: 10px;
-  height: 110px;
-  border-radius: 10px;
-  /* background: var(--main-bg-color);
-  box-shadow: inset 5px 5px 10px var(--shadow-dark),
-    inset -5px -5px 10px var(--shadow-light); */
-  overflow-y: auto;
-  border: solid 4px var(--mainColor2);
+h3 {
+    font-size: 2rem;
 }
 
-.huecoIngredientes .listElement {
-  margin: 0;
-  height: 45px;
-  text-align: start;
+html {
+    height: 100%;
 }
 
-.IngredientesTotales {
-  height: 550px;
+body {
+    gap: 18px;
+    background-color: var(--antiflash-white);
 }
 
-.slot {
-  padding: 5px;
+nav {
+    padding: 12px 18px;
+    display: flex;
+    justify-content: end;
+    gap: 12px;
+    background-color: var(--seasalt);
+    border-bottom: solid 1px var(--platinum);
 }
 
-.description {
-  font-size: 2rem;
+nav button {
+    text-wrap: nowrap;
+    max-height: 44px;
 }
 
-.inputAconfirm {
-  height: 50px;
-  display: grid;
-  grid-template-columns: 1fr 210px;
-  gap: 10px;
-  margin-bottom: 10px;
+input {
+    width: 100%;
+    padding: 4px 2px;
+    border-style: none;
+    border-bottom: solid 2px var(--mainColor);
+    font-size: 2rem;
+    background-color: var(--seasalt);
 }
 
-.inputAconfirm input {
-  margin: 0;
+input:focus {
+    outline: none;
+    background-color: var(--hover);
+    border-radius: 4px 4px 0 0;
 }
 
-.pAtoggle {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  margin-bottom: 10px;
+html body .checkbox {
+    margin-left: auto;
+    width: 30px;
+    height: 30px;
 }
 
-#gitBtn {
-  margin-bottom: 10px;
-  padding: 5px;
-  height: 59px;
-  width: 59px;
-  background-color: var(--mainColor);
-  border-radius: 10px;
-  display: grid;
-  cursor: pointer;
+select {
+    font-size: 2rem;
+    background-color: var(--seasalt);
+    border: solid 1px var(--platinum);
+    border-radius: 4px;
 }
 
-#gitBtn ion-icon {
-  margin: 0;
+.table {
+    position: relative;
+    /* Añadir esta línea */
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }
 
-.mb10 {
-  margin-bottom: 10px;
+.tableText {
+    padding: 0 6px;
+    background-color: var(--antiflash-white);
+    border-radius: 4px;
+    font-size: 1.5rem;
 }
 
-html .unaviliable {
-  text-decoration: line-through;
-  color: red;
-  border-radius: 10px;
+.tooltip {
+    width: fit-content;
+    height: fit-content;
+    position: absolute;
+    top: -20px;
+    opacity: 0;
+    background-color: var(--platinum);
+    padding: 3px;
+    border-radius: 8px;
+    border: solid 2px var(--onyx);
+    display: flex;
+    transition-duration: 0.2s;
+    pointer-events: none;
+    font-size: 1rem;
 }
 
-#subTotal {
-  margin-top: 8px;
+.tooltip span {
+    font-size: 1.5rem;
+}
+
+.tableSelected .tooltip {
+    top: -15px;
+    /* Ajusta según sea necesario */
+    opacity: 1;
+    transition-duration: 0.3s;
+}
+
+.table:active .tooltip {
+    display: none;
+}
+
+html #NotaContainer {
+    width: calc(100% - 18px);
+    color: var(--red);
+    font-weight: 700;
+    font-size: 2.5rem;
+}
+
+.shifCover {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    place-items: center;
+    background-color: var(--antiflash-white);
+    z-index: 20;
+}
+
+.shifCover .win {
+    width: fit-content;
+    height: fit-content;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cssbuttons-io-button {
+    padding: 12px;
+    padding-right: 68px;
+    position: relative;
+    border-radius: 999px;
+    background-color: var(--mainColor);
+    color: var(--seasalt);
+    font-weight: 600;
+}
+
+.cssbuttons-io-button .icon {
+    height: 44px;
+    width: 44px;
+    display: flex;
+    place-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 5px;
+    right: 6px;
+    border-radius: 22px;
+    background-color: var(--seasalt);
+    transition: all ease .3s;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
+}
+
+.cssbuttons-io-button:hover .icon {
+    width: calc(100% - 12px);
+}
+
+.cssbuttons-io-button:active .icon {
+    transform: scaleY(.90) scaleX(.95);
 }

@@ -1,0 +1,33 @@
+.calc {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: absolute;
+    transform:translateY(-8px) translatex(22px);
+    background-color: var(--seasalt);
+    border-radius: 22px;
+}
+
+.calc button {
+    width: 60px;
+    height: 60px;
+    border-radius: 22px;
+    background-color: var(--seasalt);
+    border: solid 1px var(--platinum);
+    font-weight: 700;
+}
+
+.calc button:hover {
+    background-color: var(--hover);
+}
+
+.calc input {
+    width: 194px;
+}
+
+#calcBtn {
+    width: 128px;
+    background-color: var(--mainColor);
+    color: var(--seasalt);
+}
