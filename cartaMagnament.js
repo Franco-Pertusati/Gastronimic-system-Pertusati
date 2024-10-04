@@ -4,6 +4,7 @@ var groups = [];
 var tables = [];
 var sales = [];
 var shifts = JSON.parse(localStorage.getItem("shifts")) || [];
+var barName = JSON.parse(localStorage.getItem("barName")) || "Bar name";
 var paymentsMethods = [];
 var cashRegisters = [
   { name: "Caja-1:", total: 0, id: 1551 },
@@ -551,8 +552,6 @@ function updateTableShape() {
   saveTablesToLocalStorage();
 }
 
-paymentsBtn.addEventListener("click", function () {});
-
 document
   .querySelector("#openSellwindow1")
   .addEventListener("click", function () {
@@ -627,13 +626,14 @@ function mergeLists() {
   if (itemsToAdd.length) {
     itemsToAdd.forEach((item) => addProductToTable(item));
     selectedTable.total = selectedTable.total + tableSubTotal;
+    itemsForComand = itemsToAdd.filter((p) => p.printOnComand);
     if (selectedTable.position) {
       selectedTable.startTime = Date.now();
       updateTableState();
     } else {
       switchDialogState("confirmSellDialog");
+      printTicket();
     }
-    itemsForComand = itemsToAdd.filter((p) => p.printOnComand);
     if (itemsForComand.length) {
       printTicketComanda(itemsForComand);
     }
@@ -976,7 +976,7 @@ function printTicket() {
       <div class="itemList">
         <span>${product.name}</span>
         <span>${product.quantity}</span>
-        <span>${(product.price * product.quantity).toFixed(2)}</span>
+        <span>$${(product.price * product.quantity).toFixed(2)}</span>
       </div>
     `;
   });
@@ -1037,7 +1037,7 @@ function printTicket() {
         }
     </style>
     <div class="ticket">
-        <h1>El Despa</h1>
+        <h1>${barName}</h1>
         <h2>03/08/12</h2>
         <div class="list">
           ${itemsListHTML}
@@ -1296,6 +1296,24 @@ function calculateChange() {
     const change = (paidAmount - selectedTable.total).toFixed(2);
     vueltoSpan.textContent = `Vuelto: $${change}`;
     resultSpan.textContent = "";
+  }
+}
+
+const barNameSpan = document.querySelector("#barNameSpan");
+barNameSpan.textContent = JSON.parse(localStorage.getItem("barName"));
+
+function updateBarName() {
+  const input = document.querySelector("#barNameInput");
+  barName = input.value;
+  barNameSpan.textContent = barName;
+  saveData("barName", barName);
+}
+
+function delLocalStorage(dataToDelete) {
+  if (dataToDelete != "all") {
+    localStorage.removeItem(dataToDelete);
+  } else {
+    localStorage.clear();
   }
 }
 

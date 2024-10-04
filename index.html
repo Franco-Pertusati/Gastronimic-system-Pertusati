@@ -24,10 +24,14 @@
 
 <body>
     <nav class="shadow">
-        <h1>Vanilla</h1>
+        <div class="flex wfull appTitle">
+            <h1>Growler</h1>
+            <span id="barNameSpan">Bar name</span>
+        </div>
         <div class="btnszip">
-            <i class="material-icons">keyboard_arrow_down</i>
+            <i class="material-icons">bolt</i>
             <span>Acciones</span>
+            <i class="material-icons">keyboard_arrow_down</i>
             <div class="buttons shadow win ">
                 <button class="discretBtn wfull" id="vecBtn">
                     <i class="material-icons">shopping_cart</i>
@@ -41,15 +45,12 @@
                     <i class="material-icons">swap_horiz</i>
                     <span>Mover mesa o items</span>
                 </button>
-                <button class="discretBtn wfull" onclick="switchDialogState('closeShiftDialog')">
-                    <i class="material-icons">key</i>
-                    <span>Terminar turno</span>
-                </button>
             </div>
         </div>
         <div class="btnszip">
-            <i class="material-icons">keyboard_arrow_down</i>
+            <i class="material-icons">point_of_sale</i>
             <span>Caja</span>
+            <i class="material-icons">keyboard_arrow_down</i>
             <div class="buttons shadow win">
                 <button class="discretBtn wfull">
                     <i class="material-icons">arrow_downward</i>
@@ -77,17 +78,29 @@
                 </button>
             </div>
         </div>
+        <div class="btnszip">
+            <i class="material-icons">work</i>
+            <span>Turnos</span>
+            <i class="material-icons">keyboard_arrow_down</i>
+            <div class="buttons shadow win">
+                <button class="discretBtn wfull" onclick="switchDialogState('shiftsListDialog')">
+                    <i class="material-icons">work_history</i>
+                    <span>Historial de turnos</span>
+                </button>
+                <button class="discretBtn wfull" onclick="switchDialogState('closeShiftDialog')">
+                    <i class="material-icons">key</i>
+                    <span>Terminar turno</span>
+                </button>
+            </div>
+        </div>
         <button class="discretBtn" onclick="switchDialogState('cartaDialog'), hideInput()">
             <i class="material-icons">restaurant</i>
             <span>Carta</span>
         </button>
-        <button class="discretBtn" onclick="switchDialogState('weekStats'), hideInput()">
-            <i class="material-icons">trending_up</i>
-            <span>Semana</span>
-        </button>
         <div class="btnszip">
-            <i class="material-icons">keyboard_arrow_down</i>
+            <i class="material-icons">settings</i>
             <span>Settings</span>
+            <i class="material-icons">keyboard_arrow_down</i>
             <div class="buttons buttons2 shadow win ">
                 <button class="discretBtn wfull" onclick="switchDialogState('userDataDialog')">
                     <i class="material-icons">refresh</i>
@@ -97,7 +110,7 @@
                     <i class="material-icons">upload</i>
                     <span>Cargar ejemplo</span>
                 </button>
-                <button class="discretBtn wfull">
+                <button class="discretBtn wfull" onclick="switchDialogState('nombreDelBarDialog')">
                     <i class="material-icons">title</i>
                     <span>Nombre del bar</span>
                 </button>
@@ -196,17 +209,19 @@
                     <i class="material-icons checked">radio_button_checked</i>
                     <i class="material-icons unchecked hide">radio_button_unchecked</i>
                     <span>Mesa</span>
+                    <i class="material-icons">table_restaurant</i>
                 </button>
                 <button id="salonConfig">
                     <i class="material-icons checked hide">radio_button_checked</i>
                     <i class="material-icons unchecked">radio_button_unchecked</i>
                     <span>Salon</span>
+                    <i class="material-icons">grid_view</i>
                 </button>
             </div>
         </div>
     </div>
 
-    <div class="dialogContainer ">
+    <div class="dialogContainer hide">
 
         <div class="dialog hide sellWindow" id="sellWindow">
             <div id="sellWindowPestaña" class="win"></div>
@@ -402,11 +417,11 @@
             </button>
         </div>
 
-        <div class="dialog hide flex p18" id="confirmSellDialog">
-            <div class="flex flex-col gap-18 w512">
+        <div class="dialog hide flex p18 gap-18" id="confirmSellDialog">
+            <div class="flex flex-col gap-18 p18 win">
                 <h2>Confirmar venta</h2>
                 <div class="flex gap-8">
-                    <span>Metodo de pago: </span>
+                    <span class="wfull">Metodo de pago: </span>
                     <select name="" id="pmSlct"></select>
                 </div>
                 <div class="flex gap-8">
@@ -414,18 +429,18 @@
                         <i class="material-icons">close</i>
                         <span>Cancelar</span>
                     </button>
-                    <button id="closeTableBtn" class="discretBtn enfasisBtn" onclick="closeTable(), closeCurrentDialog()">
+                    <button id="closeTableBtn" class="discretBtn enfasisBtn"
+                        onclick="closeTable(), closeCurrentDialog()">
                         <i class="material-icons">check</i>
                         <span>confirmar venta</span>
                     </button>
                 </div>
             </div>
-            <div class="calculator">
+            <div class="calculator win">
                 <div class="output">
                     <span class="result"></span>
                 </div>
-
-                <div class="calc shadow">
+                <div class="calc">
                     <div class="flex flex-col gap-2">
                         <input placeholder="Pagó con" type="text">
                         <span>Vuelto: $0.00</span>
@@ -467,46 +482,33 @@
             </button>
         </div>
 
-        <div class="dialog hide" id="shiftsListDialog">
+        <div class="dialog hide p18" id="shiftsListDialog">
             <h2>Resumen de turnos</h2>
             <div id="shiftsListDialog"></div>
-        </div>
-
-        <div class="dialog p18 gap-18 flex flex-col w512" id="weekCalendar">
-            <h2>Turnos</h2>
-            <div class="shiftList">
-                <div class="shiftInShiftList">
-                    <span>Fecha:</span>
-                    <span>Ventas totales:</span>
-                    <span>Ventas por caja:</span>
-                    <span>Mesas cerradas:</span>
-                    <span></span>
-                </div>            
-            </div>
         </div>
 
         <div class="dialog hide p18 flex flex-col gap-8 w512" id="userDataDialog">
             <div class="flex gap-18">
                 <span class="wfull">Borrar todos los datos</span>
-                <button class="discretBtn enfasisBtn">
+                <button class="discretBtn enfasisBtn" onclick="delLocalStorage('all')">
                     <i class="material-icons">delete</i>
                 </button>
             </div>
             <div class="flex gap-18">
                 <span class="wfull">Borrar datos de las mesas</span>
-                <button class="discretBtn enfasisBtn">
+                <button class="discretBtn enfasisBtn" onclick="delLocalStorage('tables')">
                     <i class="material-icons">delete</i>
                 </button>
             </div>
             <div class="flex gap-18">
                 <span class="wfull">Borrar datos de los productos</span>
-                <button class="discretBtn enfasisBtn">
+                <button class="discretBtn enfasisBtn" onclick="delLocalStorage('groups')">
                     <i class="material-icons">delete</i>
                 </button>
             </div>
             <div class="flex gap-18">
                 <span class="wfull">Borrar datos de los turnos</span>
-                <button class="discretBtn enfasisBtn">
+                <button class="discretBtn enfasisBtn" onclick="delLocalStorage('shifts')">
                     <i class="material-icons">delete</i>
                 </button>
             </div>
@@ -514,6 +516,20 @@
                 <span class="wfull">Volver</span>
                 <i class="material-icons">close</i>
             </button>
+        </div>
+
+        <div class="dialog hide p18 flex flex-col gap-18 w512" id="nombreDelBarDialog">
+            <h2>Nombre del bar</h2>
+            <div class="flex gap-8">
+                <input type="text" placeholder="Nombre del bar" id="barNameInput">
+                <button class="discretBtn" onclick="closeCurrentDialog()" id="cancelBarName">
+                    <i class="material-icons">close</i>
+                </button>
+                <button class="discretBtn enfasisBtn" onclick="closeCurrentDialog(), updateBarName()">
+                    <i class="material-icons">check</i>
+                </button>
+            </div>
+            <span>El nombre del bar es el que figurara en el titulo de los tickets.</span>
         </div>
 
     </div>

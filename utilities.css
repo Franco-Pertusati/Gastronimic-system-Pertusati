@@ -69,12 +69,11 @@ html .circleTable {
     width: 100%;
     display: flex;
     gap: 18px;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 
 .radioBtns button {
-    width: 100%;
     display: flex;
     gap: 6px;
     padding: 6px 18px;
@@ -337,6 +336,7 @@ html body .blocked {
     padding: 6px 12px;
     position: relative;
     display: flex;
+    gap: 4px;
     align-items: center;
     justify-content: center;
 }

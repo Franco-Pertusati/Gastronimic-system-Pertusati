@@ -37,13 +37,21 @@ span {
 }
 
 h1 {
-    font-size: 5.5rem;
     color: var(--mainColor);
-    position: absolute;
-    left: 20px;
-    top: 34px;
-    line-height: 0;
     font-weight: bolder;
+    font-size: 5.5rem;
+    line-height: 0;
+    place-self: center;
+    justify-self: start;
+}
+
+.appTitle {
+    place-items: center;
+    gap: 42px;
+}
+
+.appTitle .end {
+    line-height: 0;
 }
 
 h2 {
