@@ -625,10 +625,12 @@ function mergeLists() {
 
   if (itemsToAdd.length) {
     itemsToAdd.forEach((item) => addProductToTable(item));
-    selectedTable.total = selectedTable.total + tableSubTotal;
     itemsForComand = itemsToAdd.filter((p) => p.printOnComand);
+    selectedTable.total = selectedTable.total + tableSubTotal;
     if (selectedTable.position) {
-      selectedTable.startTime = Date.now();
+      if (!selectedTable.startTime) {
+        selectedTable.startTime = Date.now();
+      }
       updateTableState();
     } else {
       switchDialogState("confirmSellDialog");
@@ -1309,6 +1311,19 @@ function updateBarName() {
   saveData("barName", barName);
 }
 
+const ntType = document.getElementById("ntType");
+const ntImport = document.getElementById("ntImport");
+const ntPm = document.getElementById("ntPm");
+const ntProveedor = document.getElementById("ntProveedor");
+const reflejarEncaja = document.getElementById("reflejarEncaja");
+const cancelNt = document.getElementById("cancelNt");
+const confirmNt = document.getElementById("confirmNt");
+
+function createTransaction(type) {
+  ntType.textContent = `Registrar nueva ${type}`;
+  populateSelect("ntPm", paymentsMethods);
+}
+
 function delLocalStorage(dataToDelete) {
   if (dataToDelete != "all") {
     localStorage.removeItem(dataToDelete);
@@ -1387,3 +1402,5 @@ cashRegisters.forEach((cr) => {
   total = cr.total;
 });
 document.getElementById("totalabsoluto").textContent = `$${total.toFixed(2)}`;
+
+createTransaction("entrada");

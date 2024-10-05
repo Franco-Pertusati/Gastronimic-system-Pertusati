@@ -2,18 +2,13 @@
     margin-bottom: 18px;
 }
 
-/* CAJAS DIALOG */
-#cajas {
-    width: 264px;
-}
-
 .cajasList {
     height: 100%;
 }
 
 .caja {
     display: grid;
-    grid-template-columns: 120px 1fr;
+    grid-template-columns: 220px 120px;
     align-items: center;
 }
 
