@@ -15,3 +15,11 @@
 .bolder {
     font-weight: 800;
 }
+
+#newTransaction .caja {
+    grid-template-columns: 220px 200px;
+}
+
+#newTransaction input {
+    width: 200px;
+}

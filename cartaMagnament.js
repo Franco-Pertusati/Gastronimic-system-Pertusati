@@ -7,8 +7,10 @@ var shifts = JSON.parse(localStorage.getItem("shifts")) || [];
 var barName = JSON.parse(localStorage.getItem("barName")) || "Bar name";
 var paymentsMethods = [];
 var cashRegisters = [
-  { name: "Caja-1:", total: 0, id: 1551 },
-  { name: "Caja-2:", total: 0, id: 1552 },
+  { name: "Monto inicial:", total: 0, id: 1550 },
+  { name: "Egresos:", total: 0, id: 1551 },
+  { name: "Caja-1:", total: 0, id: 1552 },
+  { name: "Caja-2:", total: 0, id: 1553 },
 ];
 var selectedTable = null;
 var visibleInput = null;
@@ -60,7 +62,6 @@ function createShift() {
     endTime: getFormatedTime(),
     sales: [...sales],
   };
-  console.log(shifts);
   shifts.push(newShift);
   saveData("shifts", shifts);
 }
@@ -655,7 +656,6 @@ function cancelOperation() {
   addedItems.innerHTML = "";
   if (!selectedTable.position) {
     selectATable();
-    console.log("sinPosicion");
   }
 }
 
@@ -727,7 +727,6 @@ document
   });
 
 function closeTable() {
-  updateBalances();
   registerSale();
   selectedTable.products = [];
   selectedTable.total = 0;
@@ -745,26 +744,45 @@ function closeTable() {
 }
 
 function updateBalances() {
-  selectedTable.products.forEach((p) => {
-    const cashRegisterName = p.cashRegister;
-    const productPrice = parseFloat(p.price);
-    total = total + productPrice;
-    document.getElementById("totalabsoluto").textContent = `$${total.toFixed(
-      2
-    )}`;
+  total = 0;
+  cashRegisters.forEach((cr) => (cr.total = 0));
 
-    const cashRegister = cashRegisters.find(
-      (cr) => cr.name === cashRegisterName
-    );
+  sales.forEach((s) => {
+    total += s.total;
 
-    if (cashRegister) {
-      cashRegister.total += productPrice;
-      document.getElementById(
-        `register-${cashRegister.id}`
-      ).textContent = `$${cashRegister.total.toFixed(2)}`;
+    if (s.products) {
+      s.products.forEach((p) => {
+        let crToUpdate = cashRegisters.find((cr) => p.cashRegister == cr.name);
+        if (crToUpdate) {
+          crToUpdate.total += parseFloat(p.price);
+        }
+      });
     }
   });
-  saveData("cashRegisters", cashRegisters);
+
+  document.querySelector("#totalabsoluto").textContent = `$${total.toFixed(2)}`;
+  document.querySelector("#cajasList").innerHTML = "";
+
+  cashRegisters.forEach((cr) => {
+    printCashRegister(cr);
+  });
+
+  localStorage.setItem("cashRegisters", JSON.stringify(cashRegisters));
+  localStorage.setItem("totalSales", total.toFixed(2));
+}
+
+function loadFromLocalStorage() {
+  let storedCashRegisters = JSON.parse(localStorage.getItem("cashRegisters"));
+  if (storedCashRegisters) {
+    cashRegisters = storedCashRegisters;
+  }
+
+  let storedTotalSales = parseFloat(localStorage.getItem("totalSales"));
+  if (!isNaN(storedTotalSales)) {
+    total = storedTotalSales;
+  }
+
+  updateBalances();
 }
 
 function registerSale() {
@@ -776,7 +794,13 @@ function registerSale() {
     time: getFormatedTime(),
     date: getFormatedDate(),
     id: Date.now(),
+    type: null,
   };
+  if (selectedTable.position) {
+    saleData.type = "table_restaurant";
+  } else {
+    saleData.type = "point_of_sale";
+  }
   sales.push(saleData);
   printSale(saleData);
   saveData("sales", sales);
@@ -792,6 +816,10 @@ function printSale(sale) {
   const movInfo = document.createElement("div");
   movInfo.className = "movInfo";
 
+  const icon = document.createElement("i");
+  icon.textContent = sale.type;
+  icon.classList.add("material-icons");
+
   const mesaSpan = document.createElement("span");
   mesaSpan.textContent = sale.name;
   mesaSpan.classList.add("elipsis");
@@ -802,42 +830,46 @@ function printSale(sale) {
   const dateSpan = document.createElement("span");
   dateSpan.textContent = sale.time;
 
+  const dateSpan2 = document.createElement("span");
+  dateSpan2.textContent = sale.date;
+
   const pmSpan = document.createElement("span");
   pmSpan.textContent = sale.paymentsMethod;
   pmSpan.classList.add("elipsis");
 
-  const dateSpan2 = document.createElement("span");
-  dateSpan2.textContent = sale.date;
-
-  const button = document.createElement("button");
-  button.className = "discretBtn";
-
-  const icon = document.createElement("i");
-  icon.className = "material-icons unchecked";
-  icon.textContent = "chevron_left";
-
-  button.appendChild(icon);
+  // Mueve dateSpan antes de pmSpan para que tenga sentido
+  movInfo.appendChild(icon);
   movInfo.appendChild(mesaSpan);
   movInfo.appendChild(amountSpan);
-  movInfo.appendChild(pmSpan);
-  movInfo.appendChild(dateSpan);
   movInfo.appendChild(dateSpan2);
-  movInfo.appendChild(button);
+  movInfo.appendChild(dateSpan);
+  movInfo.appendChild(pmSpan);
+
   innerDiv.appendChild(movInfo);
   movContainer.appendChild(innerDiv);
-
-  const movListItem = document.createElement("div");
-  movListItem.className = "movListItem hide";
-  movListItem.id = `sale-${sale.id}`;
-  movContainer.appendChild(movListItem);
   list.appendChild(movContainer);
 
-  button.addEventListener("click", () => {
-    movListItem.classList.toggle("hide");
-    button.classList.toggle("rotate90");
-  });
+  if (sale.products) {
+    const button = document.createElement("button");
+    button.className = "discretBtn";
+    movInfo.appendChild(button);
 
-  printItemsWithQuantity(movListItem.id, sale.products);
+    const icon = document.createElement("i");
+    icon.className = "material-icons unchecked";
+    icon.textContent = "chevron_left";
+
+    const movListItem = document.createElement("div");
+    movListItem.className = "movListItem hide";
+    movListItem.id = `sale-${sale.id}`;
+    movContainer.appendChild(movListItem);
+
+    button.appendChild(icon);
+    button.addEventListener("click", () => {
+      movListItem.classList.toggle("hide");
+      button.classList.toggle("rotate90");
+    });
+    printItemsWithQuantity(movListItem.id, sale.products);
+  }
 }
 
 const tableNotesBtn = document
@@ -1187,17 +1219,6 @@ function populateSelect(selectId, options) {
   });
 }
 
-function createCashRegister() {
-  const cashRegister = {
-    name: `Caja-${cashRegisters.length}`,
-    id: Date.now(),
-    total: 0,
-  };
-  cashRegisters.push(cashRegister);
-  printCashRegister(cashRegister);
-  saveData("cashRegisters", cashRegisters);
-}
-
 function printCashRegister(cashRegister) {
   var container = document.querySelector("#cajasList");
   const caja = document.createElement("div");
@@ -1209,13 +1230,11 @@ function printCashRegister(cashRegister) {
 
   const amountSpan = document.createElement("span");
   amountSpan.id = `register-${cashRegister.id}`;
-  amountSpan.textContent = `$${cashRegister.total}` || "$0.00";
+  amountSpan.textContent = `$${cashRegister.total}`;
   caja.appendChild(amountSpan);
 
   container.appendChild(caja);
 }
-
-document.getElementById("totalabsoluto").textContent = `$${total.toFixed(2)}`;
 
 function createPm() {
   const input = document.querySelector("#pmName");
@@ -1315,13 +1334,45 @@ const ntType = document.getElementById("ntType");
 const ntImport = document.getElementById("ntImport");
 const ntPm = document.getElementById("ntPm");
 const ntProveedor = document.getElementById("ntProveedor");
-const reflejarEncaja = document.getElementById("reflejarEncaja");
 const cancelNt = document.getElementById("cancelNt");
-const confirmNt = document.getElementById("confirmNt");
+const confirmNt = document
+  .getElementById("confirmNt")
+  .addEventListener("click", createTransaction);
+var isTrasnPositive = true;
 
-function createTransaction(type) {
+function printTransactionDialog(type) {
   ntType.textContent = `Registrar nueva ${type}`;
+  if (type == "entrada") {
+    isTrasnPositive = true;
+  } else {
+    isTrasnPositive = false;
+  }
   populateSelect("ntPm", paymentsMethods);
+  switchDialogState("newTransaction");
+}
+
+function createTransaction() {
+  const transactionData = {
+    name: ntProveedor.value,
+    total: parseInt(ntImport.value),
+    paymentsMethod: ntPm.value,
+    time: getFormatedTime(),
+    date: getFormatedDate(),
+    id: Date.now(),
+    type: null,
+  };
+  if (!isTrasnPositive) {
+    transactionData.total = transactionData.total * -1;
+    transactionData.type = "arrow_upward";
+  } else {
+    transactionData.type = "arrow_downward";
+  }
+  sales.push(transactionData);
+  printSale(transactionData);
+  saveData("sales", sales);
+  ntImport.value = "";
+  ntProveedor.value = "";
+  closeCurrentDialog();
 }
 
 function delLocalStorage(dataToDelete) {
@@ -1368,7 +1419,6 @@ function loadGroups() {
 
 function saveData(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
-  console.log(key);
 }
 
 function loadData(key, variableToUpdate, containerSelector, printFunction) {
@@ -1387,9 +1437,180 @@ function loadBoolean(key) {
   return value === "true";
 }
 
-printCashRegister(cashRegisters[0]);
-printCashRegister(cashRegisters[1]);
-loadData("cashRegisters", cashRegisters, "#cajasList", printCashRegister);
+function loadExampleData() {
+  groups = [
+    {
+      name: "Cafes",
+      products: [
+        {
+          name: "Cafe americano",
+          price: 35,
+          id: 1728338825432,
+          cashRegister: "Caja-1",
+          printOnComand: false,
+          available: true,
+        },
+        {
+          name: "Espresso Doble",
+          price: 40,
+          id: 1728338825433,
+          cashRegister: "Caja-1",
+          printOnComand: false,
+          available: true,
+        },
+        {
+          name: "Cappuccino",
+          price: 50,
+          id: 1728338825434,
+          cashRegister: "Caja-1",
+          printOnComand: false,
+          available: true,
+        },
+        {
+          name: "Latte",
+          price: 55,
+          id: 1728338825435,
+          cashRegister: "Caja-1",
+          printOnComand: false,
+          available: true,
+        },
+        {
+          name: "Macchiato",
+          price: 45,
+          id: 1728338825436,
+          cashRegister: "Caja-1",
+          printOnComand: false,
+          available: true,
+        },
+      ],
+    },
+    {
+      name: "Bebidas frias",
+      products: [
+        {
+          name: "Limonada con Menta",
+          price: 40,
+          id: 1728338870135,
+          cashRegister: "Caja-1",
+          printOnComand: false,
+          available: true,
+        },
+        {
+          name: "Té Helado de Frutas Rojas",
+          price: 50,
+          id: 1728338870136,
+          cashRegister: "Caja-1",
+          printOnComand: false,
+          available: true,
+        },
+        {
+          name: "Smoothie de Mango y Fresa",
+          price: 65,
+          id: 1728338870137,
+          cashRegister: "Caja-1",
+          printOnComand: false,
+          available: true,
+        },
+        {
+          name: "Frapuccino de Café",
+          price: 70,
+          id: 1728338870138,
+          cashRegister: "Caja-1",
+          printOnComand: false,
+          available: true,
+        },
+        {
+          name: "Jugo de Naranja Natural",
+          price: 45,
+          id: 1728338870139,
+          cashRegister: "Caja-1",
+          printOnComand: false,
+          available: true,
+        },
+      ],
+    },
+  ];
+
+  paymentsMethods = [
+    {
+      name: "Efectivo",
+      total: 0,
+      id: 1728340925076,
+    },
+    {
+      name: "Tarjeta",
+      total: 0,
+      id: 1728340929956,
+    },
+  ];
+
+  barName = "Café: El Ejemplo";
+
+  tables = [
+    {
+        "id": 1728341183749,
+        "name": "Mesa 1",
+        "products": [],
+        "total": 0,
+        "waitingPayment": false,
+        "note": "",
+        "position": "25",
+        "shape": true,
+        "startTime": null
+    },
+    {
+        "id": 1728341183925,
+        "name": "Mesa 2",
+        "products": [],
+        "total": 0,
+        "waitingPayment": false,
+        "note": "",
+        "position": "26",
+        "shape": true,
+        "startTime": null
+    },
+    {
+        "id": 1728341184069,
+        "name": "Mesa 3",
+        "products": [],
+        "total": 0,
+        "waitingPayment": false,
+        "note": "",
+        "position": "27",
+        "shape": true,
+        "startTime": null
+    },
+    {
+        "id": 1728341189517,
+        "name": "Redonda 1",
+        "products": [],
+        "total": 0,
+        "waitingPayment": false,
+        "note": "",
+        "position": "45",
+        "shape": false,
+        "startTime": null
+    },
+    {
+        "id": 1728341189669,
+        "name": "Redonda 2",
+        "products": [],
+        "total": 0,
+        "waitingPayment": false,
+        "note": "",
+        "position": "46",
+        "shape": false,
+        "startTime": null
+    }
+]
+
+  saveData("groups", groups);
+  saveData("paymentsMethods", paymentsMethods);
+  saveData("barName", barName);
+  saveData("tables", tables);
+  location.reload()
+}
+
 loadData("sales", sales, "#cashHistoryList", printSale);
 loadData("paymentsMethods", paymentsMethods, "#paymentMethodsList", printPm);
 populateSelect("pmSlct", paymentsMethods);
@@ -1397,10 +1618,4 @@ loadTables();
 loadGroups();
 selectATable();
 shiftManagment();
-
-cashRegisters.forEach((cr) => {
-  total = cr.total;
-});
-document.getElementById("totalabsoluto").textContent = `$${total.toFixed(2)}`;
-
-createTransaction("entrada");
+loadFromLocalStorage();

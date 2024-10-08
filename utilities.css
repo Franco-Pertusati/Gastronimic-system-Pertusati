@@ -115,7 +115,6 @@ html .circleTable {
     padding: 6px 22px;
     font-weight: 700;
     color: var(--seasalt);
-    font-size: 2.5rem;
     background-color: var(--mainColor);
     border-radius: 22px;
 }
@@ -325,7 +324,7 @@ html body .blocked {
 
 .enfasisBtn span,
 .enfasisBtn i {
-    color: var(--seasalt);
+    color: var(--alwaysWhite);
 }
 
 .enfasisBtn:hover {

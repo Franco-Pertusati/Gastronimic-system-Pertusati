@@ -43,7 +43,7 @@
                 </button>
                 <button class="discretBtn wfull" id="">
                     <i class="material-icons">swap_horiz</i>
-                    <span>Mover mesa o items</span>
+                    <span>Mover mesa</span>
                 </button>
             </div>
         </div>
@@ -52,15 +52,15 @@
             <span>Caja</span>
             <i class="material-icons">keyboard_arrow_down</i>
             <div class="buttons shadow win">
-                <button class="discretBtn wfull">
+                <button class="discretBtn wfull" onclick="printTransactionDialog('entrada')">
                     <i class="material-icons">arrow_downward</i>
                     <span>Nueva entrada</span>
                 </button>
-                <button class="discretBtn wfull">
+                <button class="discretBtn wfull" onclick="printTransactionDialog('salida')">
                     <i class="material-icons">arrow_upward</i>
                     <span>Nueva salida</span>
                 </button>
-                <button class="discretBtn wfull" onclick="switchDialogState('cajas')">
+                <button class="discretBtn wfull" onclick="switchDialogState('cajas'),  updateBalances()">
                     <i class="material-icons">point_of_sale</i>
                     <span>Estado de caja</span>
                 </button>
@@ -102,7 +102,7 @@
                     <i class="material-icons">refresh</i>
                     <span>Reestablecer valores</span>
                 </button>
-                <button class="discretBtn wfull">
+                <button class="discretBtn wfull" onclick="loadExampleData()">
                     <i class="material-icons">upload</i>
                     <span>Cargar ejemplo</span>
                 </button>
@@ -217,7 +217,7 @@
         </div>
     </div>
 
-    <div class="dialogContainer">
+    <div class="dialogContainer hide">
 
         <div class="dialog hide sellWindow" id="sellWindow">
             <div id="sellWindowPestaña" class="win"></div>
@@ -365,10 +365,6 @@
         <div class="dialog hide flex flex-col gap-8 p18" id="cajas">
             <h2>Estado de caja</h2>
             <div>
-                <div class="caja">
-                    <span>Monto inicial:</span>
-                    <span id="">$0</span>
-                </div>
                 <div class="cajasList" id="cajasList"></div>
                 <div class="caja bolder">
                     <span>Total:</span>
@@ -376,10 +372,16 @@
                 </div>
             </div>
             <div></div>
-            <button class="discretBtn" onclick="closeCurrentDialog()">
-                <i class="material-icons">close</i>
-                <span>Volver</span>
-            </button>
+            <div class="flex gap-18">
+                <button class="discretBtn" onclick="closeCurrentDialog()">
+                    <i class="material-icons">close</i>
+                    <span>Volver</span>
+                </button>
+                <button class="discretBtn enfasisBtn" onclick="">
+                    <i class="material-icons">attach_money</i>
+                    <span>Establecer monto inicial</span>
+                </button>
+            </div>
         </div>
 
         <div class="dialog hide flex flex-col" id="historyDialog">
@@ -533,28 +535,19 @@
             <span>El nombre del bar es el que figurara en el titulo de los tickets.</span>
         </div>
 
-        <div class="dialog p18 flex flex-col gap-18" id="newTransaction">
+        <div class="dialog hide p18 flex flex-col gap-18" id="newTransaction">
             <h2 id="ntType">Nuevo ${}</h2>
             <div class="caja">
-                <span>Importe</span>
+                <span>Importe*</span>
                 <input type="text" id="ntImport">
-            </div>
-            <div class="caja">
-                <span>Metodo de pago</span>
-                <select name="" id="ntPm"></select>
             </div>
             <div class="caja">
                 <span>Proveedor</span>
                 <input type="text" id="ntProveedor">
             </div>
             <div class="caja">
-                <span>Reflejar en caja</span>
-                <div class="switch-parent">
-                    <input type="checkbox" class="checkbox" id="reflejarEncaja" />
-                    <label class="switch" for="reflejarEncaja">
-                        <span class="slider"></span>
-                    </label>
-                </div>
+                <span>Metodo de pago</span>
+                <select name="" id="ntPm"></select>
             </div>
             <div></div>
             <div class="flex gap-18">
