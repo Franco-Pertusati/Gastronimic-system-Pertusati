@@ -535,6 +535,17 @@
             <span>El nombre del bar es el que figurara en el titulo de los tickets.</span>
         </div>
 
+        <div class="firstTimeDialog p18 flex flex-col gap-18 dialog hide" id="firstTimeDialog">
+            <h2>¿Primera vez?</h2>
+            <span>Prueba cargar datos de ejmplo para probar como funciona el sistema.</span>
+            <div class="flex gap-18">
+                <button class="discretBtn" onclick="closeCurrentDialog()">No, gracias</button>
+                <button class="discretBtn enfasisBtn" onclick="loadExampleData()">
+                    <span>Cargar datos de ejemplo</span>
+                </button>
+            </div>
+        </div>
+
         <div class="dialog hide p18 flex flex-col gap-18" id="newTransaction">
             <h2 id="ntType">Nuevo ${}</h2>
             <div class="caja">
@@ -563,41 +574,32 @@
         </div>
     </div>
 
-    <div class="shifCover flex flex-col gap-18">
-        <div class="win">
+    <div class="shifCover flex gap-18">
+        <div class="softDesc win">
             <h2>Growler</h2>
-            <button class="cssbuttons-io-button" id="startShift">
-                Comenzar turno
-                <div class="icon">
-                    <i class="material-icons">arrow_forward</i>
+            <div>
+                <p>Growler es un sistema de gestion para locales gastronomicos chicos. Es gratis y no requiere registro.
+                    No
+                    cuenta con niveles de autorización, lo que significa que la persona que lo maneje debe ser de
+                    confianza.
+                </p>
+            </div>
+        </div>
+        <div class="flex flex-col gap-18">
+            <div class="win">
+                <button class="cssbuttons-io-button" id="startShift">
+                    Comenzar turno
+                    <div class="icon">
+                        <i class="material-icons">arrow_forward</i>
+                    </div>
+                </button>
+            </div>
+            <div class="win flex flex-col p18 gap-18">
+                <h2>Tutorial</h2>
+                <div class="zocalo">
+                    <span>Proximamente</span>
                 </div>
-            </button>
-        </div>
-        <div class="flex gap-18">
-            <button class="nBtn">
-                <span>Guia de uso</span>
-                <i class="material-icons">question_mark</i>
-            </button>
-            <button class="nBtn">
-                <span>Github</span>
-                <i class="material-icons">open_in_new</i>
-            </button>
-        </div>
-        <div class="flex gap-18">
-            <button class="nBtn">
-                <span>Importar / exportar datos</span>
-                <i class="material-icons">swap_vert</i>
-            </button>
-        </div>
-        <div class="flex gap-18">
-            <button class="nBtn">
-                <span>Turnos</span>
-                <i class="material-icons">group</i>
-            </button>
-            <button class="nBtn">
-                <span>Estadisticas</span>
-                <i class="material-icons">show_chart</i>
-            </button>
+            </div>
         </div>
     </div>
     <script src="cartaMagnament.js"></script>

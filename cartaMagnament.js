@@ -1437,6 +1437,13 @@ function loadBoolean(key) {
   return value === "true";
 }
 
+var offerExample = localStorage.getItem("offerExample") !== null ? JSON.parse(localStorage.getItem("offerExample")) : true;
+
+if (offerExample === true) {
+    switchDialogState("firstTimeDialog");
+    localStorage.setItem("offerExample", JSON.stringify(false));
+}
+
 function loadExampleData() {
   groups = [
     {
@@ -1548,67 +1555,67 @@ function loadExampleData() {
 
   tables = [
     {
-        "id": 1728341183749,
-        "name": "Mesa 1",
-        "products": [],
-        "total": 0,
-        "waitingPayment": false,
-        "note": "",
-        "position": "25",
-        "shape": true,
-        "startTime": null
+      id: 1728341183749,
+      name: "Mesa 1",
+      products: [],
+      total: 0,
+      waitingPayment: false,
+      note: "",
+      position: "25",
+      shape: true,
+      startTime: null,
     },
     {
-        "id": 1728341183925,
-        "name": "Mesa 2",
-        "products": [],
-        "total": 0,
-        "waitingPayment": false,
-        "note": "",
-        "position": "26",
-        "shape": true,
-        "startTime": null
+      id: 1728341183925,
+      name: "Mesa 2",
+      products: [],
+      total: 0,
+      waitingPayment: false,
+      note: "",
+      position: "26",
+      shape: true,
+      startTime: null,
     },
     {
-        "id": 1728341184069,
-        "name": "Mesa 3",
-        "products": [],
-        "total": 0,
-        "waitingPayment": false,
-        "note": "",
-        "position": "27",
-        "shape": true,
-        "startTime": null
+      id: 1728341184069,
+      name: "Mesa 3",
+      products: [],
+      total: 0,
+      waitingPayment: false,
+      note: "",
+      position: "27",
+      shape: true,
+      startTime: null,
     },
     {
-        "id": 1728341189517,
-        "name": "Redonda 1",
-        "products": [],
-        "total": 0,
-        "waitingPayment": false,
-        "note": "",
-        "position": "45",
-        "shape": false,
-        "startTime": null
+      id: 1728341189517,
+      name: "Redonda 1",
+      products: [],
+      total: 0,
+      waitingPayment: false,
+      note: "",
+      position: "45",
+      shape: false,
+      startTime: null,
     },
     {
-        "id": 1728341189669,
-        "name": "Redonda 2",
-        "products": [],
-        "total": 0,
-        "waitingPayment": false,
-        "note": "",
-        "position": "46",
-        "shape": false,
-        "startTime": null
-    }
-]
+      id: 1728341189669,
+      name: "Redonda 2",
+      products: [],
+      total: 0,
+      waitingPayment: false,
+      note: "",
+      position: "46",
+      shape: false,
+      startTime: null,
+    },
+  ];
 
   saveData("groups", groups);
   saveData("paymentsMethods", paymentsMethods);
   saveData("barName", barName);
   saveData("tables", tables);
-  location.reload()
+  location.reload();
 }
 
 loadData("sales", sales, "#cashHistoryList", printSale);

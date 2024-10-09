@@ -2,3 +2,31 @@
     width: 400px;
     display: flex;
 }
+
+.firstTimeDialog {
+    width: 460px;
+}
+
+.zocalo {
+    width: 245px;
+    height: 130px;
+    background-color: var(--platinum);
+    padding: 8px;
+    border-radius: 12px;
+    text-align: center;
+    place-content: center;
+}
+
+.shifCover .softDesc {
+    width: 320px;
+    height: 334px;
+}
+
+.softDesc div {
+    height: 100%;
+    overflow-y: auto;
+}
+
+p {
+    font-size: 2rem;
+}
