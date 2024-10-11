@@ -1028,7 +1028,7 @@ function printTicket() {
             padding: 0;
             box-sizing: border-box;
             font-family: monospace;
-            font-size: 62.5%;
+            font-size: 85%;
             color: var(--eerie-black);
         }
     
@@ -1134,7 +1134,7 @@ function printTicketComanda(itemsForComand) {
             padding: 0;
             box-sizing: border-box;
             font-family: monospace;
-            font-size: 62.5%;
+            font-size: 85%;
             color: var(--eerie-black);
         }
     
