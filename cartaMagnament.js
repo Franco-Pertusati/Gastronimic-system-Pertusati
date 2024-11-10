@@ -521,8 +521,9 @@ function updateTableState() {
     printBtn.classList.add("blocked");
     paymentsBtn.classList.add("hide");
     tooltip.textContent = "0m";
+    selectedTable.startTime = null;
   } else {
-    printItemsWithQuantity("selectedTableList", selectedTable.products);
+    printItemsWithQuantity("selectedTableList", selectedTable.products, true);
     tableUI.classList.add("occupied");
     printBtn.classList.remove("hide");
     printBtn.classList.remove("blocked");
@@ -615,6 +616,7 @@ function addProductToTable(product) {
     price: product.price,
     id: product.id,
     cashRegister: product.cashRegister,
+    additionTime: Date.now()
   };
   selectedTable.products.push(productToAdd);
 }
@@ -625,7 +627,9 @@ function mergeLists() {
   addedItems.innerHTML = "";
 
   if (itemsToAdd.length) {
-    itemsToAdd.forEach((item) => addProductToTable(item));
+    itemsToAdd.forEach((item) => {
+      addProductToTable(item);
+    });
     itemsForComand = itemsToAdd.filter((p) => p.printOnComand);
     selectedTable.total = selectedTable.total + tableSubTotal;
     if (selectedTable.position) {
@@ -659,23 +663,21 @@ function cancelOperation() {
   }
 }
 
-function printItemsWithQuantity(listElementID, listToPrint) {
+function printItemsWithQuantity(listElementID, listToPrint, withTime) {
   const listElement = document.getElementById(listElementID);
   listElement.innerHTML = "";
 
   const productCount = listToPrint.reduce((acc, product, index) => {
-    const { name, price } = product;
+    const { name, price, additionTime } = product; 
     if (!acc[name]) {
-      acc[name] = { price, count: 0, indexes: [] };
+      acc[name] = { price, count: 0, indexes: [], additionTime };  
     }
     acc[name].count++;
     acc[name].indexes.push(index);
     return acc;
   }, {});
 
-  for (const [name, { price, count, indexes }] of Object.entries(
-    productCount
-  )) {
+  for (const [name, { price, count, indexes, additionTime }] of Object.entries(productCount)) {
     const listItem = document.createElement("div");
     listItem.classList.add("prodInPordList2");
 
@@ -711,10 +713,16 @@ function printItemsWithQuantity(listElementID, listToPrint) {
     listItem.appendChild(nameSpan);
     listItem.appendChild(countSpan);
     listItem.appendChild(priceSpan);
+    if (withTime) {
+      const additionTimeSpan = document.createElement("span");  
+      additionTimeSpan.textContent = getTimeSpan(additionTime)  
+      listItem.appendChild(additionTimeSpan);
+    }
     listItem.appendChild(delBtn);
     listElement.appendChild(listItem);
   }
 }
+
 
 document
   .querySelector("#cancleClosetableBtn")
@@ -837,7 +845,6 @@ function printSale(sale) {
   pmSpan.textContent = sale.paymentsMethod;
   pmSpan.classList.add("elipsis");
 
-  // Mueve dateSpan antes de pmSpan para que tenga sentido
   movInfo.appendChild(icon);
   movInfo.appendChild(mesaSpan);
   movInfo.appendChild(amountSpan);
@@ -1617,6 +1624,15 @@ function loadExampleData() {
   saveData("tables", tables);
   location.reload();
 }
+
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape') {
+    closeCurrentDialog()
+    if (!selectedTable.position) {
+      selectATable()
+    }
+  }
+});
 
 loadData("sales", sales, "#cashHistoryList", printSale);
 loadData("paymentsMethods", paymentsMethods, "#paymentMethodsList", printPm);

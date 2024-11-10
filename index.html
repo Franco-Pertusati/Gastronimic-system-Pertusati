@@ -110,7 +110,7 @@
                     <i class="material-icons">title</i>
                     <span>Nombre del local</span>
                 </button>
-                <button class="discretBtn wfull">
+                <button class="discretBtn wfull" onclick="switchDialogState('ticketsConfigDialog')">
                     <i class="material-icons">receipt_long</i>
                     <span>Tickets</span>
                 </button>
@@ -494,9 +494,36 @@
             </button>
         </div>
 
-        <div class="dialog hide p18" id="ticketsConfigDialogs">
-            <h2>Config de tockets</h2>
-            <div id="shiftsList"></div>
+        <div class="dialog hide p18 w512 flex flex-col gap-18" id="ticketsConfigDialog">
+            <h2>Config de tickets</h2>
+            <div class="flex flex-col gap-8">
+                <div class="flex">
+                    <span class="wfull">Tamaño de encabezado:</span>
+                    <select name="" id=""></select>
+                </div>
+            </div>
+            <div class="flex flex-col gap-8">
+                <div class="flex">
+                    <span class="wfull">Tamaño de items:</span>
+                    <select name="" id=""></select>
+                </div>
+            </div>
+            <div class="flex flex-col gap-8">
+                <div class="flex">
+                    <span class="wfull">Tamaño del total:</span>
+                    <select name="" id=""></select>
+                </div>
+            </div>
+            <div class="flex gap-8">
+                <button class="discretBtn enfasisBtn">
+                    <span>Previsualización</span>
+                    <i class="material-icons">preview</i>
+                </button>
+                <button class="discretBtn enfasisBtn">
+                    <span>Aplicar</span>
+                    <i class="material-icons">check</i>
+                </button>
+            </div>
             <button class="discretBtn" onclick="closeCurrentDialog()">
                 <span>Cancelar</span>
                 <i class="material-icons">close</i>
