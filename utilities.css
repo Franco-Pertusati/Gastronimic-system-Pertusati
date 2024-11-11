@@ -6,7 +6,7 @@
     background-color: var(--seasalt);
     border: solid 1px var(--french-gray);
     color: var(--eerie-black);
-    font-size: 2rem;
+    font-size: 1.5rem;
     font: 600;
     box-shadow: 0px 4px 4px -2px rgba(0, 0, 0, 0.2);
     text-wrap: nowrap;
@@ -38,6 +38,7 @@
     display: flex;
     height: calc(100vh - 67px);
     padding: 18px;
+    position: relative;
 }
 
 .salon {
@@ -47,6 +48,7 @@
     background-color: var(--seasalt);
     border-radius: 22px;
     border: solid 1px var(--platinum);
+    position: relative;
 }
 
 html .circleTable {
@@ -57,11 +59,11 @@ html .circleTable {
     background-color: var(--blue);
 }
 
-.salonContainer .panelContainer {
-    width: 510px;
-    display: flex;
-    flex-direction: column;
+.panelContainer {
+    height: calc(100% - 56px);
+    width: 640px;
     border-radius: 22px;
+    position: relative;
 }
 
 .radioBtns {
@@ -81,7 +83,7 @@ html .circleTable {
     background-color: var(--seasalt);
     border: solid 1px var(--french-gray);
     color: var(--eerie-black);
-    font-size: 2rem;
+    font-size: 1.5rem;
     font: 600;
     box-shadow: 0px 4px 4px -2px rgba(0, 0, 0, 0.2);
 }
@@ -95,6 +97,20 @@ html .circleTable {
     display: flex;
     flex-direction: column;
     gap: 18px;
+}
+
+.tableData {
+    margin-top: 4px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.tableData span {
+    width: fit-content;
+    background-color: var(--mainColor);
+    color: var(--seasalt);
+    border-radius: 50px;
+    padding: 4px 12px;
 }
 
 #panelPag1 {
@@ -125,6 +141,7 @@ html .circleTable {
 
 .selectedTableList {
     height: 100%;
+    overflow: auto;
 }
 
 .circleBtn {
@@ -133,7 +150,7 @@ html .circleTable {
     border-radius: 50%;
     background-color: var(--mainColor);
     color: var(--seasalt);
-    font-size: 2rem;
+    font-size: 1.5rem;
     font: 600;
 }
 

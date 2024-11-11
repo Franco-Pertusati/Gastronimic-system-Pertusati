@@ -23,3 +23,9 @@
 #newTransaction input {
     width: 200px;
 }
+
+#shiftsListDialog {
+    height: 100vh;
+    width: 100vw;
+    border-radius: 0;
+}

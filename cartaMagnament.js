@@ -523,7 +523,7 @@ function updateTableState() {
     tooltip.textContent = "0m";
     selectedTable.startTime = null;
   } else {
-    printItemsWithQuantity("selectedTableList", selectedTable.products, true);
+    printItemsWithQuantity("selectedTableList", selectedTable.products, withTime = true);
     tableUI.classList.add("occupied");
     printBtn.classList.remove("hide");
     printBtn.classList.remove("blocked");
@@ -593,7 +593,7 @@ function printSellWindow() {
           itemsToAdd.push(p);
           tableSubTotal += parseFloat(p.price);
           totalUI.textContent = `Subtotal: $${tableSubTotal.toFixed(2)}`;
-          printItemsWithQuantity("addedItems", itemsToAdd);
+          printItemsWithQuantity("addedItems", itemsToAdd, false, true);
         });
       });
     });
@@ -663,7 +663,7 @@ function cancelOperation() {
   }
 }
 
-function printItemsWithQuantity(listElementID, listToPrint, withTime) {
+function printItemsWithQuantity(listElementID, listToPrint, withTime, withPrinteable) {
   const listElement = document.getElementById(listElementID);
   listElement.innerHTML = "";
 
@@ -717,6 +717,9 @@ function printItemsWithQuantity(listElementID, listToPrint, withTime) {
       const additionTimeSpan = document.createElement("span");  
       additionTimeSpan.textContent = getTimeSpan(additionTime)  
       listItem.appendChild(additionTimeSpan);
+    }
+    if (withPrinteable) {
+      const printItemBtn = document.createElement("button");
     }
     listItem.appendChild(delBtn);
     listElement.appendChild(listItem);
@@ -1623,6 +1626,24 @@ function loadExampleData() {
   saveData("barName", barName);
   saveData("tables", tables);
   location.reload();
+}
+
+printShifts()
+function printShifts() {
+  shifts.forEach(shift => {
+    const shiftContainer = document.createElement("div");
+    shiftContainer.innerHTML = `
+            <div class="shiftsContainer flex">
+                <div>
+                    <h3>Fecha: ${shift.date} -- Hora de inicio: ${shift.startTime} -- Hora de salida: ${shift.endTime}</h3>
+                </div>
+                <div>
+                  
+                </div>
+            </div>
+    `
+    document.querySelector("#shiftsList").appendChild(shiftContainer)
+  });
 }
 
 document.addEventListener('keydown', function(event) {

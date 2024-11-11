@@ -1,6 +1,6 @@
 .sellWindow {
     display: flex;
-    height: 640px;
+    height: 620px;
     overflow: hidden;
     gap: 8px;
 }
@@ -80,5 +80,4 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     align-items: center;
-    padding: 0 10px;
 }

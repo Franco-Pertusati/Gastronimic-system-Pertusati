@@ -29,18 +29,18 @@ button {
     width: fit-content;
     border-style: none;
     cursor: pointer;
-    font-size: 2rem;
+    font-size: 1.5rem;
     align-items: center;
 }
 
 span {
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 h1 {
     color: var(--mainColor);
     font-weight: bolder;
-    font-size: 5.5rem;
+    font-size: 3.5rem;
     line-height: 0;
     place-self: center;
     justify-self: start;
@@ -68,6 +68,7 @@ html {
 }
 
 body {
+    max-height: 100vh;
     gap: 18px;
     background-color: var(--antiflash-white);
 }
@@ -91,7 +92,7 @@ input {
     padding: 4px 2px;
     border-style: none;
     border-bottom: solid 2px var(--mainColor);
-    font-size: 2rem;
+    font-size: 1.5rem;
     background-color: var(--seasalt);
 }
 
@@ -108,7 +109,7 @@ html body .checkbox {
 }
 
 select {
-    font-size: 2rem;
+    font-size: 1.5rem;
     background-color: var(--seasalt);
     border: solid 1px var(--platinum);
     border-radius: 4px;
