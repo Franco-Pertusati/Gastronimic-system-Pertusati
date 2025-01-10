@@ -736,20 +736,25 @@ document
   });
 
 function closeTable() {
-  registerSale();
-  selectedTable.products = [];
-  selectedTable.total = 0;
-  if (selectedTable.position) {
-    selectedTable.waitingPayment = false;
-    selectedTable.note = "";
-    selectedTable.startTime = null;
-    updateTableState();
+  if (selectedTable.products.length > 0) {
+    registerSale();
+    selectedTable.products = [];
+    selectedTable.total = 0;
+    if (selectedTable.position) {
+      selectedTable.waitingPayment = false;
+      selectedTable.note = "";
+      selectedTable.startTime = null;
+      updateTableState();
+    } else {
+      selectATable();
+    }
+    calcInput.value = "";
+    resultSpan.textContent = "";
+    vueltoSpan.textContent = "";
   } else {
-    selectATable();
+    alert("Mesa sin productos")
+    closeCurrentDialog()
   }
-  calcInput.value = "";
-  resultSpan.textContent = "";
-  vueltoSpan.textContent = "";
 }
 
 function updateBalances() {
@@ -1651,6 +1656,21 @@ function printShifts() {
     document.querySelector("#shiftsList").appendChild(shiftContainer);
   });
 }
+
+const themeBtn = document.querySelector("#toggleTheme");
+const body = document.body;
+
+function toggleTheme() {
+  const currentTheme = body.getAttribute('data-theme');
+  
+  if (currentTheme === 'light') {
+    body.setAttribute('data-theme', 'dark');
+  } else {
+    body.setAttribute('data-theme', 'light');
+  }
+}
+
+themeBtn.addEventListener('click', toggleTheme);
 
 document.addEventListener("keydown", function (event) {
   if (event.key === "Escape") {

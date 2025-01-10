@@ -46,7 +46,6 @@
 .squareProdBtn {
     width: 120px;
     height: 120px;
-    color: var(--seasalt);
     background-color: var(--mainColor);
     border-radius: 22px;
     display: flex;

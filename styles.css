@@ -8,12 +8,31 @@
     --outer-space: #495057ff;
     --onyx: #343a40ff;
     --eerie-black: #212529ff;
-    --mainColor: #f16845; 
+    --mainColor: #ff7c65;
     --hover: #ffeee9;
-    --red: #eb252c;
+    --red: #d11f25;
     --green: #8bc927;
     --blue: #379BD8;
     --alwaysWhite: #f8f9faff;
+    --glass: rgba(255, 255, 255, 0.4)fff;
+}
+
+[data-theme="dark"] {
+    --seasalt: #2c2c2c;
+    --antiflash-white: #1e1e1e;
+    --platinum: #3a3a3a;
+    --french-gray: #4a4a4a;
+    --french-gray-2: #5a5a5a;
+    --slate-gray: #6a6a6a;
+    --outer-space: #7a7a7a;
+    --onyx: #ffffff;
+    --eerie-black: #d4d4d4;
+    --mainColor: #be4f33;
+    --hover: #333333;
+    --red: #c51e23;
+    --green: #6fa11e;
+    --blue: #2f84b9;
+    --alwaysWhite: #f1f1f1;
 }
 
 * {
@@ -142,10 +161,9 @@ select {
     position: absolute;
     top: -20px;
     opacity: 0;
-    background-color: var(--platinum);
+    background-color: var(--eerie-black);
     padding: 3px;
     border-radius: 8px;
-    border: solid 2px var(--onyx);
     display: flex;
     transition-duration: 0.2s;
     pointer-events: none;
@@ -154,6 +172,11 @@ select {
 
 .tooltip span {
     font-size: 1.5rem;
+    color: var(--seasalt);
+}
+
+.tooltip i {
+    color: var(--seasalt);
 }
 
 .tableSelected .tooltip {
