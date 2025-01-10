@@ -6,12 +6,7 @@ var sales = [];
 var shifts = JSON.parse(localStorage.getItem("shifts")) || [];
 var barName = JSON.parse(localStorage.getItem("barName")) || "Bar name";
 var paymentsMethods = [];
-var cashRegisters = [
-  { name: "Monto inicial:", total: 0, id: 1550 },
-  { name: "Egresos:", total: 0, id: 1551 },
-  { name: "Caja-1:", total: 0, id: 1552 },
-  { name: "Caja-2:", total: 0, id: 1553 },
-];
+var cashRegisters = [];
 var selectedTable = null;
 var visibleInput = null;
 var shiftStartTime = null;
@@ -169,15 +164,14 @@ function getTimeSpan(startTime) {
 function createNewProduct(group, groupItemList) {
   var namingAttempts = 0;
   const baseName = "Nuevo producto";
-  const productId = Date.now();
   const newProduct = {
     name: baseName,
     price: 0,
-    id: productId,
-    cashRegister: cashRegisters[0].name,
+    cashRegister: group.index,
     printOnComand: false,
     available: true,
   };
+  console.log(newProduct);
   while (group.products.find((p) => p.name == newProduct.name)) {
     namingAttempts++;
     newProduct.name = baseName + ` (${namingAttempts})`;
@@ -517,23 +511,21 @@ function updateTableState() {
   if (!selectedTable.products.length) {
     tableUI.classList.remove("blueTable");
     tableUI.classList.remove("occupied");
-    printBtn.classList.remove("hide");
     printBtn.classList.add("blocked");
-    paymentsBtn.classList.add("hide");
     tooltip.textContent = "0m";
     selectedTable.startTime = null;
   } else {
-    printItemsWithQuantity("selectedTableList", selectedTable.products, withTime = true);
+    printItemsWithQuantity(
+      "selectedTableList",
+      selectedTable.products,
+      (withTime = true)
+    );
     tableUI.classList.add("occupied");
-    printBtn.classList.remove("hide");
     printBtn.classList.remove("blocked");
-    paymentsBtn.classList.add("hide");
     tooltip.textContent = getTimeSpan(selectedTable.startTime);
     if (selectedTable.waitingPayment) {
       tableUI.classList.remove("occupied");
       tableUI.classList.add("blueTable");
-      printBtn.classList.add("hide");
-      paymentsBtn.classList.remove("hide");
     }
   }
   document.getElementById("NotaContainer").textContent = selectedTable.note;
@@ -616,7 +608,7 @@ function addProductToTable(product) {
     price: product.price,
     id: product.id,
     cashRegister: product.cashRegister,
-    additionTime: Date.now()
+    additionTime: Date.now(),
   };
   selectedTable.products.push(productToAdd);
 }
@@ -663,21 +655,28 @@ function cancelOperation() {
   }
 }
 
-function printItemsWithQuantity(listElementID, listToPrint, withTime, withPrinteable) {
+function printItemsWithQuantity(
+  listElementID,
+  listToPrint,
+  withTime,
+  withPrinteable
+) {
   const listElement = document.getElementById(listElementID);
   listElement.innerHTML = "";
 
   const productCount = listToPrint.reduce((acc, product, index) => {
-    const { name, price, additionTime } = product; 
+    const { name, price, additionTime } = product;
     if (!acc[name]) {
-      acc[name] = { price, count: 0, indexes: [], additionTime };  
+      acc[name] = { price, count: 0, indexes: [], additionTime };
     }
     acc[name].count++;
     acc[name].indexes.push(index);
     return acc;
   }, {});
 
-  for (const [name, { price, count, indexes, additionTime }] of Object.entries(productCount)) {
+  for (const [name, { price, count, indexes, additionTime }] of Object.entries(
+    productCount
+  )) {
     const listItem = document.createElement("div");
     listItem.classList.add("prodInPordList2");
 
@@ -714,8 +713,8 @@ function printItemsWithQuantity(listElementID, listToPrint, withTime, withPrinte
     listItem.appendChild(countSpan);
     listItem.appendChild(priceSpan);
     if (withTime) {
-      const additionTimeSpan = document.createElement("span");  
-      additionTimeSpan.textContent = getTimeSpan(additionTime)  
+      const additionTimeSpan = document.createElement("span");
+      additionTimeSpan.textContent = getTimeSpan(additionTime);
       listItem.appendChild(additionTimeSpan);
     }
     if (withPrinteable) {
@@ -725,7 +724,6 @@ function printItemsWithQuantity(listElementID, listToPrint, withTime, withPrinte
     listElement.appendChild(listItem);
   }
 }
-
 
 document
   .querySelector("#cancleClosetableBtn")
@@ -1088,6 +1086,11 @@ function printTicket() {
         </div>
         <h2>Total: $${total}</h2>
     </div>
+    <script>
+        window.onload = function() {
+      window.print();
+    }
+    </script>
   </body>
   `;
 
@@ -1100,13 +1103,10 @@ function printTicket() {
 }
 
 function printTicketComanda(itemsForComand) {
-  // La lista de items está en selectedTable.products
   const products = itemsForComand;
-
-  // Crear un objeto para agrupar productos y calcular la cantidad
+  const extraNote = document.querySelector("#comandaCommentInp");
   const productCounts = {};
 
-  // Recorrer la lista de productos para contar cuántas veces aparece cada producto
   products.forEach((product) => {
     if (productCounts[product.name]) {
       productCounts[product.name].quantity++;
@@ -1121,7 +1121,6 @@ function printTicketComanda(itemsForComand) {
 
   let itemsListHTML = "";
 
-  // Iterar sobre los productos agrupados para construir el HTML dinámicamente
   Object.values(productCounts).forEach((product) => {
     itemsListHTML += `
       <div class="itemList">
@@ -1131,7 +1130,6 @@ function printTicketComanda(itemsForComand) {
     `;
   });
 
-  // Calcular el total de los productos
   const total = Object.values(productCounts)
     .reduce((acc, product) => acc + product.price * product.quantity, 0)
     .toFixed(2);
@@ -1202,18 +1200,23 @@ function printTicketComanda(itemsForComand) {
         <div class="dataContainer">
           <span>${getFormatedTime()}</span>
         </div>
+        <div class="dataContainer">
+          <span>${extraNote.value}</span>
+        </div>
     </div>
       <script>
     window.onload = function() {
       window.print();
     }
-  </script>
+  </>
   </body>
   `;
 
   const ticketWindow = window.open("", "_blank", "width=400,height=600");
   ticketWindow.document.write(ticketContent);
   ticketWindow.document.close();
+
+  extraNote.value = "";
 }
 
 function populateSelect(selectId, options) {
@@ -1447,11 +1450,14 @@ function loadBoolean(key) {
   return value === "true";
 }
 
-var offerExample = localStorage.getItem("offerExample") !== null ? JSON.parse(localStorage.getItem("offerExample")) : true;
+var offerExample =
+  localStorage.getItem("offerExample") !== null
+    ? JSON.parse(localStorage.getItem("offerExample"))
+    : true;
 
 if (offerExample === true) {
-    switchDialogState("firstTimeDialog");
-    localStorage.setItem("offerExample", JSON.stringify(false));
+  switchDialogState("firstTimeDialog");
+  localStorage.setItem("offerExample", JSON.stringify(false));
 }
 
 function loadExampleData() {
@@ -1628,9 +1634,9 @@ function loadExampleData() {
   location.reload();
 }
 
-printShifts()
+printShifts();
 function printShifts() {
-  shifts.forEach(shift => {
+  shifts.forEach((shift) => {
     const shiftContainer = document.createElement("div");
     shiftContainer.innerHTML = `
             <div class="shiftsContainer flex">
@@ -1641,16 +1647,16 @@ function printShifts() {
                   
                 </div>
             </div>
-    `
-    document.querySelector("#shiftsList").appendChild(shiftContainer)
+    `;
+    document.querySelector("#shiftsList").appendChild(shiftContainer);
   });
 }
 
-document.addEventListener('keydown', function(event) {
-  if (event.key === 'Escape') {
-    closeCurrentDialog()
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") {
+    closeCurrentDialog();
     if (!selectedTable.position) {
-      selectATable()
+      selectATable();
     }
   }
 });

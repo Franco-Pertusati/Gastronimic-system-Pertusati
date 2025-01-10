@@ -1,7 +1,6 @@
 .sellWindow {
     display: flex;
     height: 620px;
-    overflow: hidden;
     gap: 8px;
 }
 
@@ -11,11 +10,11 @@
     border: none;
     border-radius: 0;
     box-shadow: none;
+    position: relative;
 }
 
 #sellWindow .win {
     border: solid 1px var(--platinum);
-    padding: 0;
 }
 
 #sellWindowPestaña {
@@ -35,6 +34,7 @@
 
 .SellWindowlistContainer {
     overflow-y: auto;
+    position: relative;
 }
 
 #sellWindowProductList {
@@ -55,7 +55,7 @@
 }
 
 .squareProdBtn:hover {
-    box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
 }
 
 .addedItems {
@@ -80,4 +80,14 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     align-items: center;
+}
+
+#comandaCommentWin {
+    width: 100%;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 0;
+    bottom: -92px;
 }

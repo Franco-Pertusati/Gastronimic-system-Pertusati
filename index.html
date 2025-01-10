@@ -1,732 +1,592 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Growler | Gestion</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="utilities.css" />
-    <link rel="stylesheet" href="cartaDialog.css" />
-    <link rel="stylesheet" href="sellWindow.css" />
-    <link rel="stylesheet" href="closeTableDialog.css" />
-    <link rel="stylesheet" href="cashDialog.css" />
-    <link rel="stylesheet" href="confirmSellDialog.css" />
-    <link rel="stylesheet" href="HistorialMovimientos.css" />
-    <link rel="stylesheet" href="weekCalendar.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    />
-  </head>
 
-  <body>
-    <nav class="shadow">
-      <div class="flex wfull appTitle">
-        <h1>Growler</h1>
-        <span id="barNameSpan">Bar name</span>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Growler | Gestion</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="utilities.css" />
+  <link rel="stylesheet" href="cartaDialog.css" />
+  <link rel="stylesheet" href="sellWindow.css" />
+  <link rel="stylesheet" href="closeTableDialog.css" />
+  <link rel="stylesheet" href="cashDialog.css" />
+  <link rel="stylesheet" href="confirmSellDialog.css" />
+  <link rel="stylesheet" href="HistorialMovimientos.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+</head>
+
+<body>
+  <nav class="shadow">
+    <div class="flex wfull appTitle">
+      <h1>Growler</h1>
+      <span id="barNameSpan">Bar name</span>
+    </div>
+    <div class="btnszip">
+      <i class="material-icons">bolt</i>
+      <span>Acciones</span>
+      <i class="material-icons">keyboard_arrow_down</i>
+      <div class="buttons shadow win">
+        <button class="discretBtn wfull" id="vecBtn">
+          <i class="material-icons">shopping_cart</i>
+          <span>Venta en mostrador</span>
+        </button>
+        <button class="discretBtn wfull" id="">
+          <i class="material-icons">close</i>
+          <span>Cerrar todas las mesas</span>
+        </button>
+        <button class="discretBtn wfull" id="">
+          <i class="material-icons">swap_horiz</i>
+          <span>Mover mesa</span>
+        </button>
       </div>
-      <div class="btnszip">
-        <i class="material-icons">bolt</i>
-        <span>Acciones</span>
-        <i class="material-icons">keyboard_arrow_down</i>
-        <div class="buttons shadow win">
-          <button class="discretBtn wfull" id="vecBtn">
-            <i class="material-icons">shopping_cart</i>
-            <span>Venta en mostrador</span>
-          </button>
-          <button class="discretBtn wfull" id="">
-            <i class="material-icons">close</i>
-            <span>Cerrar todas las mesas</span>
-          </button>
-          <button class="discretBtn wfull" id="">
-            <i class="material-icons">swap_horiz</i>
-            <span>Mover mesa</span>
-          </button>
-        </div>
+    </div>
+    <div class="btnszip">
+      <i class="material-icons">point_of_sale</i>
+      <span>Caja</span>
+      <i class="material-icons">keyboard_arrow_down</i>
+      <div class="buttons shadow win">
+        <button class="discretBtn wfull" onclick="printTransactionDialog('entrada')">
+          <i class="material-icons">arrow_downward</i>
+          <span>Nueva entrada</span>
+        </button>
+        <button class="discretBtn wfull" onclick="printTransactionDialog('salida')">
+          <i class="material-icons">arrow_upward</i>
+          <span>Nueva salida</span>
+        </button>
+        <button class="discretBtn wfull" onclick="switchDialogState('cajas'),  updateBalances()">
+          <i class="material-icons">point_of_sale</i>
+          <span>Estado de caja</span>
+        </button>
+        <button class="discretBtn wfull" onclick="switchDialogState('paymentMethods')">
+          <i class="material-icons">payments</i>
+          <span>Metodos de pago</span>
+        </button>
+        <button class="discretBtn wfull" onclick="switchDialogState('historyDialog')">
+          <i class="material-icons">history</i>
+          <span>Historial de movimientos</span>
+        </button>
       </div>
-      <div class="btnszip">
-        <i class="material-icons">point_of_sale</i>
-        <span>Caja</span>
-        <i class="material-icons">keyboard_arrow_down</i>
-        <div class="buttons shadow win">
-          <button
-            class="discretBtn wfull"
-            onclick="printTransactionDialog('entrada')"
-          >
-            <i class="material-icons">arrow_downward</i>
-            <span>Nueva entrada</span>
-          </button>
-          <button
-            class="discretBtn wfull"
-            onclick="printTransactionDialog('salida')"
-          >
-            <i class="material-icons">arrow_upward</i>
-            <span>Nueva salida</span>
-          </button>
-          <button
-            class="discretBtn wfull"
-            onclick="switchDialogState('cajas'),  updateBalances()"
-          >
-            <i class="material-icons">point_of_sale</i>
-            <span>Estado de caja</span>
-          </button>
-          <button
-            class="discretBtn wfull"
-            onclick="switchDialogState('paymentMethods')"
-          >
-            <i class="material-icons">payments</i>
-            <span>Metodos de pago</span>
-          </button>
-          <button
-            class="discretBtn wfull"
-            onclick="switchDialogState('historyDialog')"
-          >
-            <i class="material-icons">history</i>
-            <span>Historial de movimientos</span>
-          </button>
-        </div>
+    </div>
+    <div class="btnszip">
+      <i class="material-icons">work</i>
+      <span>Turnos</span>
+      <i class="material-icons">keyboard_arrow_down</i>
+      <div class="buttons shadow win">
+        <button class="discretBtn wfull" onclick="switchDialogState('shiftsListDialog')">
+          <i class="material-icons">work_history</i>
+          <span>Historial de turnos</span>
+        </button>
+        <button class="discretBtn wfull" onclick="switchDialogState('closeShiftDialog')">
+          <i class="material-icons">key</i>
+          <span>Terminar turno</span>
+        </button>
       </div>
-      <div class="btnszip">
-        <i class="material-icons">work</i>
-        <span>Turnos</span>
-        <i class="material-icons">keyboard_arrow_down</i>
-        <div class="buttons shadow win">
-          <button
-            class="discretBtn wfull"
-            onclick="switchDialogState('shiftsListDialog')"
-          >
-            <i class="material-icons">work_history</i>
-            <span>Historial de turnos</span>
-          </button>
-          <button
-            class="discretBtn wfull"
-            onclick="switchDialogState('closeShiftDialog')"
-          >
-            <i class="material-icons">key</i>
-            <span>Terminar turno</span>
-          </button>
-        </div>
+    </div>
+    <button class="discretBtn" onclick="switchDialogState('cartaDialog'), hideInput()">
+      <i class="material-icons">restaurant</i>
+      <span>Carta</span>
+    </button>
+    <div class="btnszip">
+      <i class="material-icons">settings</i>
+      <span>Settings</span>
+      <i class="material-icons">keyboard_arrow_down</i>
+      <div class="buttons buttons2 shadow win">
+        <button class="discretBtn wfull" onclick="switchDialogState('userDataDialog')">
+          <i class="material-icons">refresh</i>
+          <span>Reestablecer valores</span>
+        </button>
+        <button class="discretBtn wfull" onclick="loadExampleData()">
+          <i class="material-icons">upload</i>
+          <span>Cargar ejemplo</span>
+        </button>
+        <button class="discretBtn wfull" onclick="switchDialogState('nombreDelBarDialog')">
+          <i class="material-icons">title</i>
+          <span>Nombre del local</span>
+        </button>
+        <button class="discretBtn wfull">
+          <i class="material-icons">receipt_long</i>
+          <span>Tickets</span>
+        </button>
+        <button class="discretBtn wfull">
+          <i class="material-icons">contrast</i>
+          <span>Temas</span>
+        </button>
       </div>
-      <button
-        class="discretBtn"
-        onclick="switchDialogState('cartaDialog'), hideInput()"
-      >
-        <i class="material-icons">restaurant</i>
-        <span>Carta</span>
-      </button>
-      <div class="btnszip">
-        <i class="material-icons">settings</i>
-        <span>Settings</span>
-        <i class="material-icons">keyboard_arrow_down</i>
-        <div class="buttons buttons2 shadow win">
-          <button
-            class="discretBtn wfull"
-            onclick="switchDialogState('userDataDialog')"
-          >
-            <i class="material-icons">refresh</i>
-            <span>Reestablecer valores</span>
-          </button>
-          <button class="discretBtn wfull" onclick="loadExampleData()">
-            <i class="material-icons">upload</i>
-            <span>Cargar ejemplo</span>
-          </button>
-          <button
-            class="discretBtn wfull"
-            onclick="switchDialogState('nombreDelBarDialog')"
-          >
-            <i class="material-icons">title</i>
-            <span>Nombre del local</span>
-          </button>
-          <button class="discretBtn wfull">
-            <i class="material-icons">receipt_long</i>
-            <span>Tickets</span>
-          </button>
-          <button class="discretBtn wfull">
-            <i class="material-icons">contrast</i>
-            <span>Temas</span>
-          </button>
-        </div>
-      </div>
-    </nav>
-    <div class="salonContainer gap-18">
-      <div class="salon flex shadow">
-        <div class="grid"></div>
-      </div>
-      <div class="panelContainer">
-        <div class="hfull win">
-          <div id="panelPag1" class="flex flex-col gap-18 p8 relative">
-            <div class="tableData">
-              <div>
-                <span class="center" id="selectedTableName">Mesa:</span>
-              </div>
-              <div>
-                <span id="totalSelectedTable">Total: $0</span>
-              </div>
+    </div>
+  </nav>
+  <div class="salonContainer gap-18">
+    <div class="salon flex shadow">
+      <div class="grid"></div>
+    </div>
+    <div class="panelContainer">
+      <div class="hfull win">
+        <div id="panelPag1" class="flex flex-col gap-18 p8 relative">
+          <div class="tableData">
+            <div>
+              <span class="center" id="selectedTableName">Mesa:</span>
             </div>
-            <span id="NotaContainer"></span>
-            <div class="selectedTableList hfull" id="selectedTableList"></div>
-            <div class="flex gap-8 hide" id="showNoteInput">
-              <input
-                type="text"
-                id="noteInput"
-                placeholder="Agregar nota"
-                onkeydown=""
-              />
-              <button class="discretBtn" onclick="hideInput()">
-                <i class="material-icons">close</i>
+            <div>
+              <span id="totalSelectedTable">Total: $0</span>
+            </div>
+          </div>
+          <span id="NotaContainer"></span>
+          <div class="selectedTableList hfull" id="selectedTableList"></div>
+          <div class="flex gap-8 hide" id="showNoteInput">
+            <input type="text" id="noteInput" placeholder="Agregar nota" onkeydown="" />
+            <button class="discretBtn" onclick="hideInput()">
+              <i class="material-icons">close</i>
+            </button>
+          </div>
+          <div class="flex flex-col wfull" style="justify-content: space-between">
+            <div class="flex center gap-18">
+              <button class="squarebtn enfasisBtn" id="openSellwindow1">
+                <i class="material-icons">add</i>
+                <span>Adicionar</span>
+              </button>
+              <button class="squarebtn" id="tableNotesBtn">
+                <i class="material-icons">description</i>
+                <span>Nota</span>
+              </button>
+              <button class="squarebtn" id="printTicket">
+                <i class="material-icons">receipt_long</i>
+                <span>Imprimir</span>
+              </button>
+              <button class="squarebtn" id="closeSell" onclick="switchDialogState('confirmSellDialog')">
+                <i class="material-icons">shopping_cart</i>
+                <span>Cerrar</span>
               </button>
             </div>
-            <div class="flex flex-col gap-18 center wfull">
-              <div class="flex gap-2">
-                <button class="discretBtn" id="openSellwindow1">
-                  <i class="material-icons">add</i>
-                  <span>Adicionar</span>
-                </button>
-                <button class="discretBtn" id="tableNotesBtn">
-                  <i class="material-icons">description</i>
-                  <span>Nota</span>
-                </button>
-                <button
-                  class="discretBtn hide"
-                  id="closeSell"
-                  onclick="switchDialogState('confirmSellDialog')"
-                >
-                  <i class="material-icons">shopping_cart</i>
-                  <span>Cerrar mesa</span>
-                </button>
-                <button class="discretBtn" id="printTicket">
-                  <i class="material-icons">receipt_long</i>
-                  <span>Imprimir cuenta</span>
-                </button>
-              </div>
-            </div>
           </div>
-          <div id="panelPag2" class="hide p8">
-            <div class="panel">
-              <div class="flex flex-col gap-18">
-                <div class="gridCount">
-                  <div>
-                    <h3>Tamaño de celda:</h3>
-                  </div>
-                  <div class="flex gap-18">
-                    <button class="circleBtn" id="decrementPx">-</button>
-                    <span id="pxValue"></span>
-                    <button class="circleBtn" id="incrementPx">+</button>
-                  </div>
+        </div>
+        <div id="panelPag2" class="hide p8">
+          <div class="panel">
+            <div class="flex flex-col gap-18">
+              <div class="gridCount">
+                <div>
+                  <h3>Tamaño de celda:</h3>
+                </div>
+                <div class="flex gap-18">
+                  <button class="circleBtn" id="decrementPx">-</button>
+                  <span id="pxValue"></span>
+                  <button class="circleBtn" id="incrementPx">+</button>
                 </div>
               </div>
-              <div class="flex flex-col gap-18">
-                <h3>Mesa seleccionada:</h3>
-                <input
-                  type="text"
-                  placeholder="Titulo"
-                  name=""
-                  id="tableTextInput"
-                />
-                <button class="enfasisBtn discretBtn" id="tableShape">
-                  <span>Forma: </span>
-                  <i class="material-icons">square</i>
-                </button>
-                <button id="delTable" class="enfasisBtn discretBtn">
-                  <i class="material-icons">delete</i>
-                  <span>Borrar mesa</span>
-                </button>
-              </div>
-              <div class="">
-                <button id="addTable" class="enfasisBtn discretBtn">
-                  <i class="material-icons">add</i>
-                  <span>Crear mesa</span>
-                </button>
-              </div>
+            </div>
+            <div class="flex flex-col gap-18">
+              <h3>Mesa seleccionada:</h3>
+              <input type="text" placeholder="Titulo" name="" id="tableTextInput" />
+              <button class="enfasisBtn discretBtn" id="tableShape">
+                <span>Forma: </span>
+                <i class="material-icons">square</i>
+              </button>
+              <button id="delTable" class="enfasisBtn discretBtn">
+                <i class="material-icons">delete</i>
+                <span>Borrar mesa</span>
+              </button>
+            </div>
+            <div class="">
+              <button id="addTable" class="enfasisBtn discretBtn">
+                <i class="material-icons">add</i>
+                <span>Crear mesa</span>
+              </button>
             </div>
           </div>
         </div>
-        <div class="radioBtns">
-          <button id="tableConfig">
-            <i class="material-icons checked">radio_button_checked</i>
-            <i class="material-icons unchecked hide">radio_button_unchecked</i>
-            <span>Mesa</span>
-            <i class="material-icons">table_restaurant</i>
+      </div>
+      <div class="radioBtns">
+        <button id="tableConfig">
+          <i class="material-icons checked">radio_button_checked</i>
+          <i class="material-icons unchecked hide">radio_button_unchecked</i>
+          <span>Mesa</span>
+          <i class="material-icons">table_restaurant</i>
+        </button>
+        <button id="salonConfig">
+          <i class="material-icons checked hide">radio_button_checked</i>
+          <i class="material-icons unchecked">radio_button_unchecked</i>
+          <span>Salon</span>
+          <i class="material-icons">grid_view</i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="dialogContainer hide">
+    <div class="dialog hide sellWindow" id="sellWindow">
+      <div id="sellWindowPestaña" class="win"></div>
+      <div class="flex pestañaItems win" style="position: relative;">
+        <div class="SellWindowlistContainer">
+          <div class="productsList p18 gap-18 flex wrap" id="sellWindowProductList"></div>
+        </div>
+        <div class="win" id="comandaCommentWin">
+          <span>Comentario de comanda:</span>
+          <input name="" id="comandaCommentInp"></input>
+        </div>
+      </div>
+      <div class="addedItems flex flex-col win">
+        <div class="flex p8">
+          <h2 class="center" id="selectedTable">Mesa 18</h2>
+        </div>
+        <div id="addedItems" class="p18"></div>
+        <div class="p8 flex">
+          <h2 class="center" id="sellWindowTotal">$0.00</h2>
+        </div>
+        <div id="sellWindowsbotonera" class="" style="justify-content: space-between;">
+          <button class="discretBtn" id="cancelOperation" onclick="closeCurrentDialog()">
+            <i class="material-icons">close</i>
+            <span>Cancelar</span>
           </button>
-          <button id="salonConfig">
-            <i class="material-icons checked hide">radio_button_checked</i>
-            <i class="material-icons unchecked">radio_button_unchecked</i>
-            <span>Salon</span>
-            <i class="material-icons">grid_view</i>
+          <button class="discretBtn enfasisBtn" id="addItems">
+            <i class="material-icons">add</i>
+            <span id="variableText"></span>
           </button>
         </div>
       </div>
     </div>
 
-    <div class="dialogContainer hide">
-      <div class="dialog hide sellWindow" id="sellWindow">
-        <div id="sellWindowPestaña" class="win"></div>
-        <div class="flex pestañaItems win">
-          <div class="SellWindowlistContainer">
-            <div
-              class="productsList p18 gap-18 flex wrap"
-              id="sellWindowProductList"
-            ></div>
-          </div>
-        </div>
-        <div class="addedItems flex flex-col win">
-          <div class="flex p8">
-            <h2 class="center" id="selectedTable">Mesa 18</h2>
-          </div>
-          <div id="addedItems" class="p18"></div>
-          <div class="p8 flex">
-            <h2 class="center" id="sellWindowTotal">$0.00</h2>
-          </div>
-          <div id="sellWindowsbotonera" class="">
-            <button
-              class="discretBtn"
-              id="cancelOperation"
-              onclick="closeCurrentDialog()"
-            >
-              <i class="material-icons">close</i>
-              <span>Cancelar</span>
-            </button>
-            <button class="discretBtn enfasisBtn" id="addItems">
-              <i class="material-icons">add</i>
-              <span id="variableText">Sumar a la mesa</span>
-            </button>
-          </div>
+    <div id="cartaDialog" class="dialog hide flex">
+      <div id="groupWindow">
+        <div class="groupsList"></div>
+        <div class="flex gap-8 m18">
+          <button class="discretBtn" onclick="closeCurrentDialog()">
+            <i class="material-icons">close</i>
+            <span>Cerrar</span>
+          </button>
+          <button class="discretBtn enfasisBtn" onclick="createNewGroup()">
+            <i class="material-icons">add</i>
+            <span>Nuevo grupo</span>
+          </button>
         </div>
       </div>
-
-      <div id="cartaDialog" class="dialog hide flex">
-        <div id="groupWindow">
-          <div class="groupsList"></div>
-          <div class="flex gap-8 m18">
-            <button class="discretBtn" onclick="closeCurrentDialog()">
-              <i class="material-icons">close</i>
-              <span>Cerrar</span>
-            </button>
-            <button class="discretBtn enfasisBtn" onclick="createNewGroup()">
-              <i class="material-icons">add</i>
-              <span>Nuevo grupo</span>
-            </button>
-          </div>
-        </div>
-        <div class="flex flex-col p18" id="itemInfo">
-          <div class="itemmod">
-            <h2 class="p18">Info del producto</h2>
+      <div class="flex flex-col p18" id="itemInfo">
+        <div class="itemmod">
+          <h2 class="p18">Info del producto</h2>
+          <div class="flex flex-col gap-18">
             <div class="flex flex-col gap-18">
-              <div class="flex flex-col gap-18">
-                <div>
-                  <span>Nombre:</span>
-                  <input type="text" id="prodNameInput" />
+              <div>
+                <span>Nombre:</span>
+                <input type="text" id="prodNameInput" />
+              </div>
+              <div>
+                <span>Precio:</span>
+                <input type="text" id="prodPriceInput" />
+              </div>
+              <div class="spanToggle">
+                <span>Disponibilidad:</span>
+                <div class="switch-parent">
+                  <input type="checkbox" class="checkbox" id="availableCb" />
+                  <label class="switch" for="availableCb">
+                    <span class="slider"></span>
+                  </label>
                 </div>
-                <div>
-                  <span>Precio:</span>
-                  <input type="text" id="prodPriceInput" />
+              </div>
+              <div class="spanToggle">
+                <span>Imprimir al comandar:</span>
+                <div class="switch-parent">
+                  <input type="checkbox" class="checkbox" id="printOnComand" />
+                  <label class="switch" for="printOnComand">
+                    <span class="slider"></span>
+                  </label>
                 </div>
-                <div class="spanToggle">
-                  <span>Disponibilidad:</span>
-                  <div class="switch-parent">
-                    <input type="checkbox" class="checkbox" id="availableCb" />
-                    <label class="switch" for="availableCb">
-                      <span class="slider"></span>
-                    </label>
-                  </div>
+              </div>
+              <div class="flex">
+                <span class="wfull">Caja:</span>
+                <select name="" id="cajaForProdSlct"></select>
+              </div>
+              <div class="spanToggle">
+                <span>Disponibilidad horaria:</span>
+                <div class="switch-parent">
+                  <input type="checkbox" class="checkbox" id="availableCb2" />
+                  <label class="switch" for="availableCb2">
+                    <span class="slider"></span>
+                  </label>
                 </div>
-                <div class="spanToggle">
-                  <span>Imprimir al comandar:</span>
-                  <div class="switch-parent">
-                    <input
-                      type="checkbox"
-                      class="checkbox"
-                      id="printOnComand"
-                    />
-                    <label class="switch" for="printOnComand">
-                      <span class="slider"></span>
-                    </label>
-                  </div>
-                </div>
-                <div class="flex">
-                  <span class="wfull">Caja:</span>
-                  <select name="" id="cajaForProdSlct"></select>
-                </div>
-                <!-- <div class="flex flex-col gap-18">
-                                <div class="spanToggle">
-                                    <span>Disponibilidad horaria:</span>
-                                    <div class="switch-parent">
-                                        <input type="checkbox" class="checkbox" id="availableCb2" />
-                                        <label class="switch" for="availableCb2">
-                                            <span class="slider"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="flex gap-2">
-                                    <span>Desde</span>
-                                    <select name="" id="">
-                                        <option value="">18:00</option>
-                                    </select>
-                                    <span>Hasta</span>
-                                    <select name="" id="">
-                                        <option value="">20:00</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="spanToggle">
-                                    <span>Disponibilidad semanal:</span>
-                                    <div class="switch-parent">
-                                        <input type="checkbox" class="checkbox" id="availableCb3" />
-                                        <label class="switch" for="availableCb3">
-                                            <span class="slider"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="days-btn-container">
-                                    <input class="day-btn" id="sunday" type="checkbox" checked="false" />
-                                    <label class="day-label" for="sunday">D</label>
-
-                                    <input class="day-btn" id="monday" type="checkbox" checked="false" />
-                                    <label class="day-label" for="monday">L</label>
-
-                                    <input class="day-btn" id="tuesday" type="checkbox" checked="false" />
-                                    <label class="day-label" for="tuesday">M</label>
-
-                                    <input class="day-btn" id="wednesday" type="checkbox" checked="false" />
-                                    <label class="day-label" for="wednesday">M</label>
-
-                                    <input class="day-btn" id="thursday" type="checkbox" checked="false" />
-                                    <label class="day-label" for="thursday">J</label>
-
-                                    <input class="day-btn" id="friday" type="checkbox" checked="false" />
-                                    <label class="day-label" for="friday">V</label>
-
-                                    <input class="day-btn" id="saturday" type="checkbox" checked="false" />
-                                    <label class="day-label" for="saturday">S</label>
-                                </div>
-                            </div> -->
+              </div>
+              <div class="flex gap-2">
+                <span>Desde</span>
+                <select name="" id="">
+                  <option value="">18:00</option>
+                </select>
+                <span>Hasta</span>
+                <select name="" id="">
+                  <option value="">20:00</option>
+                </select>
               </div>
             </div>
           </div>
-          <div class="itemModBtns">
-            <button class="discretBtn enfasisBtn" id="updateProductBtn">
-              <i class="material-icons">check</i>
-              <span>Aplicar</span>
-            </button>
+        </div>
+        <div class="itemModBtns">
+          <button class="discretBtn enfasisBtn" id="updateProductBtn">
+            <i class="material-icons">check</i>
+            <span>Aplicar</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog hide flex flex-col gap-8 p18" id="cajas">
+      <h2>Estado de caja</h2>
+      <div>
+        <div class="cajasList" id="cajasList"></div>
+        <div class="caja bolder">
+          <span>Total:</span>
+          <span id="totalabsoluto">$0</span>
+        </div>
+      </div>
+      <div></div>
+      <div class="flex gap-18">
+        <button class="discretBtn" onclick="closeCurrentDialog()">
+          <i class="material-icons">close</i>
+          <span>Volver</span>
+        </button>
+        <button class="discretBtn enfasisBtn" onclick="">
+          <i class="material-icons">attach_money</i>
+          <span>Establecer monto inicial</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="dialog hide flex flex-col" id="historyDialog">
+      <h2>Historial de movimientos</h2>
+      <div class="" id="cashHistoryList"></div>
+      <div class="flex gap-8">
+        <button class="discretBtn m18" onclick="closeCurrentDialog()">
+          <i class="material-icons">close</i>
+          <span>Volver</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="dialog hide flex flex-col gap-18 p18" id="paymentMethods">
+      <h2 class="">Metodos de pago</h2>
+      <div class="flex flex-col gap-8" id="paymentMethodsList"></div>
+      <div class="flex gap-8">
+        <button class="discretBtn" onclick="closeCurrentDialog()">
+          <i class="material-icons">close</i>
+          <span>Volver</span>
+        </button>
+        <button class="discretBtn enfasisBtn" onclick="switchDialogState('newPMdialog')">
+          <i class="material-icons">add</i>
+          <span>Añadir</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="dialog hide flex p18 gap-8" id="newPMdialog">
+      <input type="text" placeholder="Metodo de pago" id="pmName" />
+      <button class="discretBtn enfasisBtn" onclick="createPm(), switchDialogState('paymentMethods')">
+        <i class="material-icons">check</i>
+      </button>
+      <button class="discretBtn" onclick="switchDialogState('paymentMethods')">
+        <i class="material-icons">close</i>
+      </button>
+    </div>
+
+    <div class="dialog hide flex p18 gap-18" id="confirmSellDialog">
+      <div class="flex flex-col gap-18 p18 win">
+        <h2>Confirmar venta</h2>
+        <div class="flex gap-8">
+          <span class="wfull">Metodo de pago: </span>
+          <select name="" id="pmSlct"></select>
+        </div>
+        <div class="flex gap-8">
+          <button class="discretBtn" onclick="closeCurrentDialog()" id="cancleClosetableBtn">
+            <i class="material-icons">close</i>
+            <span>Cancelar</span>
+          </button>
+          <button id="closeTableBtn" class="discretBtn enfasisBtn" onclick="closeTable(), closeCurrentDialog()">
+            <i class="material-icons">check</i>
+            <span>confirmar venta</span>
+          </button>
+        </div>
+      </div>
+      <div class="calculator win">
+        <div class="output">
+          <span class="result"></span>
+        </div>
+        <div class="calc">
+          <div class="flex flex-col gap-2">
+            <input placeholder="Pagó con" type="text" />
+            <span>Vuelto: $0.00</span>
+          </div>
+          <div class="flex gap-8">
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+          </div>
+          <div class="flex gap-8">
+            <button>4</button>
+            <button>5</button>
+            <button>6</button>
+          </div>
+          <div class="flex gap-8">
+            <button>7</button>
+            <button>8</button>
+            <button>9</button>
+          </div>
+          <div class="flex gap-8" style="width: fit-content">
+            <button class="center">0</button>
+            <button class="center" id="calcBtn">Calc</button>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="dialog hide flex flex-col gap-8 p18" id="cajas">
-        <h2>Estado de caja</h2>
-        <div>
-          <div class="cajasList" id="cajasList"></div>
-          <div class="caja bolder">
-            <span>Total:</span>
-            <span id="totalabsoluto">$0</span>
-          </div>
+    <div class="dialog hide p18 flex flex-col gap-8" id="closeShiftDialog">
+      <button class="cssbuttons-io-button" id="closeShitBtn">
+        Terminar turno
+        <div class="icon">
+          <i class="material-icons">done</i>
         </div>
-        <div></div>
-        <div class="flex gap-18">
-          <button class="discretBtn" onclick="closeCurrentDialog()">
-            <i class="material-icons">close</i>
-            <span>Volver</span>
-          </button>
-          <button class="discretBtn enfasisBtn" onclick="">
-            <i class="material-icons">attach_money</i>
-            <span>Establecer monto inicial</span>
-          </button>
-        </div>
+      </button>
+      <span id="advert1"></span>
+      <button class="discretBtn" onclick="closeCurrentDialog()">
+        <span>Cancelar</span>
+        <i class="material-icons">close</i>
+      </button>
+    </div>
+
+    <div class="dialog hide p18" id="shiftsListDialog">
+      <h2>Resumen de turnos</h2>
+      <div id="shiftsList"></div>
+      <button class="discretBtn" onclick="closeCurrentDialog()">
+        <span>Cancelar</span>
+        <i class="material-icons">close</i>
+      </button>
+    </div>
+
+    <div class="dialog hide p18" id="ticketsConfigDialogs">
+      <h2>Config de tockets</h2>
+      <div id="shiftsList"></div>
+      <button class="discretBtn" onclick="closeCurrentDialog()">
+        <span>Cancelar</span>
+        <i class="material-icons">close</i>
+      </button>
+    </div>
+
+    <div class="dialog hide p18 flex flex-col gap-8 w512" id="userDataDialog">
+      <div class="flex gap-18">
+        <span class="wfull">Borrar todos los datos</span>
+        <button class="discretBtn enfasisBtn" onclick="delLocalStorage('all')">
+          <i class="material-icons">delete</i>
+        </button>
       </div>
-
-      <div class="dialog hide flex flex-col" id="historyDialog">
-        <h2>Historial de movimientos</h2>
-        <div class="" id="cashHistoryList"></div>
-        <div class="flex gap-8">
-          <button class="discretBtn m18" onclick="closeCurrentDialog()">
-            <i class="material-icons">close</i>
-            <span>Volver</span>
-          </button>
-        </div>
+      <div class="flex gap-18">
+        <span class="wfull">Borrar datos de las mesas</span>
+        <button class="discretBtn enfasisBtn" onclick="delLocalStorage('tables')">
+          <i class="material-icons">delete</i>
+        </button>
       </div>
-
-      <div class="dialog hide flex flex-col gap-18 p18" id="paymentMethods">
-        <h2 class="">Metodos de pago</h2>
-        <div class="flex flex-col gap-8" id="paymentMethodsList"></div>
-        <div class="flex gap-8">
-          <button class="discretBtn" onclick="closeCurrentDialog()">
-            <i class="material-icons">close</i>
-            <span>Volver</span>
-          </button>
-          <button
-            class="discretBtn enfasisBtn"
-            onclick="switchDialogState('newPMdialog')"
-          >
-            <i class="material-icons">add</i>
-            <span>Añadir</span>
-          </button>
-        </div>
+      <div class="flex gap-18">
+        <span class="wfull">Borrar datos de los productos</span>
+        <button class="discretBtn enfasisBtn" onclick="delLocalStorage('groups')">
+          <i class="material-icons">delete</i>
+        </button>
       </div>
+      <div class="flex gap-18">
+        <span class="wfull">Borrar datos de los turnos</span>
+        <button class="discretBtn enfasisBtn" onclick="delLocalStorage('shifts')">
+          <i class="material-icons">delete</i>
+        </button>
+      </div>
+      <button class="discretBtn" onclick="closeCurrentDialog()">
+        <span class="wfull">Volver</span>
+        <i class="material-icons">close</i>
+      </button>
+    </div>
 
-      <div class="dialog hide flex p18 gap-8" id="newPMdialog">
-        <input type="text" placeholder="Metodo de pago" id="pmName" />
-        <button
-          class="discretBtn enfasisBtn"
-          onclick="createPm(), switchDialogState('paymentMethods')"
-        >
+    <div class="dialog hide p18 flex flex-col gap-18 w512" id="nombreDelBarDialog">
+      <h2>Nombre del bar</h2>
+      <div class="flex gap-8">
+        <input type="text" placeholder="Nombre del bar" id="barNameInput" />
+        <button class="discretBtn enfasisBtn" onclick="closeCurrentDialog(), updateBarName()">
           <i class="material-icons">check</i>
         </button>
-        <button
-          class="discretBtn"
-          onclick="switchDialogState('paymentMethods')"
-        >
+        <button class="discretBtn" onclick="closeCurrentDialog()" id="cancelBarName">
           <i class="material-icons">close</i>
         </button>
       </div>
+      <span>El nombre del bar es el que figurara en el titulo de los
+        tickets.</span>
+    </div>
 
-      <div class="dialog hide flex p18 gap-18" id="confirmSellDialog">
-        <div class="flex flex-col gap-18 p18 win">
-          <h2>Confirmar venta</h2>
-          <div class="flex gap-8">
-            <span class="wfull">Metodo de pago: </span>
-            <select name="" id="pmSlct"></select>
-          </div>
-          <div class="flex gap-8">
-            <button
-              class="discretBtn"
-              onclick="closeCurrentDialog()"
-              id="cancleClosetableBtn"
-            >
-              <i class="material-icons">close</i>
-              <span>Cancelar</span>
-            </button>
-            <button
-              id="closeTableBtn"
-              class="discretBtn enfasisBtn"
-              onclick="closeTable(), closeCurrentDialog()"
-            >
-              <i class="material-icons">check</i>
-              <span>confirmar venta</span>
-            </button>
-          </div>
-        </div>
-        <div class="calculator win">
-          <div class="output">
-            <span class="result"></span>
-          </div>
-          <div class="calc">
-            <div class="flex flex-col gap-2">
-              <input placeholder="Pagó con" type="text" />
-              <span>Vuelto: $0.00</span>
-            </div>
-            <div class="flex gap-8">
-              <button>1</button>
-              <button>2</button>
-              <button>3</button>
-            </div>
-            <div class="flex gap-8">
-              <button>4</button>
-              <button>5</button>
-              <button>6</button>
-            </div>
-            <div class="flex gap-8">
-              <button>7</button>
-              <button>8</button>
-              <button>9</button>
-            </div>
-            <div class="flex gap-8" style="width: fit-content">
-              <button class="center">0</button>
-              <button class="center" id="calcBtn">Calc</button>
-            </div>
-          </div>
-        </div>
+    <div class="firstTimeDialog p18 flex flex-col gap-18 dialog hide" id="firstTimeDialog">
+      <h2>¿Primera vez?</h2>
+      <span>Prueba cargar datos de ejmplo para probar como funciona el
+        sistema.</span>
+      <div class="flex gap-18">
+        <button class="discretBtn" onclick="closeCurrentDialog()">
+          No, gracias
+        </button>
+        <button class="discretBtn enfasisBtn" onclick="loadExampleData()">
+          <span>Cargar datos de ejemplo</span>
+        </button>
       </div>
+    </div>
 
-      <div class="dialog hide p18 flex flex-col gap-8" id="closeShiftDialog">
-        <button class="cssbuttons-io-button" id="closeShitBtn">
-          Terminar turno
+    <div class="dialog hide p18 flex flex-col gap-18" id="newTransaction">
+      <h2 id="ntType">Nuevo ${}</h2>
+      <div class="caja">
+        <span>Importe*</span>
+        <input type="text" id="ntImport" />
+      </div>
+      <div class="caja">
+        <span>Proveedor</span>
+        <input type="text" id="ntProveedor" />
+      </div>
+      <div class="caja">
+        <span>Metodo de pago</span>
+        <select name="" id="ntPm"></select>
+      </div>
+      <div></div>
+      <div class="flex gap-18">
+        <button class="discretBtn" id="cancelNt" onclick="closeCurrentDialog()">
+          <span>Cancel</span>
+          <i class="material-icons">close</i>
+        </button>
+        <button class="discretBtn enfasisBtn" id="confirmNt">
+          <span>Confirmar</span>
+          <i class="material-icons">check</i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="shifCover flex gap-18">
+    <div class="softDesc win">
+      <h2>Growler</h2>
+      <div>
+        <p>
+          Growler es un sistema de gestion para locales gastronomicos chicos.
+          Es gratis y no requiere registro. No cuenta con niveles de
+          autorización, lo que significa que la persona que lo maneje debe ser
+          de confianza.
+        </p>
+      </div>
+    </div>
+    <div class="flex flex-col gap-18">
+      <div class="win">
+        <button class="cssbuttons-io-button" id="startShift">
+          Comenzar turno
           <div class="icon">
-            <i class="material-icons">done</i>
+            <i class="material-icons">arrow_forward</i>
           </div>
         </button>
-        <span id="advert1"></span>
-        <button class="discretBtn" onclick="closeCurrentDialog()">
-          <span>Cancelar</span>
-          <i class="material-icons">close</i>
-        </button>
       </div>
-
-      <div class="dialog hide p18" id="shiftsListDialog">
-        <h2>Resumen de turnos</h2>
-        <div id="shiftsList">
-        </div>
-        <button class="discretBtn" onclick="closeCurrentDialog()">
-          <span>Cancelar</span>
-          <i class="material-icons">close</i>
-        </button>
-      </div>
-
-      <div class="dialog hide p18" id="ticketsConfigDialogs">
-        <h2>Config de tockets</h2>
-        <div id="shiftsList"></div>
-        <button class="discretBtn" onclick="closeCurrentDialog()">
-          <span>Cancelar</span>
-          <i class="material-icons">close</i>
-        </button>
-      </div>
-
-      <div class="dialog hide p18 flex flex-col gap-8 w512" id="userDataDialog">
-        <div class="flex gap-18">
-          <span class="wfull">Borrar todos los datos</span>
-          <button
-            class="discretBtn enfasisBtn"
-            onclick="delLocalStorage('all')"
-          >
-            <i class="material-icons">delete</i>
-          </button>
-        </div>
-        <div class="flex gap-18">
-          <span class="wfull">Borrar datos de las mesas</span>
-          <button
-            class="discretBtn enfasisBtn"
-            onclick="delLocalStorage('tables')"
-          >
-            <i class="material-icons">delete</i>
-          </button>
-        </div>
-        <div class="flex gap-18">
-          <span class="wfull">Borrar datos de los productos</span>
-          <button
-            class="discretBtn enfasisBtn"
-            onclick="delLocalStorage('groups')"
-          >
-            <i class="material-icons">delete</i>
-          </button>
-        </div>
-        <div class="flex gap-18">
-          <span class="wfull">Borrar datos de los turnos</span>
-          <button
-            class="discretBtn enfasisBtn"
-            onclick="delLocalStorage('shifts')"
-          >
-            <i class="material-icons">delete</i>
-          </button>
-        </div>
-        <button class="discretBtn" onclick="closeCurrentDialog()">
-          <span class="wfull">Volver</span>
-          <i class="material-icons">close</i>
-        </button>
-      </div>
-
-      <div
-        class="dialog hide p18 flex flex-col gap-18 w512"
-        id="nombreDelBarDialog"
-      >
-        <h2>Nombre del bar</h2>
-        <div class="flex gap-8">
-          <input type="text" placeholder="Nombre del bar" id="barNameInput" />
-          <button
-            class="discretBtn enfasisBtn"
-            onclick="closeCurrentDialog(), updateBarName()"
-          >
-            <i class="material-icons">check</i>
-          </button>
-          <button
-            class="discretBtn"
-            onclick="closeCurrentDialog()"
-            id="cancelBarName"
-          >
-            <i class="material-icons">close</i>
-          </button>
-        </div>
-        <span
-          >El nombre del bar es el que figurara en el titulo de los
-          tickets.</span
-        >
-      </div>
-
-      <div
-        class="firstTimeDialog p18 flex flex-col gap-18 dialog hide"
-        id="firstTimeDialog"
-      >
-        <h2>¿Primera vez?</h2>
-        <span
-          >Prueba cargar datos de ejmplo para probar como funciona el
-          sistema.</span
-        >
-        <div class="flex gap-18">
-          <button class="discretBtn" onclick="closeCurrentDialog()">
-            No, gracias
-          </button>
-          <button class="discretBtn enfasisBtn" onclick="loadExampleData()">
-            <span>Cargar datos de ejemplo</span>
-          </button>
-        </div>
-      </div>
-
-      <div class="dialog hide p18 flex flex-col gap-18" id="newTransaction">
-        <h2 id="ntType">Nuevo ${}</h2>
-        <div class="caja">
-          <span>Importe*</span>
-          <input type="text" id="ntImport" />
-        </div>
-        <div class="caja">
-          <span>Proveedor</span>
-          <input type="text" id="ntProveedor" />
-        </div>
-        <div class="caja">
-          <span>Metodo de pago</span>
-          <select name="" id="ntPm"></select>
-        </div>
-        <div></div>
-        <div class="flex gap-18">
-          <button
-            class="discretBtn"
-            id="cancelNt"
-            onclick="closeCurrentDialog()"
-          >
-            <span>Cancel</span>
-            <i class="material-icons">close</i>
-          </button>
-          <button class="discretBtn enfasisBtn" id="confirmNt">
-            <span>Confirmar</span>
-            <i class="material-icons">check</i>
-          </button>
+      <div class="win flex flex-col p18 gap-18">
+        <h2>Tutorial</h2>
+        <div class="zocalo">
+          <span>Proximamente</span>
         </div>
       </div>
     </div>
+  </div>
+  <script src="cartaMagnament.js"></script>
+</body>
 
-    <div class="shifCover flex gap-18">
-      <div class="softDesc win">
-        <h2>Growler</h2>
-        <div>
-          <p>
-            Growler es un sistema de gestion para locales gastronomicos chicos.
-            Es gratis y no requiere registro. No cuenta con niveles de
-            autorización, lo que significa que la persona que lo maneje debe ser
-            de confianza.
-          </p>
-        </div>
-      </div>
-      <div class="flex flex-col gap-18">
-        <div class="win">
-          <button class="cssbuttons-io-button" id="startShift">
-            Comenzar turno
-            <div class="icon">
-              <i class="material-icons">arrow_forward</i>
-            </div>
-          </button>
-        </div>
-        <div class="win flex flex-col p18 gap-18">
-          <h2>Tutorial</h2>
-          <div class="zocalo">
-            <span>Proximamente</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <script src="cartaMagnament.js"></script>
-  </body>
 </html>

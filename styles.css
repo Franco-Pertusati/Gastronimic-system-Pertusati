@@ -1,14 +1,14 @@
 :root {
     --seasalt: #f8f9faff;
     --antiflash-white: #e9ecefff;
-    --platinum: #dee2e6ff;
+    --platinum: rgb(203, 210, 218);
     --french-gray: #ced4daff;
     --french-gray-2: #adb5bdff;
     --slate-gray: #6c757dff;
     --outer-space: #495057ff;
     --onyx: #343a40ff;
     --eerie-black: #212529ff;
-    --mainColor: #f16845;
+    --mainColor: #f16845; 
     --hover: #ffeee9;
     --red: #eb252c;
     --green: #8bc927;
@@ -207,14 +207,14 @@ html #NotaContainer {
 }
 
 .cssbuttons-io-button .icon {
-    height: 44px;
-    width: 44px;
+    height: 41px;
+    width: 41px;
     display: flex;
     place-items: center;
     justify-content: center;
     position: absolute;
-    top: 5px;
-    right: 6px;
+    top: 3px;
+    right: 3px;
     border-radius: 22px;
     background-color: var(--seasalt);
     transition: all ease .3s;
@@ -222,7 +222,7 @@ html #NotaContainer {
 }
 
 .cssbuttons-io-button:hover .icon {
-    width: calc(100% - 12px);
+    width: calc(100% - 6px);
 }
 
 .cssbuttons-io-button:active .icon {
