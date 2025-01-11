@@ -19,13 +19,14 @@
 
 #sellWindowPestaña {
     width: 200px;
-    padding-top: 16px;
     overflow-y: auto;
 }
 
 #sellWindowPestaña button {
     width: 100%;
     background-color: var(--seasalt);
+    border-radius: 99px;
+    font-weight: bold;
 }
 
 #sellWindowPestaña button:hover {
@@ -38,19 +39,22 @@
 }
 
 #sellWindowProductList {
-    width: 432px;
+    width: 376px;
     display: flex;
     flex-wrap: wrap;
+    gap: 8px
 }
 
 .squareProdBtn {
     width: 120px;
     height: 120px;
-    background-color: var(--mainColor);
+    background-color: var(--antiflash-white);
+    padding: 8px;
     border-radius: 22px;
     display: flex;
     justify-content: center;
     transition: all ease .2s;
+    font-weight: bold;
 }
 
 .squareProdBtn:hover {
@@ -59,6 +63,7 @@
 
 .addedItems {
     width: 400px;
+    position: relative;
 }
 
 #addedItems {
@@ -82,11 +87,7 @@
 }
 
 #comandaCommentWin {
-    width: 100%;
     padding: 12px;
     display: flex;
     flex-direction: column;
-    position: absolute;
-    left: 0;
-    bottom: -92px;
 }

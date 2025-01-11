@@ -47,7 +47,7 @@
 }
 
 .discretBtn:hover {
-    background-color: var(--platinum);
+    background-color: var(--antiflash-white);
 }
 
 .salonContainer {
@@ -113,6 +113,7 @@ html .circleTable {
     display: flex;
     flex-direction: column;
     gap: 18px;
+    padding: 0;
 }
 
 .tableData {
@@ -278,7 +279,7 @@ html .circleTable {
     top: 0;
     left: 0;
     display: flex;
-    background-color: var(--glass);
+    background: var(--glass);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }

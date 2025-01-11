@@ -143,25 +143,23 @@
               <i class="material-icons">close</i>
             </button>
           </div>
-          <div class="flex flex-col wfull" style="justify-content: space-between">
-            <div class="flex center gap-18">
-              <button class="squarebtn enfasisBtn" id="openSellwindow1">
-                <i class="material-icons">add</i>
-                <span>Adicionar</span>
-              </button>
-              <button class="squarebtn" id="tableNotesBtn">
-                <i class="material-icons">description</i>
-                <span>Nota</span>
-              </button>
-              <button class="squarebtn" id="printTicket">
-                <i class="material-icons">receipt_long</i>
-                <span>Imprimir</span>
-              </button>
-              <button class="squarebtn" id="closeSell" onclick="switchDialogState('confirmSellDialog')">
-                <i class="material-icons">shopping_cart</i>
-                <span>Cerrar</span>
-              </button>
-            </div>
+          <div class="flex gap-18" style="width: 100%; justify-content: space-between;">
+            <button class="squarebtn enfasisBtn" id="openSellwindow1">
+              <i class="material-icons">add</i>
+              <span>Adicionar</span>
+            </button>
+            <button class="squarebtn" id="tableNotesBtn">
+              <i class="material-icons">description</i>
+              <span>Nota</span>
+            </button>
+            <button class="squarebtn" id="printTicket">
+              <i class="material-icons">receipt_long</i>
+              <span>Imprimir</span>
+            </button>
+            <button class="squarebtn" id="closeSell" onclick="switchDialogState('confirmSellDialog')">
+              <i class="material-icons">shopping_cart</i>
+              <span>Cerrar</span>
+            </button>
           </div>
         </div>
         <div id="panelPag2" class="hide p8">
@@ -216,12 +214,12 @@
     </div>
   </div>
 
-  <div class="dialogContainer hide">
+  <div class="dialogContainer ">
     <div class="dialog hide sellWindow" id="sellWindow">
       <div id="sellWindowPestaña" class="win"></div>
-      <div class="flex pestañaItems win" style="position: relative;">
-        <div class="SellWindowlistContainer">
-          <div class="productsList p18 gap-18 flex wrap" id="sellWindowProductList"></div>
+      <div class="flex" style="flex-direction: column; gap: 12px;">
+        <div class="SellWindowlistContainer win" style="height: 100%;">
+          <div class="productsList flex wrap" id="sellWindowProductList"></div>
         </div>
         <div class="win" id="comandaCommentWin">
           <span>Comentario de comanda:</span>
@@ -249,13 +247,17 @@
       </div>
     </div>
 
-    <div id="cartaDialog" class="dialog hide flex">
+    <div id="cartaDialog" class="dialog  flex">
       <div id="groupWindow">
         <div class="groupsList"></div>
         <div class="flex gap-8 m18">
           <button class="discretBtn" onclick="closeCurrentDialog()">
             <i class="material-icons">close</i>
             <span>Cerrar</span>
+          </button>
+          <button class="enfasisBtn discretBtn">
+            <i class="material-icons">upload_file</i>
+            <span>Cargar archivo</span>
           </button>
           <button class="discretBtn enfasisBtn" onclick="createNewGroup()">
             <i class="material-icons">add</i>
@@ -586,7 +588,7 @@
       </div>
     </div>
   </div>
-  <script src="cartaMagnament.js"></script>
+  <script src="mainv1.js"></script>
 </body>
 
 </html>

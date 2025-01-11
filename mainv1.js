@@ -606,8 +606,6 @@ function addProductToTable(product) {
   const productToAdd = {
     name: product.name,
     price: product.price,
-    id: product.id,
-    cashRegister: product.cashRegister,
     additionTime: Date.now(),
   };
   selectedTable.products.push(productToAdd);
@@ -752,8 +750,8 @@ function closeTable() {
     resultSpan.textContent = "";
     vueltoSpan.textContent = "";
   } else {
-    alert("Mesa sin productos")
-    closeCurrentDialog()
+    alert("Mesa sin productos");
+    closeCurrentDialog();
   }
 }
 
@@ -807,7 +805,6 @@ function registerSale() {
     paymentsMethod: document.querySelector("#pmSlct").value,
     time: getFormatedTime(),
     date: getFormatedDate(),
-    id: Date.now(),
     type: null,
   };
   if (selectedTable.position) {
@@ -970,7 +967,7 @@ function getFormatedDate() {
   return `${date}/${month}/${year}`;
 }
 
-takeAwayTable = {
+var takeAwayTable = {
   name: "Venta de mostrador",
   products: [],
   total: 0,
@@ -1465,179 +1462,7 @@ if (offerExample === true) {
   localStorage.setItem("offerExample", JSON.stringify(false));
 }
 
-function loadExampleData() {
-  groups = [
-    {
-      name: "Cafes",
-      products: [
-        {
-          name: "Cafe americano",
-          price: 35,
-          id: 1728338825432,
-          cashRegister: "Caja-1",
-          printOnComand: false,
-          available: true,
-        },
-        {
-          name: "Espresso Doble",
-          price: 40,
-          id: 1728338825433,
-          cashRegister: "Caja-1",
-          printOnComand: false,
-          available: true,
-        },
-        {
-          name: "Cappuccino",
-          price: 50,
-          id: 1728338825434,
-          cashRegister: "Caja-1",
-          printOnComand: false,
-          available: true,
-        },
-        {
-          name: "Latte",
-          price: 55,
-          id: 1728338825435,
-          cashRegister: "Caja-1",
-          printOnComand: false,
-          available: true,
-        },
-        {
-          name: "Macchiato",
-          price: 45,
-          id: 1728338825436,
-          cashRegister: "Caja-1",
-          printOnComand: false,
-          available: true,
-        },
-      ],
-    },
-    {
-      name: "Bebidas frias",
-      products: [
-        {
-          name: "Limonada con Menta",
-          price: 40,
-          id: 1728338870135,
-          cashRegister: "Caja-1",
-          printOnComand: false,
-          available: true,
-        },
-        {
-          name: "Té Helado de Frutas Rojas",
-          price: 50,
-          id: 1728338870136,
-          cashRegister: "Caja-1",
-          printOnComand: false,
-          available: true,
-        },
-        {
-          name: "Smoothie de Mango y Fresa",
-          price: 65,
-          id: 1728338870137,
-          cashRegister: "Caja-1",
-          printOnComand: false,
-          available: true,
-        },
-        {
-          name: "Frapuccino de Café",
-          price: 70,
-          id: 1728338870138,
-          cashRegister: "Caja-1",
-          printOnComand: false,
-          available: true,
-        },
-        {
-          name: "Jugo de Naranja Natural",
-          price: 45,
-          id: 1728338870139,
-          cashRegister: "Caja-1",
-          printOnComand: false,
-          available: true,
-        },
-      ],
-    },
-  ];
-
-  paymentsMethods = [
-    {
-      name: "Efectivo",
-      total: 0,
-      id: 1728340925076,
-    },
-    {
-      name: "Tarjeta",
-      total: 0,
-      id: 1728340929956,
-    },
-  ];
-
-  barName = "Café: El Ejemplo";
-
-  tables = [
-    {
-      id: 1728341183749,
-      name: "Mesa 1",
-      products: [],
-      total: 0,
-      waitingPayment: false,
-      note: "",
-      position: "25",
-      shape: true,
-      startTime: null,
-    },
-    {
-      id: 1728341183925,
-      name: "Mesa 2",
-      products: [],
-      total: 0,
-      waitingPayment: false,
-      note: "",
-      position: "26",
-      shape: true,
-      startTime: null,
-    },
-    {
-      id: 1728341184069,
-      name: "Mesa 3",
-      products: [],
-      total: 0,
-      waitingPayment: false,
-      note: "",
-      position: "27",
-      shape: true,
-      startTime: null,
-    },
-    {
-      id: 1728341189517,
-      name: "Redonda 1",
-      products: [],
-      total: 0,
-      waitingPayment: false,
-      note: "",
-      position: "45",
-      shape: false,
-      startTime: null,
-    },
-    {
-      id: 1728341189669,
-      name: "Redonda 2",
-      products: [],
-      total: 0,
-      waitingPayment: false,
-      note: "",
-      position: "46",
-      shape: false,
-      startTime: null,
-    },
-  ];
-
-  saveData("groups", groups);
-  saveData("paymentsMethods", paymentsMethods);
-  saveData("barName", barName);
-  saveData("tables", tables);
-  location.reload();
-}
+function loadExampleData() {}
 
 printShifts();
 function printShifts() {
@@ -1661,16 +1486,16 @@ const themeBtn = document.querySelector("#toggleTheme");
 const body = document.body;
 
 function toggleTheme() {
-  const currentTheme = body.getAttribute('data-theme');
-  
-  if (currentTheme === 'light') {
-    body.setAttribute('data-theme', 'dark');
+  const currentTheme = body.getAttribute("data-theme");
+
+  if (currentTheme === "light") {
+    body.setAttribute("data-theme", "dark");
   } else {
-    body.setAttribute('data-theme', 'light');
+    body.setAttribute("data-theme", "light");
   }
 }
 
-themeBtn.addEventListener('click', toggleTheme);
+themeBtn.addEventListener("click", toggleTheme);
 
 document.addEventListener("keydown", function (event) {
   if (event.key === "Escape") {
@@ -1689,3 +1514,4 @@ loadGroups();
 selectATable();
 shiftManagment();
 loadFromLocalStorage();
+window.closeCurrentDialog = closeCurrentDialog;
