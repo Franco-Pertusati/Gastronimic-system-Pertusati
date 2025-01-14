@@ -88,7 +88,7 @@
         </button>
       </div>
     </div>
-    <button class="discretBtn" onclick="switchDialogState('cartaDialog'), hideInput()">
+    <button class="discretBtn" onclick="switchDialogState('cartaDialog')">
       <i class="material-icons">restaurant</i>
       <span>Carta</span>
     </button>
@@ -126,7 +126,7 @@
     </div>
     <div class="panelContainer">
       <div class="hfull win">
-        <div id="panelPag1" class="flex flex-col gap-18 p8 relative">
+        <div id="panelPag1" class="flex flex-col gap-18   relative">
           <div class="tableData">
             <div>
               <span class="center" id="selectedTableName">Mesa:</span>
@@ -144,25 +144,21 @@
             </button>
           </div>
           <div class="flex gap-18" style="width: 100%; justify-content: space-between;">
-            <button class="squarebtn enfasisBtn" id="openSellwindow1">
+            <button class="discretBtn enfasisBtn" id="openSellwindow1">
               <i class="material-icons">add</i>
               <span>Adicionar</span>
             </button>
-            <button class="squarebtn" id="tableNotesBtn">
-              <i class="material-icons">description</i>
-              <span>Nota</span>
-            </button>
-            <button class="squarebtn" id="printTicket">
+            <button class="discretBtn" id="printTicket">
               <i class="material-icons">receipt_long</i>
               <span>Imprimir</span>
             </button>
-            <button class="squarebtn" id="closeSell" onclick="switchDialogState('confirmSellDialog')">
+            <button class="discretBtn" id="closeSell" onclick="switchDialogState('confirmSellDialog')">
               <i class="material-icons">shopping_cart</i>
               <span>Cerrar</span>
             </button>
           </div>
         </div>
-        <div id="panelPag2" class="hide p8">
+        <div id="panelPag2" class="hide  ">
           <div class="panel">
             <div class="flex flex-col gap-18">
               <div class="gridCount">
@@ -214,7 +210,7 @@
     </div>
   </div>
 
-  <div class="dialogContainer ">
+  <div class="dialogContainer hide">
     <div class="dialog hide sellWindow" id="sellWindow">
       <div id="sellWindowPestaña" class="win"></div>
       <div class="flex" style="flex-direction: column; gap: 12px;">
@@ -227,11 +223,11 @@
         </div>
       </div>
       <div class="addedItems flex flex-col win">
-        <div class="flex p8">
+        <div class="flex  ">
           <h2 class="center" id="selectedTable">Mesa 18</h2>
         </div>
         <div id="addedItems" class="p18"></div>
-        <div class="p8 flex">
+        <div class="  flex">
           <h2 class="center" id="sellWindowTotal">$0.00</h2>
         </div>
         <div id="sellWindowsbotonera" class="" style="justify-content: space-between;">
@@ -247,87 +243,91 @@
       </div>
     </div>
 
-    <div id="cartaDialog" class="dialog  flex">
-      <div id="groupWindow">
-        <div class="groupsList"></div>
-        <div class="flex gap-8 m18">
-          <button class="discretBtn" onclick="closeCurrentDialog()">
-            <i class="material-icons">close</i>
-            <span>Cerrar</span>
-          </button>
-          <button class="enfasisBtn discretBtn">
-            <i class="material-icons">upload_file</i>
-            <span>Cargar archivo</span>
-          </button>
-          <button class="discretBtn enfasisBtn" onclick="createNewGroup()">
-            <i class="material-icons">add</i>
-            <span>Nuevo grupo</span>
-          </button>
+    <div id="cartaDialog" class="dialog hide win crt">
+      <div id="menuList" style="height: 100%;"></div>
+      <div class="flex gap-8">
+        <button class="discretBtn" onclick="closeCurrentDialog()">
+          <i class="material-icons">close</i>
+          <span>Cerrar</span>
+        </button>
+        <button class="discretBtn">
+          <i class="material-icons">upload_file</i>
+          <span>Cargar archivo</span>
+        </button>
+        <button class="discretBtn enfasisBtn" onclick="closeCurrentDialog(); switchDialogState('createCategorieWin')">
+          <i class="material-icons">add</i>
+          <span>Nueva categoria</span>
+        </button>
+        <button class="discretBtn enfasisBtn" onclick="closeCurrentDialog(); switchDialogState('createProductWin')">
+          <i class="material-icons">add</i>
+          <span>Nuevo producto</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="createCategorieWin" class="dialog win flex flex-col gap-18 hide">
+      <span>Crear nueva categoria</span>
+      <input type="text" placeholder="Pintas" id="categoryNameInput">
+      <div class="flex gap-8">
+        <button class="discretBtn" onclick="closeCurrentDialog(); switchDialogState('cartaDialog')">
+          <i class="material-icons">close</i>
+          <span>Cancelar</span>
+        </button>
+        <button class="discretBtn enfasisBtn" onclick="createCategory()">
+          <i class="material-icons">check</i>
+          <span>Create</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="createProductWin" class="dialog hide win flex flex-col gap-18">
+      <h2>Crear producto</h2>
+      <div class="spanInput">
+        <span>Nombre:</span>
+        <input type="text" id="productName" placeholder="Hamburguesa completa">
+      </div>
+      <div class="spanInput">
+        <span>Precio:</span>
+        <input type="text" id="productPrice" placeholder="5000.00">
+      </div>
+      <div class="spanInput">
+        <span>Costo:</span>
+        <input type="text" id="productCost" placeholder="1000.00">
+      </div>
+      <br>
+      <div class="spanToggle">
+        <span>Imprimir al comandar: </span>
+        <div class="switchContainer">
+          <input type="checkbox" class="checkbox" id="ch1">
+          <label class="switch" for="ch1">
+            <span class="slider"></span>
+          </label>
         </div>
       </div>
-      <div class="flex flex-col p18" id="itemInfo">
-        <div class="itemmod">
-          <h2 class="p18">Info del producto</h2>
-          <div class="flex flex-col gap-18">
-            <div class="flex flex-col gap-18">
-              <div>
-                <span>Nombre:</span>
-                <input type="text" id="prodNameInput" />
-              </div>
-              <div>
-                <span>Precio:</span>
-                <input type="text" id="prodPriceInput" />
-              </div>
-              <div class="spanToggle">
-                <span>Disponibilidad:</span>
-                <div class="switch-parent">
-                  <input type="checkbox" class="checkbox" id="availableCb" />
-                  <label class="switch" for="availableCb">
-                    <span class="slider"></span>
-                  </label>
-                </div>
-              </div>
-              <div class="spanToggle">
-                <span>Imprimir al comandar:</span>
-                <div class="switch-parent">
-                  <input type="checkbox" class="checkbox" id="printOnComand" />
-                  <label class="switch" for="printOnComand">
-                    <span class="slider"></span>
-                  </label>
-                </div>
-              </div>
-              <div class="flex">
-                <span class="wfull">Caja:</span>
-                <select name="" id="cajaForProdSlct"></select>
-              </div>
-              <div class="spanToggle">
-                <span>Disponibilidad horaria:</span>
-                <div class="switch-parent">
-                  <input type="checkbox" class="checkbox" id="availableCb2" />
-                  <label class="switch" for="availableCb2">
-                    <span class="slider"></span>
-                  </label>
-                </div>
-              </div>
-              <div class="flex gap-2">
-                <span>Desde</span>
-                <select name="" id="">
-                  <option value="">18:00</option>
-                </select>
-                <span>Hasta</span>
-                <select name="" id="">
-                  <option value="">20:00</option>
-                </select>
-              </div>
-            </div>
-          </div>
+      <div class="spanToggle">
+        <span>Agregar al resumen diario: </span>
+        <div class="switchContainer">
+          <input type="checkbox" class="checkbox" id="ch2">
+          <label class="switch" for="ch2">
+            <span class="slider"></span>
+          </label>
         </div>
-        <div class="itemModBtns">
-          <button class="discretBtn enfasisBtn" id="updateProductBtn">
-            <i class="material-icons">check</i>
-            <span>Aplicar</span>
-          </button>
-        </div>
+      </div>
+      <div class="spanToggle">
+        <span>Categoría: </span>
+        <select id="productCategory">
+        </select>
+      </div>
+      <br>
+      <div class="flex gap-18">
+        <button class="discretBtn" onclick="closeCurrentDialog(); switchDialogState('cartaDialog')">
+          <i class="material-icons">close</i>
+          <span>Cancelar</span>
+        </button>
+        <button class="discretBtn enfasisBtn" onclick="createProduct()">
+          <i class="material-icons">check</i>
+          <span>Crear producto</span>
+        </button>
       </div>
     </div>
 

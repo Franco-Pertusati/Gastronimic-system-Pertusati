@@ -1,6 +1,7 @@
 var activeShift = loadBoolean("activeShift") || false;
 let cellSize = JSON.parse(localStorage.getItem("cellSize")) || 125;
-var groups = [];
+var categories = JSON.parse(localStorage.getItem("categories")) || [];
+var products = JSON.parse(localStorage.getItem("products")) || [];
 var tables = [];
 var sales = [];
 var shifts = JSON.parse(localStorage.getItem("shifts")) || [];
@@ -16,6 +17,138 @@ var total = 0;
 const grid = document.querySelector(".grid");
 const renameGroupDialog = document.querySelector(".changeNameDialog");
 const shiftCover = document.querySelector(".shifCover");
+
+function createCategory() {
+  const input = document.querySelector("#categoryNameInput");
+  const newCategory = input.value;
+  categories.push(newCategory);
+  saveData("categories", categories);
+
+  input.value = "";
+  closeCurrentDialog();
+  switchDialogState("cartaDialog");
+  fillCategoryOptions();
+}
+
+function fillCategoryOptions() {
+  const categorySelect = document.getElementById("productCategory");
+  categorySelect.innerHTML = ""; // Limpiar opciones anteriores
+  categories.forEach(function (category) {
+    const option = document.createElement("option");
+    option.value = category;
+    option.textContent = category;
+    categorySelect.appendChild(option);
+  });
+}
+
+// Llamamos a esta función para cargar las categorías cuando se muestra el formulario
+fillCategoryOptions();
+
+function createProduct() {
+  const name = document.getElementById("productName").value;
+  const price = parseFloat(
+    document.getElementById("productPrice").value.replace(",", ".")
+  );
+  const cost = parseFloat(
+    document.getElementById("productCost").value.replace(",", ".")
+  );
+  const printCommand = document.getElementById("ch1").checked;
+  const addToSummary = document.getElementById("ch2").checked;
+  var category = document.getElementById("productCategory").value;
+
+  // Validación básica
+  if (!name || isNaN(price) || isNaN(cost)) {
+    alert("Por favor, complete todos los campos correctamente.");
+    return;
+  }
+
+  if (!category) {
+    category = null;
+  }
+
+  const product = {
+    name: name,
+    price: price,
+    cost: cost,
+    printCommand: printCommand,
+    addToSummary: addToSummary,
+    category: category,
+  };
+
+  products.push(product);
+  saveData("products", products);
+
+  // Limpiar campos y cerrar el formulario
+  document.getElementById("productName").value = "";
+  document.getElementById("productPrice").value = "";
+  document.getElementById("productCost").value = "";
+  document.getElementById("ch1").checked = false;
+  document.getElementById("ch2").checked = false;
+  document.getElementById("productCategory").selectedIndex = 0;
+
+  closeCurrentDialog();
+  switchDialogState("cartaDialog");
+}
+
+categories.forEach((c) => {
+  displayProductsByCategory(c, "menuList");
+});
+
+function displayProductsByCategory(category, listId) {
+  const list = document.getElementById(listId);
+
+  const filteredProducts = products.filter((p) => p.category === category);
+
+  const categoryCard = document.createElement("div");
+  categoryCard.classList.add("categoryCard");
+
+  const categoryTitle = document.createElement("h3");
+  categoryTitle.textContent = category;
+
+  categoryCard.appendChild(categoryTitle);
+
+  const productList = document.createElement("ul");
+
+  filteredProducts.forEach((product) => {
+    const productItem = document.createElement("li");
+
+    const productName = document.createElement("span");
+    productName.textContent = `${product.name}`;
+    productItem.appendChild(productName);
+
+    const productPrice = document.createElement("span");
+    productPrice.textContent = `$${product.price}`;
+    productItem.appendChild(productPrice);
+
+    const printCommandButton = document.createElement("button");
+    printCommandButton.classList.add("discretBtn");
+
+    const printCommandIcon = document.createElement("i");
+    printCommandIcon.classList.add("material-icons");
+    printCommandIcon.textContent = product.printCommand
+      ? "check_circle"
+      : "cancel";
+    printCommandButton.appendChild(printCommandIcon);
+    productItem.appendChild(printCommandButton);
+
+    const addToSummaryButton = document.createElement("button");
+    addToSummaryButton.classList.add("discretBtn");
+
+    const addToSummaryIcon = document.createElement("i");
+    addToSummaryIcon.classList.add("material-icons");
+    addToSummaryIcon.textContent = product.addToSummary
+      ? "check_circle"
+      : "cancel";
+    addToSummaryButton.appendChild(addToSummaryIcon);
+    productItem.appendChild(addToSummaryButton);
+
+    productList.appendChild(productItem);
+  });
+
+  categoryCard.appendChild(productList);
+
+  list.appendChild(categoryCard);
+}
 
 document.querySelector("#startShift").addEventListener("click", function () {
   activeShift = true;
@@ -70,186 +203,10 @@ function shiftManagment() {
   saveData("activeShift", activeShift);
 }
 
-function createNewGroup() {
-  var namingAttempts = 0;
-  const baseName = "Nuevo grupo";
-  const newGroup = { name: baseName, products: [] };
-  while (groups.find((g) => g.name == newGroup.name)) {
-    namingAttempts++;
-    newGroup.name = baseName + ` (${namingAttempts})`;
-  }
-  groups.push(newGroup);
-  printGroup(newGroup);
-  saveGroupsToLocalStorage();
-}
-
-function printGroup(newGroup) {
-  const container = document.querySelector(".groupsList");
-  const newGroupDiv = document.createElement("div");
-  newGroupDiv.className = "newGroup";
-  const flexDiv = document.createElement("div");
-  flexDiv.className = "flex gap-8 p8";
-  const h3 = document.createElement("h2");
-  h3.textContent = newGroup.name;
-  const renameGroupDiv = document.createElement("div");
-  renameGroupDiv.id = newGroup.name.replace(/\s+/g, "-");
-  renameGroupDiv.className = "renameGroup";
-  const groupNameInput = document.createElement("input");
-  groupNameInput.type = "text";
-  groupNameInput.placeholder = "Nuevo nombre";
-  groupNameInput.className = "groupNameInput";
-  groupNameInput.addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-      if (this.value != "") {
-        newGroup.name = this.value;
-        h3.textContent = this.value;
-        renameGroupDiv.id = this.value.replace(/\s+/g, "-");
-        groupItemListDiv.id = `gl-${newGroup.name.replace(/\s+/g, "-")}`;
-        hideInput();
-      } else {
-        hideInput();
-      }
-    }
-  });
-  const closeButton = document.createElement("button");
-  closeButton.classList.add("discretBtn");
-  closeButton.addEventListener("click", function () {
-    hideInput();
-    groupNameInput.value = "";
-  });
-  closeButton.innerHTML = '<i class="material-icons">close</i>';
-  renameGroupDiv.appendChild(groupNameInput);
-  renameGroupDiv.appendChild(closeButton);
-  const editButton = document.createElement("button");
-  editButton.addEventListener("click", function () {
-    showInput(renameGroupDiv.id);
-    groupNameInput.focus();
-  });
-  editButton.className = "discretBtn";
-  editButton.innerHTML = '<i class="material-icons">edit</i>';
-  const deleteButton = document.createElement("button");
-  deleteButton.className = "discretBtn";
-  deleteButton.innerHTML = '<i class="material-icons">delete</i>';
-  flexDiv.appendChild(h3);
-  flexDiv.appendChild(renameGroupDiv);
-  flexDiv.appendChild(editButton);
-  flexDiv.appendChild(deleteButton);
-  const groupItemListDiv = document.createElement("div");
-  groupItemListDiv.className = "groupItemList";
-  groupItemListDiv.id = `gl-${newGroup.name.replace(/\s+/g, "-")}`;
-  const addButton = document.createElement("button");
-  addButton.className = "discretBtn m8";
-  addButton.innerHTML = '<i class="material-icons">add</i>Crear producto';
-  addButton.addEventListener("click", function () {
-    createNewProduct(newGroup, groupItemListDiv);
-    hideInput();
-  });
-  newGroupDiv.appendChild(flexDiv);
-  newGroupDiv.appendChild(groupItemListDiv);
-  newGroupDiv.appendChild(addButton);
-  container.appendChild(newGroupDiv);
-  if (groups.length > 1) {
-    hideInput();
-  }
-  groupNameInput.focus();
-  visibleInput = renameGroupDiv;
-}
-
 function getTimeSpan(startTime) {
   const currentTime = Date.now();
   const timeSpan = (currentTime - startTime) / (1000 * 60);
   return `${timeSpan.toFixed(0)}m`;
-}
-
-function createNewProduct(group, groupItemList) {
-  var namingAttempts = 0;
-  const baseName = "Nuevo producto";
-  const newProduct = {
-    name: baseName,
-    price: 0,
-    cashRegister: group.index,
-    printOnComand: false,
-    available: true,
-  };
-  console.log(newProduct);
-  while (group.products.find((p) => p.name == newProduct.name)) {
-    namingAttempts++;
-    newProduct.name = baseName + ` (${namingAttempts})`;
-  }
-  group.products.push(newProduct);
-  printProduct(newProduct);
-  saveGroupsToLocalStorage();
-}
-
-function printProduct(product) {
-  var group = null;
-  for (const g of groups) {
-    var prdct = g.products.find((p) => p.id == product.id);
-    if (prdct) {
-      group = g;
-    }
-  }
-  var groupNode = document.getElementById(
-    `gl-${group.name.replace(/\s+/g, "-")}`
-  );
-  const prodInProdList = document.createElement("div");
-  prodInProdList.id = product.id;
-  prodInProdList.classList.add("prodInProdList");
-  if (product.available) {
-    prodInProdList.classList.remove("unaviable");
-  } else {
-    prodInProdList.classList.add("unaviable");
-  }
-  const nameSpan = document.createElement("span");
-  nameSpan.classList.add("elipsis");
-  nameSpan.textContent = product.name;
-  nameSpan.id = `ns-${product.id}`;
-  const priceSpan = document.createElement("span");
-  priceSpan.textContent = `$${parseFloat(product.price).toFixed(2)}`;
-  priceSpan.id = `ps-${product.id}`;
-  const optionsDiv = document.createElement("div");
-  optionsDiv.classList.add("flex", "gap-8", "prodOptions2");
-  const deleteButton = document.createElement("button");
-  deleteButton.classList.add("discretBtn");
-  const editButton = document.createElement("button");
-  editButton.addEventListener("click", function () {
-    printItemData(product);
-  });
-  editButton.className = "discretBtn";
-  editButton.innerHTML = '<i class="material-icons">edit</i>';
-  optionsDiv.appendChild(editButton);
-  const deleteIcon = document.createElement("i");
-  deleteIcon.classList.add("material-icons");
-  deleteIcon.textContent = "delete";
-  deleteButton.appendChild(deleteIcon);
-  deleteButton.addEventListener("click", function () {
-    group.products = group.products.filter((p) => p.id !== product.id);
-    groupNode.removeChild(prodInProdList);
-    saveGroupsToLocalStorage();
-  });
-  optionsDiv.appendChild(deleteButton);
-  prodInProdList.appendChild(nameSpan);
-  prodInProdList.appendChild(priceSpan);
-  prodInProdList.appendChild(optionsDiv);
-  groupNode.appendChild(prodInProdList);
-}
-
-function hideInput() {
-  if (visibleInput) {
-    visibleInput.classList.add("hide");
-    visibleInput = null;
-  } else {
-    return;
-  }
-}
-
-function showInput(inputId) {
-  if (visibleInput) {
-    hideInput();
-  }
-  const inputToShow = document.getElementById(inputId);
-  inputToShow.classList.remove("hide");
-  visibleInput = inputToShow;
 }
 
 document.querySelector("#addTable").addEventListener("click", function () {
@@ -268,7 +225,6 @@ function createNewTable() {
         products: [],
         total: 0,
         waitingPayment: false,
-        note: "",
         position: cell.id,
         shape: true,
         startTime: null,
@@ -551,7 +507,7 @@ document
   .addEventListener("click", function () {
     if (selectedTable) {
       switchDialogState("sellWindow");
-      printSellWindow(selectedTable);
+      displaySellWindow(selectedTable);
     } else {
       alert("Seleccione una mesa.");
     }
@@ -568,15 +524,15 @@ const variableText = document.querySelector("#variableText");
 var itemsToAdd = [];
 var tableSubTotal = 0;
 
-function printSellWindow() {
-  groupsTabs.innerHTML = "";
-  groups.forEach((g) => {
-    const tab = document.createElement("button");
-    tab.innerHTML = `<button class="discretBtn">${g.name}</button>`;
-    groupsTabs.appendChild(tab);
-    tab.addEventListener("click", function () {
+function displaySellWindow() {
+  categories.forEach((c) => {
+    const categoryBtn = document.createElement("button");
+    categoryBtn.textContent = c;
+    groupsTabs.appendChild(categoryBtn);
+    categoryBtn.addEventListener("click", function () {
       productList.innerHTML = "";
-      g.products.forEach((p) => {
+      const filteredProducts = products.filter((p) => p.category === c);
+      filteredProducts.forEach((p) => {
         const prod = document.createElement("button");
         prod.className = "squareProdBtn flex flex-col";
         prod.textContent = p.name;
@@ -882,12 +838,6 @@ function printSale(sale) {
   }
 }
 
-const tableNotesBtn = document
-  .querySelector("#tableNotesBtn")
-  .addEventListener("click", function () {
-    showInput("showNoteInput");
-  });
-
 const noteInput = document.getElementById("noteInput");
 noteInput.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
@@ -913,35 +863,6 @@ function printItemData(product) {
   availableCheckbox.checked = selectedProd.available;
   printOncomandCheckbox.checked = selectedProd.printOnComand;
   cashRegistersSlct.value = selectedProd.cashRegister;
-}
-
-document
-  .querySelector("#updateProductBtn")
-  .addEventListener("click", applyChanges);
-
-function applyChanges() {
-  const nameNode = document.getElementById(`ns-${selectedProd.id}`);
-  const priceNode = document.getElementById(`ps-${selectedProd.id}`);
-  const prodNode = document.getElementById(selectedProd.id);
-  selectedProd.name = nameInput.value;
-  selectedProd.price = priceInput.value;
-  selectedProd.available = availableCheckbox.checked;
-  selectedProd.printOnComand = printOncomandCheckbox.checked;
-  selectedProd.cashRegister = cashRegistersSlct.value;
-
-  nameNode.textContent = selectedProd.name;
-  priceNode.textContent = `$${parseInt(selectedProd.price).toFixed(2)}`;
-  if (selectedProd.available) {
-    prodNode.classList.remove("unaviable");
-  } else {
-    prodNode.classList.add("unaviable");
-  }
-
-  prodToChange = groups.find((group) =>
-    group.products.some((product) => product.id === selectedProd.id)
-  );
-  prodToChange = selectedProd;
-  saveGroupsToLocalStorage();
 }
 
 function removeLS() {
@@ -979,7 +900,7 @@ document.querySelector("#vecBtn").addEventListener("click", function () {
     .classList.remove("tableSelected");
   selectedTable = takeAwayTable;
   switchDialogState("sellWindow");
-  printSellWindow();
+  displaySellWindow();
 });
 
 function selectATable() {
@@ -1415,23 +1336,6 @@ function loadTables() {
   }
 }
 
-function saveGroupsToLocalStorage() {
-  localStorage.setItem("groups", JSON.stringify(groups));
-}
-
-function loadGroups() {
-  const savedGroups = localStorage.getItem("groups");
-  if (savedGroups) {
-    groups = JSON.parse(savedGroups);
-    groups.forEach((group) => {
-      printGroup(group);
-      group.products.forEach((product) => {
-        printProduct(product);
-      });
-    });
-  }
-}
-
 function saveData(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
@@ -1439,11 +1343,13 @@ function saveData(key, data) {
 function loadData(key, variableToUpdate, containerSelector, printFunction) {
   const savedData = localStorage.getItem(key);
   if (savedData) {
-    document.querySelector(containerSelector).innerHTML = "";
-    const parsedData = JSON.parse(savedData);
-    parsedData.forEach(printFunction);
-    variableToUpdate.length = 0;
-    variableToUpdate.push(...parsedData);
+    if (containerSelector) {
+      document.querySelector(containerSelector).innerHTML = "";
+      const parsedData = JSON.parse(savedData);
+      parsedData.forEach(printFunction);
+      variableToUpdate.length = 0;
+      variableToUpdate.push(...parsedData);
+    }
   }
 }
 
@@ -1510,7 +1416,6 @@ loadData("sales", sales, "#cashHistoryList", printSale);
 loadData("paymentsMethods", paymentsMethods, "#paymentMethodsList", printPm);
 populateSelect("pmSlct", paymentsMethods);
 loadTables();
-loadGroups();
 selectATable();
 shiftManagment();
 loadFromLocalStorage();
