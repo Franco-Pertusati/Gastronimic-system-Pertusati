@@ -32,7 +32,7 @@ function createCategory() {
 
 function fillCategoryOptions() {
   const categorySelect = document.getElementById("productCategory");
-  categorySelect.innerHTML = ""; // Limpiar opciones anteriores
+  categorySelect.innerHTML = "";
   categories.forEach(function (category) {
     const option = document.createElement("option");
     option.value = category;
@@ -41,7 +41,6 @@ function fillCategoryOptions() {
   });
 }
 
-// Llamamos a esta función para cargar las categorías cuando se muestra el formulario
 fillCategoryOptions();
 
 function createProduct() {
@@ -90,64 +89,34 @@ function createProduct() {
   switchDialogState("cartaDialog");
 }
 
-categories.forEach((c) => {
-  displayProductsByCategory(c, "menuList");
-});
+displayCategories();
 
-function displayProductsByCategory(category, listId) {
-  const list = document.getElementById(listId);
+function displayCategories() {
+  const catList = document.querySelector("#catList");
+  const prodList = document.querySelector("#menuList");
 
-  const filteredProducts = products.filter((p) => p.category === category);
+  categories.forEach((c, index) => {
+    const categoryBtn = document.createElement("button");
+    categoryBtn.textContent = c;
+    catList.appendChild(categoryBtn);
+    
+    // Agregar el evento de clic para filtrar los productos según la categoría
+    categoryBtn.addEventListener("click", function () {
+      prodList.innerHTML = "";
+      const filteredProducts = products.filter((p) => p.category === c);
+      filteredProducts.forEach((p) => {
+        const prod = document.createElement("button");
+        prod.className = "squareProdBtn flex flex-col";
+        prod.textContent = p.name;
+        prodList.appendChild(prod);
+      });
+    });
 
-  const categoryCard = document.createElement("div");
-  categoryCard.classList.add("categoryCard");
-
-  const categoryTitle = document.createElement("h3");
-  categoryTitle.textContent = category;
-
-  categoryCard.appendChild(categoryTitle);
-
-  const productList = document.createElement("ul");
-
-  filteredProducts.forEach((product) => {
-    const productItem = document.createElement("li");
-
-    const productName = document.createElement("span");
-    productName.textContent = `${product.name}`;
-    productItem.appendChild(productName);
-
-    const productPrice = document.createElement("span");
-    productPrice.textContent = `$${product.price}`;
-    productItem.appendChild(productPrice);
-
-    const printCommandButton = document.createElement("button");
-    printCommandButton.classList.add("discretBtn");
-
-    const printCommandIcon = document.createElement("i");
-    printCommandIcon.classList.add("material-icons");
-    printCommandIcon.textContent = product.printCommand
-      ? "check_circle"
-      : "cancel";
-    printCommandButton.appendChild(printCommandIcon);
-    productItem.appendChild(printCommandButton);
-
-    const addToSummaryButton = document.createElement("button");
-    addToSummaryButton.classList.add("discretBtn");
-
-    const addToSummaryIcon = document.createElement("i");
-    addToSummaryIcon.classList.add("material-icons");
-    addToSummaryIcon.textContent = product.addToSummary
-      ? "check_circle"
-      : "cancel";
-    addToSummaryButton.appendChild(addToSummaryIcon);
-    productItem.appendChild(addToSummaryButton);
-
-    productList.appendChild(productItem);
+    // Seleccionar automáticamente el primer botón
+    if (index === 0) {
+      categoryBtn.click();
+    }
   });
-
-  categoryCard.appendChild(productList);
-
-  list.appendChild(categoryCard);
 }
 
 document.querySelector("#startShift").addEventListener("click", function () {
@@ -525,7 +494,7 @@ var itemsToAdd = [];
 var tableSubTotal = 0;
 
 function displaySellWindow() {
-  categories.forEach((c) => {
+  categories.forEach((c, index) => {
     const categoryBtn = document.createElement("button");
     categoryBtn.textContent = c;
     groupsTabs.appendChild(categoryBtn);

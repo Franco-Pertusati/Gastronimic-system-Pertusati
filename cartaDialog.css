@@ -2,26 +2,34 @@
     display: flex;
     flex-direction: column;
     height: 490px;
+    gap: 12px;
 }
 
 #createCategorieWin {
     width: 320px;
 }
 
-#menuList {
+
+#catList {
+    width: 200px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
 }
 
-.crt .categoryCard {
+#catList button {
+    padding: 6px 12px;
+    background-color: var(--seasalt);
+    border-radius: 99px;
+}
+
+#catList button:hover {
     background-color: var(--antiflash-white);
-    border-radius: 12px;
-    padding: 12px;
 }
 
-.categoryCard li {
-    display: grid;
-    grid-template-columns: 220px 100px 36px 36px;
-    align-items: center;
+#menuList {
+    width: 520px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    height: fit-content;
 }
