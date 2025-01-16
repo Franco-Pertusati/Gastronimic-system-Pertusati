@@ -27,9 +27,23 @@
 }
 
 #menuList {
+    height: 416px;
     width: 520px;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 12px;
-    height: fit-content;
+    overflow-y: auto;
+}
+
+#menuList div {
+    display: flex;
+    padding: 12px;
+    width: 100%;
+    border-radius: 12px;
+    background-color: var(--antiflash-white);
+    cursor: pointer;
+}
+
+.spanName {
+    width: 500px;
 }

@@ -43,7 +43,8 @@ function fillCategoryOptions() {
 
 fillCategoryOptions();
 
-function createProduct() {
+
+function createProduct(editProd) {
   const name = document.getElementById("productName").value;
   const price = parseFloat(
     document.getElementById("productPrice").value.replace(",", ".")
@@ -99,20 +100,21 @@ function displayCategories() {
     const categoryBtn = document.createElement("button");
     categoryBtn.textContent = c;
     catList.appendChild(categoryBtn);
-    
-    // Agregar el evento de clic para filtrar los productos según la categoría
+
     categoryBtn.addEventListener("click", function () {
       prodList.innerHTML = "";
       const filteredProducts = products.filter((p) => p.category === c);
       filteredProducts.forEach((p) => {
-        const prod = document.createElement("button");
-        prod.className = "squareProdBtn flex flex-col";
-        prod.textContent = p.name;
+        const prod = document.createElement("div");
+        prod.innerHTML = `
+        <span class="spanName">${p.name}</span>
+        <span class="wfull">$${p.price}</span>
+        <i class="material-icons">more_vert</i>
+        `;
         prodList.appendChild(prod);
       });
     });
 
-    // Seleccionar automáticamente el primer botón
     if (index === 0) {
       categoryBtn.click();
     }
@@ -494,6 +496,7 @@ var itemsToAdd = [];
 var tableSubTotal = 0;
 
 function displaySellWindow() {
+  groupsTabs.innerHTML = "";
   categories.forEach((c, index) => {
     const categoryBtn = document.createElement("button");
     categoryBtn.textContent = c;
@@ -514,6 +517,10 @@ function displaySellWindow() {
         });
       });
     });
+
+    if (index === 0) {
+      categoryBtn.click();
+    }
   });
 
   if (selectedTable.position) {
@@ -545,7 +552,7 @@ function mergeLists() {
     itemsToAdd.forEach((item) => {
       addProductToTable(item);
     });
-    itemsForComand = itemsToAdd.filter((p) => p.printOnComand);
+    itemsForComand = itemsToAdd.filter((p) => p.printCommand);
     selectedTable.total = selectedTable.total + tableSubTotal;
     if (selectedTable.position) {
       if (!selectedTable.startTime) {
@@ -1100,7 +1107,7 @@ function printTicketComanda(itemsForComand) {
     window.onload = function() {
       window.print();
     }
-  </>
+  </script>
   </body>
   `;
 

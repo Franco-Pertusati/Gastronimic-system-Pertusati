@@ -336,6 +336,10 @@ html body .hide {
     display: none;
 }
 
+.selected {
+    background-color: var(--blue);
+}
+
 .hfull {
     height: 100%;
 }
