@@ -253,7 +253,7 @@
           <i class="material-icons">close</i>
           <span>Cerrar</span>
         </button>
-        <button class="discretBtn">
+        <button class="discretBtn" id="uploadFile">
           <i class="material-icons">upload_file</i>
           <span>Cargar archivo</span>
         </button>
@@ -582,6 +582,14 @@
         <button class="discretBtn enfasisBtn" onclick="loadExampleData()">
           <span>Cargar datos de ejemplo</span>
         </button>
+      </div>
+    </div>
+
+    <div class="dialog hide win" id="loadFileDialog">
+      <div class="flex">
+        <input type="text" placeholder="Pegar JSON" id="jsonInp">
+        <button class="discretBtn enfasisBtn"
+          onclick="closeCurrentDialog(); switchDialogState('cartaDialog'); loadFileToLocalStorage()">Cargar</button>
       </div>
     </div>
 

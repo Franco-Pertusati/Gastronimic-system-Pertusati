@@ -43,7 +43,6 @@ function fillCategoryOptions() {
 
 fillCategoryOptions();
 
-
 function createProduct(editProd) {
   const name = document.getElementById("productName").value;
   const price = parseFloat(
@@ -376,6 +375,40 @@ function switchDialogState(dialogId) {
     newDialog.classList.remove("hide");
   } else {
     alert("No se encontró el diálogo: " + dialogId);
+  }
+}
+
+document.querySelector("#uploadFile").addEventListener("click", function () {
+  closeCurrentDialog();
+  switchDialogState("loadFileDialog");
+});
+
+function loadFileToLocalStorage() {
+  const input = document.querySelector("#jsonInp");
+
+  // Asegurarse de que el input tiene contenido
+  if (input && input.value) {
+    try {
+      // Parsear el JSON ingresado en el input
+      const products = JSON.parse(input.value);
+
+      // Reemplazar el valor de 'products' en localStorage con el nuevo JSON
+      localStorage.setItem("products", JSON.stringify(products));
+
+      // Extraer todas las categorías únicas
+      const categories = [
+        ...new Set(products.map((product) => product.category)),
+      ];
+
+      // Guardar las categorías en localStorage
+      localStorage.setItem("categories", JSON.stringify(categories));
+
+      console.log("Productos y categorías actualizados en localStorage");
+    } catch (error) {
+      console.error("Error al parsear el JSON:", error);
+    }
+  } else {
+    console.error("No hay contenido en el input");
   }
 }
 
