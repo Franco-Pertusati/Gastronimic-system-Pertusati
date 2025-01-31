@@ -103,7 +103,7 @@ function createProduct() {
   document.getElementById("productPrice").value = "";
   document.getElementById("productCost").value = "";
   document.getElementById("ch1").checked = false;
-  document.getElementById("ch2").checked = false;
+  document.getElementById("ch2").checked = true;
   document.getElementById("productCategory").selectedIndex = 0;
 
   // Cerrar el formulario
@@ -136,6 +136,17 @@ function loadProductToEdit(productName) {
   switchDialogState("createProductWin");
 }
 
+function cancelProdEdition() {
+  prodToEditName = null;
+
+  document.getElementById("productName").value = "";
+  document.getElementById("productPrice").value = "";
+  document.getElementById("productCost").value = "";
+  document.getElementById("ch1").checked = false;
+  document.getElementById("ch2").checked = true;
+  document.getElementById("productCategory").selectedIndex = 0;
+}
+
 displayCategories();
 
 function displayCategories() {
@@ -161,7 +172,7 @@ function displayCategories() {
 
         prod.addEventListener("click", function () {
           switchDialogState("createProductWin");
-          loadProductToEdit(p.name)
+          loadProductToEdit(p.name);
         });
       });
     });
