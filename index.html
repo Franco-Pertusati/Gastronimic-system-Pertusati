@@ -284,7 +284,6 @@
     </div>
 
     <div id="createProductWin" class="dialog hide win flex flex-col gap-18">
-      <h2>Crear producto</h2>
       <div class="spanInput">
         <span>Nombre:</span>
         <input type="text" id="productName" placeholder="Hamburguesa completa">
@@ -327,58 +326,7 @@
           <i class="material-icons">close</i>
           <span>Cancelar</span>
         </button>
-        <button class="discretBtn enfasisBtn" onclick="createProduct()">
-          <i class="material-icons">check</i>
-          <span>Crear producto</span>
-        </button>
-      </div>
-    </div>
-
-    <div id="editProductWin" class="dialog hide win flex flex-col gap-18">
-      <h2>Crear producto</h2>
-      <div class="spanInput">
-        <span>Nombre:</span>
-        <input type="text" id="productName" placeholder="Hamburguesa completa">
-      </div>
-      <div class="spanInput">
-        <span>Precio:</span>
-        <input type="text" id="productPrice" placeholder="5000.00">
-      </div>
-      <div class="spanInput">
-        <span>Costo:</span>
-        <input type="text" id="productCost" placeholder="1000.00">
-      </div>
-      <br>
-      <div class="spanToggle">
-        <span>Imprimir al comandar: </span>
-        <div class="switchContainer">
-          <input type="checkbox" class="checkbox" id="ch1">
-          <label class="switch" for="ch1">
-            <span class="slider"></span>
-          </label>
-        </div>
-      </div>
-      <div class="spanToggle">
-        <span>Disponibilidad: </span>
-        <div class="switchContainer">
-          <input type="checkbox" class="checkbox" checked="true" id="ch2">
-          <label class="switch" for="ch2">
-            <span class="slider"></span>
-          </label>
-        </div>
-      </div>
-      <div class="spanToggle">
-        <span>Categoría: </span>
-        <select id="productCategory">
-        </select>
-      </div>
-      <br>
-      <div class="flex gap-18">
-        <button class="discretBtn" onclick="closeCurrentDialog(); switchDialogState('cartaDialog')">
-          <i class="material-icons">close</i>
-          <span>Cancelar</span>
-        </button>
-        <button class="discretBtn enfasisBtn" onclick="createProduct()">
+        <button class="discretBtn enfasisBtn" id="confirmProdd" onclick="createProduct()">
           <i class="material-icons">check</i>
           <span>Crear producto</span>
         </button>

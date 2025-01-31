@@ -38,10 +38,16 @@
 #menuList div {
     display: flex;
     padding: 12px;
-    width: 100%;
+    width: 486px;
     border-radius: 12px;
     background-color: var(--antiflash-white);
     cursor: pointer;
+    transition: all ease .1s;
+}
+
+#menuList div:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 4px hsla(0, 0%, 0%, 0.2);
 }
 
 .spanName {

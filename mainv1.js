@@ -43,7 +43,9 @@ function fillCategoryOptions() {
 
 fillCategoryOptions();
 
-function createProduct(editProd) {
+var prodToEditName = null;
+
+function createProduct() {
   const name = document.getElementById("productName").value;
   const price = parseFloat(
     document.getElementById("productPrice").value.replace(",", ".")
@@ -65,19 +67,38 @@ function createProduct(editProd) {
     category = null;
   }
 
-  const product = {
-    name: name,
-    price: price,
-    cost: cost,
-    printCommand: printCommand,
-    addToSummary: addToSummary,
-    category: category,
-  };
+  // Si estamos editando un producto existente
+  if (prodToEditName) {
+    const productIndex = products.findIndex((p) => p.name === prodToEditName);
+    if (productIndex !== -1) {
+      products[productIndex] = {
+        name: name,
+        price: price,
+        cost: cost,
+        printCommand: printCommand,
+        addToSummary: addToSummary,
+        category: category,
+      };
+    }
+    prodToEditName = null; // Resetear la variable de edición
+  } else {
+    // Si no estamos editando, crear un nuevo producto
+    const product = {
+      name: name,
+      price: price,
+      cost: cost,
+      printCommand: printCommand,
+      addToSummary: addToSummary,
+      category: category,
+    };
 
-  products.push(product);
+    products.push(product);
+  }
+
+  // Guardar cambios
   saveData("products", products);
 
-  // Limpiar campos y cerrar el formulario
+  // Limpiar formulario
   document.getElementById("productName").value = "";
   document.getElementById("productPrice").value = "";
   document.getElementById("productCost").value = "";
@@ -85,8 +106,34 @@ function createProduct(editProd) {
   document.getElementById("ch2").checked = false;
   document.getElementById("productCategory").selectedIndex = 0;
 
+  // Cerrar el formulario
   closeCurrentDialog();
   switchDialogState("cartaDialog");
+}
+
+function loadProductToEdit(productName) {
+  const product = products.find((p) => p.name === productName);
+  if (!product) return;
+
+  // Llenar el formulario con los datos del producto
+  document.getElementById("productName").value = product.name;
+  document.getElementById("productPrice").value = product.price
+    .toString()
+    .replace(".", ",");
+  document.getElementById("productCost").value = product.cost
+    .toString()
+    .replace(".", ",");
+  document.getElementById("ch1").checked = product.printCommand;
+  document.getElementById("ch2").checked = product.addToSummary;
+
+  // Seleccionar la categoría correcta en el dropdown
+  document.getElementById("productCategory").value = product.category || "";
+
+  // Marcar que estamos editando este producto
+  prodToEditName = productName;
+
+  // Abrir el formulario
+  switchDialogState("createProductWin");
 }
 
 displayCategories();
@@ -108,9 +155,14 @@ function displayCategories() {
         prod.innerHTML = `
         <span class="spanName">${p.name}</span>
         <span class="wfull">$${p.price}</span>
-        <i class="material-icons">more_vert</i>
+        <i class="material-icons">open_in_new</i>
         `;
         prodList.appendChild(prod);
+
+        prod.addEventListener("click", function () {
+          switchDialogState("createProductWin");
+          loadProductToEdit(p.name)
+        });
       });
     });
 
